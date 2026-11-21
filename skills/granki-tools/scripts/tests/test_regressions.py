@@ -127,6 +127,45 @@ class CheckRegressionTests(SeriesCase):
         self.assertEqual(error.returncode, 2)
 
 
+class AggregateClaimTests(unittest.TestCase):
+    """Pilot: on a raw log 44 of 46 claims were 'derived:' and nobody checked them."""
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp())
+        (self.tmp / 'log.csv').write_text('run,cache,secs\n1,off,800\n2,off,900\n3,off,1000\n4,hit,400\n5,miss,950\n6,hit,\n',
+                                         encoding='utf-8')
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp)
+
+    def verify(self, table):
+        rows = [dict(zip(['ID', 'formulation', 'value', 'source'], r)) for r in table]
+        return claims.verify_rows(rows, [self.tmp])
+
+    def test_aggregates_and_expressions_are_recomputed(self):
+        report = self.verify([
+            ('n-off', 'n', '3', 'log.csv: cache=off; agg=count'),
+            ('med-off', 'm', '900', 'log.csv: cache=off; agg=median; column=secs'),
+            ('med-cache', 'm', '675', 'log.csv: cache=hit|miss; agg=median; column=secs'),
+            ('mean-all', 'm', '810', 'log.csv: agg=mean; column=secs'),
+            ('effect', 'e', '-0.25', 'expr: med-cache / med-off - 1'),
+            ('minutes', 'e', '15.0', 'expr: med-off / 60'),
+        ])
+        self.assertEqual(report['status'], 'passed', report)
+        self.assertEqual(report['unverifiable'], [])
+
+    def test_drift_and_bad_aggregates_fail(self):
+        report = self.verify([
+            ('med-off', 'm', '850', 'log.csv: cache=off; agg=median; column=secs'),
+            ('rounded', 'm', '0.3', 'expr: med-off / 3000'),
+            ('typo', 'm', '1', 'log.csv: cache=off; agg=avg; column=secs'),
+            ('nope', 'm', '1', 'expr: med-off / missing-id'),
+            ('text', 'm', '1', 'log.csv: agg=sum; column=cache'),
+        ])
+        self.assertEqual([d['id'] for d in report['drift']], ['med-off'])
+        self.assertEqual(sorted(i['id'] for i in report['invalid']), ['nope', 'text', 'typo'])
+
+
 class PlanStageCheckTests(SeriesCase):
     def test_plan_is_checked_before_any_section_is_written(self):
         # pilot: check.py --plan on a fresh plan failed with "Sections folder not found"

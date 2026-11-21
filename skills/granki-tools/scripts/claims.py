@@ -8,9 +8,12 @@
 A claims table is a CSV with columns ID, formulation, value, source. Each
 source is a locator of one CSV cell: "file.csv: key=value; column=name" or
 "file.csv: row=N; column=name" (N is the CSV line number, the header is 1),
-or "file.json#/pointer". A claim computed from several cells starts its source
-with "derived:" and a description; it is reported as unverifiable and needs a
-reader.
+or "file.json#/pointer". A value computed from many rows is an aggregate:
+"file.csv: key=a|b; agg=median; column=name" (count, sum, mean, median, min,
+max). A value computed from other claims is an expression: "expr: R-a / R-b - 1".
+Both are recomputed and match when equal to the stated value rounded to its
+decimals. Anything else starts with "derived:" and a description; it is
+reported as unverifiable and needs a reader.
 
   build   write the claims table from the plan's `claims_build` rules; rows the
           rules do not produce (manual, derived) are kept
@@ -22,6 +25,9 @@ Prints JSON. Exit code 0 when passed, 1 when claims drifted or are ambiguous,
 from __future__ import annotations
 
 import argparse
+import ast
+import operator
+import re
 import csv
 import io
 import json
@@ -85,6 +91,61 @@ def merge_rows(built: list[dict], existing: list[dict]) -> tuple[list[dict], lis
     return built + [{k: r.get(k, '') for k in FIELDS} for r in kept], [r['ID'] for r in kept]
 
 
+def short(value: float) -> str:
+    return f'{value:.6g}'
+
+
+def close(stated: str, computed: float) -> bool:
+    """A computed value matches the stated one rounded to the stated number of decimals."""
+    text = (stated or '').strip().replace(',', '.')
+    try:
+        number = float(text)
+    except ValueError:
+        return False
+    decimals = len(text.split('.', 1)[1]) if '.' in text else 0
+    return abs(number - computed) <= 0.5 * 10 ** -decimals + 1e-9
+
+
+OPERATORS = {ast.Add: operator.add, ast.Sub: operator.sub, ast.Mult: operator.mul, ast.Div: operator.truediv}
+
+
+def evaluate(expression: str, values: dict, own_id: str) -> float:
+    """'expr: R-a / R-b - 1': arithmetic over the stated values of other claims."""
+    ids = sorted((i for i in values if i and i != own_id), key=len, reverse=True)
+    names = {}
+    def name(match):
+        names.setdefault(match.group(0), f'_v{len(names)}')
+        return names[match.group(0)]
+    pattern = '|'.join(re.escape(i) for i in ids) or r'(?!)'
+    code = re.sub(rf'(?<![\w-])(?:{pattern})(?![\w-])', name, expression.strip())
+    stray = re.findall(r'(?<![\w-])[A-Za-zА-Яа-я][\w]*-[\w-]+', code)
+    if stray:
+        raise BadLocator(f'expr: unknown claim ID {stray[0]}: {expression.strip()!r}')
+    numbers = {}
+    for claim_id, var in names.items():
+        try:
+            numbers[var] = float(str(values[claim_id]).replace(',', '.'))
+        except ValueError:
+            raise BadLocator(f'expr: {claim_id} is not a number') from None
+
+    def walk(node):
+        if isinstance(node, ast.Expression):
+            return walk(node.body)
+        if isinstance(node, ast.BinOp) and type(node.op) in OPERATORS:
+            return OPERATORS[type(node.op)](walk(node.left), walk(node.right))
+        if isinstance(node, ast.UnaryOp) and isinstance(node.op, ast.USub):
+            return -walk(node.operand)
+        if isinstance(node, ast.Constant) and isinstance(node.value, (int, float)):
+            return float(node.value)
+        if isinstance(node, ast.Name) and node.id in numbers:
+            return numbers[node.id]
+        raise BadLocator(f'expr: only claim IDs, numbers and + - * / ( ) are allowed: {expression!r}')
+    try:
+        return walk(ast.parse(code.replace('−', '-'), mode='eval'))
+    except (SyntaxError, ZeroDivisionError) as error:
+        raise BadLocator(f'expr: {error}: {expression!r}') from None
+
+
 def verify_rows(claims: list[dict], dirs: list[Path]) -> dict:
     """Compare claims with their cells.
 
@@ -98,13 +159,17 @@ def verify_rows(claims: list[dict], dirs: list[Path]) -> dict:
     for claim in claims:
         counts[claim.get('ID')] = counts.get(claim.get('ID'), 0) + 1
     duplicates = sorted(i for i, n in counts.items() if n > 1)
+    values_by_id = {c.get('ID'): c.get('value') for c in claims}
     for claim in claims:
         source = claim.get('source') or ''
         if source.startswith('derived:'):
             unverifiable.append({'id': claim['ID'], 'source': source})
             continue
         try:
-            values = resolve_locator(source, dirs, cache)
+            if source.startswith('expr:'):
+                values = [evaluate(source[5:], values_by_id, claim['ID'])]
+            else:
+                values = resolve_locator(source, dirs, cache)
         except DataNotFound:
             missing.append(claim['ID'])
             continue
@@ -115,6 +180,9 @@ def verify_rows(claims: list[dict], dirs: list[Path]) -> dict:
             missing.append(claim['ID'])
         elif len(set(values)) > 1:
             ambiguous.append(claim['ID'])
+        elif isinstance(values[0], float):
+            if not close(claim['value'], values[0]):
+                drift.append({'id': claim['ID'], 'claim': claim['value'], 'source': short(values[0])})
         elif values[0] != claim['value']:
             drift.append({'id': claim['ID'], 'claim': claim['value'], 'source': values[0]})
     status = 'passed' if not (drift or ambiguous or missing or invalid or duplicates) else 'failed'

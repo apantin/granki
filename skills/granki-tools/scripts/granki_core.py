@@ -298,10 +298,15 @@ def find_data(name: str, dirs: list[Path]) -> Path:
     raise DataNotFound(f'Data file {name} not found in: ' + ', '.join(str(d) for d in dirs))
 
 
+AGGREGATES = ('count', 'sum', 'mean', 'median', 'min', 'max')
+
+
 def parse_locator(locator: str) -> tuple[str, list[tuple[str, str]], str]:
     """'file.csv: key=value; key2=value2; column=col' -> (file, conditions, column).
 
     Conditions may also be joined by commas: 'file.csv: a=1,b=2; column=col'.
+    An aggregate ('agg=median') is returned as the condition ('agg', 'median'); with it
+    the row selector is optional and column= may be left out for agg=count.
     """
     name, sep, rest = locator.partition(':')
     if not sep:
@@ -321,9 +326,43 @@ def parse_locator(locator: str) -> tuple[str, list[tuple[str, str]], str]:
                 column = value.strip()
             else:
                 conditions.append((key.strip(), value.strip()))
+    agg = [v for k, v in conditions if k == 'agg']
+    if agg:
+        if len(agg) > 1 or agg[0] not in AGGREGATES:
+            raise BadLocator(f'agg= takes one of {", ".join(AGGREGATES)}: {locator!r}')
+        if column is None and agg[0] != 'count':
+            raise BadLocator(f'agg={agg[0]} needs column=: {locator!r}')
+        return name.strip(), conditions, column
     if column is None or not conditions:
         raise BadLocator(f'Locator needs a row selector and column=: {locator!r}')
     return name.strip(), conditions, column
+
+
+def aggregate(kind: str, rows: list[dict], column: str | None, locator: str) -> float:
+    if kind == 'count':
+        return float(len(rows))
+    numbers = []
+    for row in rows:
+        cell = (row.get(column) or '').strip().replace(',', '.')
+        if not cell:
+            continue  # blank cells do not count
+        try:
+            numbers.append(float(cell))
+        except ValueError:
+            raise BadLocator(f'agg={kind}: {cell!r} in {column!r} is not a number: {locator!r}') from None
+    if not numbers:
+        raise BadLocator(f'agg={kind}: no numbers selected: {locator!r}')
+    if kind == 'sum':
+        return sum(numbers)
+    if kind == 'mean':
+        return sum(numbers) / len(numbers)
+    if kind == 'min':
+        return min(numbers)
+    if kind == 'max':
+        return max(numbers)
+    numbers.sort()
+    middle = len(numbers) // 2
+    return numbers[middle] if len(numbers) % 2 else (numbers[middle - 1] + numbers[middle]) / 2
 
 
 def json_pointer(data, pointer: str):
@@ -346,6 +385,7 @@ def resolve_locator(locator: str, dirs: list[Path], cache: dict | None = None) -
 
     CSV: 'file.csv: key=value; column=col' or 'file.csv: row=N; column=col'
     (N counts data records from 2, the header being 1; blank lines are not records).
+    CSV aggregate: 'file.csv: key=a|b; agg=median; column=col' -> [the number] over the selected rows.
     JSON: 'file.json#/pointer' -> the value at that pointer, as text.
     Raises BadLocator for a source that is not a valid locator, DataNotFound
     for a missing file; returns [] when the row or pointer does not exist.
@@ -366,6 +406,15 @@ def resolve_locator(locator: str, dirs: list[Path], cache: dict | None = None) -
     if path not in cache:
         cache[path] = read_csv(path)
     rows = cache[path]
+    agg = next((v for k, v in conditions if k == 'agg'), None)
+    if agg:
+        conditions = [(k, v) for k, v in conditions if k != 'agg']
+        unknown = [k for k in [c for c, _ in conditions] + ([column] if column else []) if rows and k not in rows[0]]
+        if unknown:
+            raise BadLocator(f'Column {unknown[0]!r} not in {name}')
+        # in an aggregate a condition may list alternatives: cache=hit|miss
+        selected = [r for r in rows if all(r.get(k) in v.split('|') for k, v in conditions)]
+        return [aggregate(agg, selected, column, locator)]
     if rows and column not in rows[0]:
         raise BadLocator(f'Column {column!r} not in {name}')
     if conditions[0][0] == 'row' and len(conditions) == 1:
