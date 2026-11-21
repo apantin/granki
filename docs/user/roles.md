@@ -38,7 +38,7 @@
 
 ## Правила для всех комнат
 
-Правила записываются в `scene` каждой группы ([party-rooms.toml](../skills/granki-tools/assets/party-rooms.toml)), в проект их ставит `rooms.py install`.
+Правила записываются в `scene` каждой группы ([party-rooms.toml](../../skills/granki-tools/assets/party-rooms.toml)), в проект их ставит `rooms.py install`.
 
 - Комната не голосует и не решает. Итог — вопросы автору по одному с вариантами и рекомендацией.
 - Фокусник может предлагать что угодно, кроме изменения чисел и выводов.

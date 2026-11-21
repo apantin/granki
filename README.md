@@ -78,34 +78,71 @@ uv run .claude/skills/granki-tools/scripts/rooms.py install --project-root .
 
 Главред сам предложит это при первом запуске, если комнат нет.
 
+## Обновление
+
+До последней версии из `main` — та же команда установки, она обновит уже стоящие модули:
+
+```bash
+npx bmad-method@6.12.4 install --directory . --modules core \
+  --custom-source https://github.com/apantin/granki \
+  --tools claude-code,codex --yes
+uv run .claude/skills/granki-tools/scripts/rooms.py install --project-root .
+```
+
+До конкретной версии — допиши к адресу `@` и тег релиза (список — в [тегах репозитория](https://github.com/apantin/granki/tags)), например `@v0.1.0`. Вместо тега можно указать ветку; хеш коммита установщик не принимает.
+
+```bash
+npx bmad-method@6.12.4 install --directory . --modules core \
+  --custom-source https://github.com/apantin/granki@v0.1.0 \
+  --tools claude-code,codex --yes
+uv run .claude/skills/granki-tools/scripts/rooms.py install --project-root .
+```
+
+Что происходит при обновлении:
+- скиллы в `.claude/skills` и `.agents/skills` заменяются целиком: файлы, удалённые из Granki, удаляются и у тебя;
+- настройки в `_bmad/custom/` сохраняются;
+- `rooms.py install` переписывает только составы комнат Granki, повторный запуск ничего не дублирует;
+- после обновления начни новую сессию агента: `SKILL.md` читается при её старте.
+
+Серии и статьи установщик не трогает. После обновления прогони `status.py` и `check.py` по своей серии: если формат плана поменялся, скрипт вернёт код 2 и причину в поле `reason`.
+
+При установке из локальной копии (путь вместо URL) суффикс `@` не работает: переключи версию в самой копии (`git checkout v0.1.0`) и запусти установку с путём.
+
+Какая версия стоит в проекте: `grep -A1 'name: granki' _bmad/_config/manifest.yaml`. Что изменилось между версиями и что сделать при обновлении — в [CHANGELOG.md](CHANGELOG.md).
+
 ## Как начать
 
 Позови Главреда («Главред, начнём серию») или сразу `granki-series`. Главред покажет, где серия, и предложит следующий шаг.
 
-Как выглядит весь цикл на примере — в [туториале](docs/tutorial.md): вымышленная серия «Хлеб на закваске» из [examples/bread/](examples/bread/), раздел за разделом до публикации.
+Как выглядит весь цикл на примере — в [туториале](docs/user/tutorial.md): вымышленная серия «Хлеб на закваске» из [examples/bread/](examples/bread/), раздел за разделом до публикации.
 
 ## Известные ограничения
 
 - Таблицы рукописи пока не сверяются с CSV по ячейкам. Проверяются числа прозы.
 - Слова вместо чисел («в три раза») и однозначные числа скрипт не видит. Их ловят линзы ревью.
 - Сборки PDF нет.
-- Что ещё не сделано и что дальше — в [roadmap.md](docs/roadmap.md).
+- Что ещё не сделано и что дальше — в [roadmap.md](docs/dev/roadmap.md).
 - Фокус-группа читателей проверена в режиме субагентов: у каждой роли был свой агент, оркестратор действовал по правилам `bmad-party-mode`. Интерактивные комнаты (планёрки, разбор раздела) в живой сессии с автором ещё не проводились.
 
 ## Оглавление
 
 Все Markdown-файлы репозитория. Тест `test_readme.py` проверяет, что новый файл не забыли добавить сюда.
 
-**Документация** ([docs/](docs/README.md))
-- [tutorial.md](docs/tutorial.md) — туториал: статья от плана до публикации на примере
-- [design.md](docs/design.md) — замысел, принятые решения, изученные источники
-- [process.md](docs/process.md) — уровни работы, циклы плана и раздела, ревью, журнал, статусы
-- [roles.md](docs/roles.md) — роли агентов и комнаты
-- [architecture.md](docs/architecture.md) — устройство модуля, скрипты, раскладка артефактов, лицензии
-- [lessons.md](docs/lessons.md) — уроки первой серии
-- [decisions/0001-bmad-v6-foundation.md](docs/decisions/0001-bmad-v6-foundation.md) — ADR: основа на BMad Method v6.12
-- [development.md](docs/development.md) — как собиралась и проверялась версия 0.1.0
-- [roadmap.md](docs/roadmap.md) — пилот и то, что не сделано
+**Для пользователя** ([docs/](docs/README.md))
+- [tutorial.md](docs/user/tutorial.md) — туториал: статья от плана до публикации на примере
+- [process.md](docs/user/process.md) — уровни работы, циклы плана и раздела, ревью, журнал, статусы
+- [roles.md](docs/user/roles.md) — роли агентов и комнаты
+- [CHANGELOG.md](CHANGELOG.md) — изменения по версиям и что сделать при обновлении
+
+**Для разработчика**
+- [contributing.md](docs/dev/contributing.md) — рабочее место, тесты, что обновить вместе с изменением, приватность
+- [release.md](docs/dev/release.md) — выпуск версии: номер, проверки, тег, релиз на GitHub
+- [design.md](docs/dev/design.md) — замысел, принятые решения, изученные источники
+- [architecture.md](docs/dev/architecture.md) — устройство модуля, скрипты, раскладка артефактов, лицензии
+- [lessons.md](docs/dev/lessons.md) — уроки первой серии
+- [decisions/0001-bmad-v6-foundation.md](docs/dev/decisions/0001-bmad-v6-foundation.md) — ADR: основа на BMad Method v6.12
+- [history.md](docs/dev/history.md) — как собиралась и проверялась версия 0.1.0
+- [roadmap.md](docs/dev/roadmap.md) — пилот и то, что не сделано
 
 **Скиллы**
 - [granki-agent-editor](skills/granki-agent-editor/SKILL.md) — Главред
@@ -136,7 +173,7 @@ uv run .claude/skills/granki-tools/scripts/rooms.py install --project-root .
 uv run --no-project --with pyyaml python -m unittest discover -s skills/granki-tools/scripts/tests
 ```
 
-Тесты сборки HTML и прогон туториала (`test_tutorial.py` выполняет все команды из [docs/tutorial.md](docs/tutorial.md)) запускаются, если доступен Pandoc: в `PATH` или в переменной `GRANKI_PANDOC`.
+Тесты сборки HTML и прогон туториала (`test_tutorial.py` выполняет все команды из [docs/user/tutorial.md](docs/user/tutorial.md)) запускаются, если доступен Pandoc: в `PATH` или в переменной `GRANKI_PANDOC`. Что проверяет каждый тест и как вносить изменения — в [contributing.md](docs/dev/contributing.md).
 
 ## Лицензия
 

@@ -1,6 +1,6 @@
 # Устройство модуля
 
-Из чего состоит Granki и что из этого уже сделано. Процесс описан в [process.md](process.md), точные форматы файлов — в [formats.md](../skills/granki-tools/references/formats.md).
+Из чего состоит Granki и что из этого уже сделано. Процесс описан в [process.md](../user/process.md), точные форматы файлов — в [formats.md](../../skills/granki-tools/references/formats.md).
 
 Код модуля и префикс скиллов — `granki`. Префикс `bmad-` зарезервирован за официальными скиллами BMad. Правила товарного знака запрещают слово BMad в названии, а в описании допускают «Compatible with BMad Method v6».
 
@@ -36,9 +36,10 @@ granki/
     granki-editorial/               + references/passes, writing, genre-experiment.md, voice.md; NOTICE.md
     granki-tools/                   scripts/ (+ tests/), references/formats.md,
                                     assets/templates/, assets/party-rooms.toml, assets/article.template.html
-  docs/                             туториал, замысел, процесс, роли, устройство, решения, история разработки
+  docs/user/                        для пользователя: туториал, процесс, роли
+  docs/dev/                         для разработчика: порядок изменений и выпуска, замысел, устройство, решения, история
   examples/bread/                   вымышленная серия для туториала
-  README.md  LICENSE
+  README.md  CHANGELOG.md  LICENSE
 ```
 
 Скиллы обращаются к скриптам соседнего скилла по пути `{skill-root}/../granki-tools/scripts/`: все скиллы модуля ставятся в одну папку.
@@ -109,7 +110,7 @@ granki/
 | Вопросы интервью редполитики | `redpolitika/references/interview.md` | Первичная настройка голоса (`voice.md`) |
 | Не взято: посты, промо, UX, «продукт в тексте» | — | Не жанр Granki |
 
-14 справочников скопированы почти без изменений: правки затронули 3 файла и 12 строк. Список изменений — в [NOTICE.md](../skills/granki-editorial/NOTICE.md), его соответствие проверено `diff`. Новые файлы: `genre-experiment.md` (жанр «обзор результатов эксперимента»), `voice.md` (голос автора и слои редполитики), `SKILL.md`. Плагин redaktura может оставаться установленным для других задач, но Granki на него не опирается.
+14 справочников скопированы почти без изменений: правки затронули 3 файла и 12 строк. Список изменений — в [NOTICE.md](../../skills/granki-editorial/NOTICE.md), его соответствие проверено `diff`. Новые файлы: `genre-experiment.md` (жанр «обзор результатов эксперимента»), `voice.md` (голос автора и слои редполитики), `SKILL.md`. Плагин redaktura может оставаться установленным для других задач, но Granki на него не опирается.
 
 ## Лицензии
 

@@ -1,4 +1,4 @@
-"""Run every bash block of docs/tutorial.md and check the outputs it promises.
+"""Run every bash block of docs/user/tutorial.md and check the outputs it promises.
 
 The tutorial is part of the documentation: when a script changes its output or
 behaviour, this test fails instead of leaving the tutorial out of date.
@@ -14,7 +14,7 @@ import unittest
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[4]
-TUTORIAL = REPO / 'docs' / 'tutorial.md'
+TUTORIAL = REPO / 'docs' / 'user' / 'tutorial.md'
 
 
 def pandoc_available() -> bool:

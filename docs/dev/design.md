@@ -15,7 +15,7 @@ Granki превращает подготовку серии в повторяе�
 - числа проверяют скрипты;
 - статусы публикации защищают уже вышедшие статьи.
 
-Нормативное описание — в [process.md](process.md), роли — в [roles.md](roles.md), устройство модуля — в [architecture.md](architecture.md).
+Нормативное описание — в [process.md](../user/process.md), роли — в [roles.md](../user/roles.md), устройство модуля — в [architecture.md](architecture.md).
 
 ## Принятые решения
 
