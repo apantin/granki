@@ -419,6 +419,21 @@ class PlanRegressionTests(SeriesCase):
         self.assertEqual(states(), ['processed'])
 
 
+class SeriesGateTests(SeriesCase):
+    def test_article_plan_waits_for_the_series_plan(self):
+        # pilot: an article plan was approved while the series plan was still a draft
+        from test_scripts import plan as plan_cli
+        text = self.series.read_text(encoding='utf-8')
+        self.series.write_text(re.sub(r'^status: \w+', 'status: draft', text, count=1, flags=re.M), encoding='utf-8')
+        plan = self.green / 'plan.md'
+        plan.write_text(re.sub(r'^status: \w+', 'status: plan-draft', plan.read_text(encoding='utf-8'), count=1, flags=re.M),
+                        encoding='utf-8')
+        code, report = run(plan_cli, 'status', '--plan', plan, '--set', 'plan-approved')
+        self.assertEqual(code, 2)
+        self.assertIn('series plan is still a draft', report['reason'])
+        self.assertEqual(run(plan_cli, 'status', '--plan', plan, '--set', 'plan-approved', '--force')[0], 0)
+
+
 class SecondRunRegressionTests(SeriesCase):
     def test_composite_key_and_plan_targets(self):
         from test_scripts import claims as claims_cli

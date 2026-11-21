@@ -43,7 +43,7 @@ from pathlib import Path
 import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from granki_core import (ARTICLE_STATUSES, SECTION_NAME, SECTION_STATUSES, GrankiError, atomic_write,  # noqa: E402
+from granki_core import (series_of, ARTICLE_STATUSES, SECTION_NAME, SECTION_STATUSES, GrankiError, atomic_write,  # noqa: E402
                          dump_json, load_plan, load_series, section_paths, sha256_text, split_frontmatter)
 from journal import log_event, read as read_journal, state, table  # noqa: E402
 
@@ -88,6 +88,11 @@ def set_status(path: Path, status: str, actor: str, force: bool) -> dict:
     allowed = TRANSITIONS.get(current, set())
     if status not in allowed and not force:
         raise GrankiError(f'Transition {current} -> {status} is not in the lifecycle; allowed: {", ".join(sorted(allowed))}')
+    if status == 'plan-approved' and not force:
+        context = series_of(path)
+        if context and context[1].get('status') == 'draft':
+            raise GrankiError('The series plan is still a draft: approve it first (plan.py series --set approved), '
+                              'or pass --force when the author approves the article plan anyway')
     if status == 'article-review' and not force:
         pending = []
         for e in meta.get('sections', []):
