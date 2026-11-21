@@ -321,7 +321,7 @@ gr check --plan plan.md | python3 -c "import json,sys; d=json.load(sys.stdin); p
 
 ```
   "to": "article-review"
-passed ['plan-sections', 'length', 'numbers', 'claims', 'caveats', 'links', 'public', 'figures', 'published-lock']
+passed ['plan-sections', 'length', 'numbers', 'claims', 'headings', 'caveats', 'links', 'public', 'figures', 'published-lock']
 ```
 
 Затем работают линзы уровня статьи: переходы и повторы между разделами, донесён ли тезис, оговорки и оверклейм. Отдельно проходит фокус-группа читателей: в комнате `granki-reader-panel` Практик, Скептик, Новичок и Сторонник проверенного метода читают статью независимо, каждый своим субагентом. Находки привязываются к разделам и возвращают на доработку только эти разделы.

@@ -427,6 +427,21 @@ class SectionPathTests(SeriesCase):
         self.assertEqual(report['section'], '01-results.md')
 
 
+class HeadingTests(SeriesCase):
+    def test_first_heading_is_the_article_title(self):
+        # pilot: the intro opened with «# Что получилось», the section name, not the article title
+        intro = self.green / 'sections/00-intro.md'
+        intro.write_text(re.sub(r'^# .+$', '# Что получилось', intro.read_text(encoding='utf-8'), count=1, flags=re.M),
+                         encoding='utf-8')
+        report = run(check, '--plan', self.green / 'plan.md')[1]
+        headings = next(c for c in report['checks'] if c['name'] == 'headings')
+        self.assertEqual((headings['status'], headings['title_mismatch']['heading']), ('warning', 'Что получилось'))
+        results = self.green / 'sections/01-results.md'
+        results.write_text('# Лишний заголовок\n\n' + results.read_text(encoding='utf-8'), encoding='utf-8')
+        report = run(check, '--plan', self.green / 'plan.md')[1]
+        self.assertIn('headings', report['failed'])
+
+
 class SeriesGateTests(SeriesCase):
     def test_article_plan_waits_for_the_series_plan(self):
         # pilot: an article plan was approved while the series plan was still a draft

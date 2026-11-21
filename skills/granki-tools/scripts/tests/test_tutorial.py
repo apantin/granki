@@ -38,7 +38,7 @@ class TutorialTests(unittest.TestCase):
             '"added": [\n    "N001",\n    "N002",\n    "N003"\n  ]',
             'cannot be accepted: the text still has [нужно от автора',
             '| 01-flour | writing v1 | принято 3/3; accepted 3 | — | — | 2 (критичных 0) |',
-            "passed ['plan-sections', 'length', 'numbers', 'claims', 'caveats', 'links', 'public', 'figures', 'published-lock']",
+            "passed ['plan-sections', 'length', 'numbers', 'claims', 'headings', 'caveats', 'links', 'public', 'figures', 'published-lock']",
             "'name': 'published-lock', 'status': 'failed'",
             '"options": [\n        "new-version",\n        "record-divergence",\n        "no-change"\n      ]',
             '"added": [\n    "N004"',

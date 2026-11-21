@@ -29,7 +29,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from granki_core import (without_dates, GrankiError, bare_markers, caveat_markers, decimal_tokens, dump_json,  # noqa: E402
+from granki_core import (without_dates, strip_code, GrankiError, bare_markers, caveat_markers, decimal_tokens, dump_json,  # noqa: E402
                          has_sections, integer_tokens, join_sections, link_targets, load_plan, load_series, prose,
                          read_csv, render, section_paths, series_of, sha256_file, sha256_text)
 from claims import verify_rows  # noqa: E402
@@ -161,6 +161,23 @@ def check_lock(plan, shas, scope_files=None):
                   hint='switch the article to "revising" before editing a published version' if changed else None)
 
 
+def check_headings(texts, plan, first):
+    """The first section opens with «# <article title>»; other sections use ## and below."""
+    problems, mismatch = [], None
+    for name, text in texts:
+        h1 = [m.group(1).strip() for m in re.finditer(r'^# (.+)$', strip_code(text), re.M)]
+        if name == first:
+            if not re.match(r'\s*# ', strip_code(text)):
+                problems.append(f'{name}: must start with the article title as a first-level heading')
+            elif plan.get('title') and h1[0] != str(plan['title']).strip():
+                mismatch = {'section': name, 'heading': h1[0], 'plan_title': plan['title']}
+        elif h1:
+            problems.append(f'{name}: first-level heading «{h1[0]}» outside the first section')
+    return result('headings', not problems and not mismatch, warn=not problems, problems=problems,
+                  title_mismatch=mismatch,
+                  hint='the first heading is the article title; a section title goes into ## ' if (problems or mismatch) else None)
+
+
 def check_plan_sections(plan, names, claim_ids):
     planned = [e.get('file') for e in plan['sections']]
     if not planned:
@@ -214,6 +231,7 @@ def check_article(plan_path: Path, article_dir: Path | None = None, section: str
                              drift=verified['drift'], ambiguous=verified['ambiguous'], missing=verified['missing'],
                              invalid=verified['invalid'], duplicates=verified['duplicates'],
                              unverifiable=verified['unverifiable'], accepted_divergences=accepted))
+    checks.append(check_headings(texts, plan, names[0] if names else None))
     checks.append(check_caveats(texts, plan, None if section is None else {section}))
     checks.append(check_links(texts, sections_dir, article, plan))
     checks.append(check_forbidden(texts, plan))
