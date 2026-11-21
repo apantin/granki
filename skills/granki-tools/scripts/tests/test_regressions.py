@@ -419,6 +419,14 @@ class PlanRegressionTests(SeriesCase):
         self.assertEqual(states(), ['processed'])
 
 
+class SectionPathTests(SeriesCase):
+    def test_section_may_be_given_as_a_path(self):
+        # pilot: every section session first called check.py --section sections/NN-x.md and failed
+        code, report = run(check, '--plan', self.green / 'plan.md', '--section', 'sections/01-results.md')
+        self.assertNotEqual(code, 2, report)
+        self.assertEqual(report['section'], '01-results.md')
+
+
 class SeriesGateTests(SeriesCase):
     def test_article_plan_waits_for_the_series_plan(self):
         # pilot: an article plan was approved while the series plan was still a draft

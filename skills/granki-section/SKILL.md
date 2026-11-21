@@ -9,7 +9,7 @@ description: 'Пишет, правит и доводит до приёмки о�
 
 Разговор с автором — по `{skill-root}/../granki-tools/references/dialog.md`.
 
-Скрипты — `{skill-root}/../granki-tools/scripts/`. Правила письма и редактуры — скилл `granki-editorial`; собери канон `canon.py --series … --article …` перед началом. Каждое действие отмечай в журнале статьи: `journal.py log --journal <статья>/journal.md --action "…" --target <файл> [--actor автор]`.
+Скрипты — `{skill-root}/../granki-tools/scripts/`. Правила письма и редактуры — скилл `granki-editorial`; собери канон `canon.py --series … --article …` перед началом. Если канона проекта нет, не пиши без него молча: скажи автору и предложи собрать канон по его старым текстам (`voice.md` скилла `granki-editorial`), это один короткий шаг. Без канона проход редактуры не знает голоса автора. Каждое действие отмечай в журнале статьи: `journal.py log --journal <статья>/journal.md --action "…" --target <файл> [--actor автор]`.
 
 ## Написать
 

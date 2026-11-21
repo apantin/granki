@@ -268,7 +268,9 @@ def main(argv=None) -> int:
     try:
         if bool(args.plan) == bool(args.series):
             raise GrankiError('Pass exactly one of --plan or --series')
-        report = check_series(args.series) if args.series else check_article(args.plan, args.article_dir, args.section)
+        # a path such as sections/01-results.md names the same section as 01-results.md
+        section = Path(args.section).name if args.section else None
+        report = check_series(args.series) if args.series else check_article(args.plan, args.article_dir, section)
     except (GrankiError, OSError, KeyError, ValueError) as error:
         sys.stdout.write(dump_json({'status': 'error', 'reason': str(error)}))
         return 2
