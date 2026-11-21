@@ -35,10 +35,10 @@
 | [`granki-section`](skills/granki-section/SKILL.md) | Раздел: написать, разобрать замечания автора, принять |
 | [`granki-review`](skills/granki-review/SKILL.md) | Ревью раздела, статьи или серии независимыми линзами и решение по находкам |
 | [`granki-publish`](skills/granki-publish/SKILL.md) | HTML, проверка перед публикацией, отметка публикации, новая версия |
-| [`granki-editorial`](skills/granki-editorial/SKILL.md) | Проход редактуры, правила письма, голос автора и редполитика; справочники адаптированы из redaktura-skills, см. [NOTICE.md](skills/granki-editorial/NOTICE.md) |
+| [`granki-editorial`](skills/granki-editorial/SKILL.md) | Проход редактуры, правила письма, голос автора и канон; справочники адаптированы из redaktura-skills, см. [NOTICE.md](skills/granki-editorial/NOTICE.md) |
 | [`granki-tools`](skills/granki-tools/SKILL.md) | Скрипты, [шаблоны](skills/granki-tools/assets/templates/) и составы комнат; форматы файлов — в [formats.md](skills/granki-tools/references/formats.md) |
 
-Редполитика собирается из трёх слоёв: проект, серия, статья. Более частный слой перекрывает общий по разделам: тот же заголовок заменяет раздел, `(+)` дописывает, `(-)` убирает.
+**Канон** — редакционные правила: читатель, площадки, регистр, словарь, голос автора. Он собирается из трёх слоёв: проект, серия, статья. Более частный слой перекрывает общий по разделам: тот же заголовок заменяет раздел, `(+)` дописывает, `(-)` убирает.
 
 У каждой статьи есть журнал `journal.md`: реестр находок со сквозными ID и статусами и хронология действий. После ревью агент предлагает применить все находки, обсудить их по одной, применить только критичные или отложить. К отложенным находкам возвращаются в следующей сессии через `journal.py list`.
 
@@ -52,7 +52,7 @@
 | `journal.py` | Ведёт журнал статьи: реестр находок и хронологию; находит нерешённые находки во всей серии |
 | `status.py` | Статусы статей и разделов, изменения после приёмки, устаревшие ревью, нерешённые находки |
 | `impact.py` | Какие разделы задевает изменение и какие варианты есть для каждой статьи |
-| `policy.py` | Собирает редполитику статьи из слоёв проекта, серии и статьи |
+| `canon.py` | Собирает канон статьи из слоёв проекта, серии и статьи |
 | `rooms.py` | Ставит составы комнат Granki в настройки party mode проекта |
 | `build_html.py` | Собирает автономный HTML статей и указатель, сверяет результат с исходным текстом |
 
@@ -77,6 +77,8 @@ uv run .claude/skills/granki-tools/scripts/rooms.py install --project-root .
 ```
 
 Главред сам предложит это при первом запуске, если комнат нет.
+
+> **Возможен конфликт с другими скиллами.** Если в среде стоят другие наборы для редактуры, статей или правил стиля, агент может выбрать их скилл вместо скилла Granki. Редакторские справочники уже входят в Granki, поэтому такие наборы лучше отключить в проекте с серией. Как это сделать в Claude Code, Codex, Gemini CLI, Copilot, OpenCode, Cursor и Windsurf — в [conflicts.md](docs/user/conflicts.md).
 
 ## Обновление
 
@@ -132,6 +134,7 @@ uv run .claude/skills/granki-tools/scripts/rooms.py install --project-root .
 - [tutorial.md](docs/user/tutorial.md) — туториал: статья от плана до публикации на примере
 - [process.md](docs/user/process.md) — уровни работы, циклы плана и раздела, ревью, журнал, статусы
 - [roles.md](docs/user/roles.md) — роли агентов и комнаты
+- [conflicts.md](docs/user/conflicts.md) — конфликты с другими скиллами и как их отключить в разных средах
 - [CHANGELOG.md](CHANGELOG.md) — изменения по версиям и что сделать при обновлении
 
 **Для разработчика**
@@ -157,14 +160,14 @@ uv run .claude/skills/granki-tools/scripts/rooms.py install --project-root .
 - [granki-editorial](skills/granki-editorial/SKILL.md) — редактура, [NOTICE.md](skills/granki-editorial/NOTICE.md) — авторство и изменения справочников:
   - проходы: [1 смысл и фактура](skills/granki-editorial/references/passes/1-smysl-i-faktura.md), [2 структура](skills/granki-editorial/references/passes/2-struktura.md), [3 тональность](skills/granki-editorial/references/passes/3-tonalnost.md), [4 предложение](skills/granki-editorial/references/passes/4-predlozhenie.md), [5 слово](skills/granki-editorial/references/passes/5-slovo.md), [6 ритм](skills/granki-editorial/references/passes/6-ritm.md), [7 следы нейросети](skills/granki-editorial/references/passes/7-neirotekst.md), [оценки](skills/granki-editorial/references/passes/otsenki.md), [штампы](skills/granki-editorial/references/passes/shtampy.md);
   - письмо статьи: [бриф](skills/granki-editorial/references/writing/brif.md), [фактура](skills/granki-editorial/references/writing/faktura.md), [организация](skills/granki-editorial/references/writing/organizatsiya.md), [драматургия](skills/granki-editorial/references/writing/dramaturgia.md), [оформление](skills/granki-editorial/references/writing/oformlenie.md);
-  - [жанр «обзор результатов эксперимента»](skills/granki-editorial/references/genre-experiment.md), [голос автора и слои редполитики](skills/granki-editorial/references/voice.md)
+  - [жанр «обзор результатов эксперимента»](skills/granki-editorial/references/genre-experiment.md), [голос автора и слои канона](skills/granki-editorial/references/voice.md)
 - [granki-tools](skills/granki-tools/SKILL.md) — скрипты:
   - [formats.md](skills/granki-tools/references/formats.md) — точные форматы файлов;
-  - шаблоны: [план серии](skills/granki-tools/assets/templates/series-plan.md), [план статьи](skills/granki-tools/assets/templates/plan.md), [заметки автора](skills/granki-tools/assets/templates/author-notes.md), [редполитика](skills/granki-tools/assets/templates/redpolitika.md)
+  - шаблоны: [план серии](skills/granki-tools/assets/templates/series-plan.md), [план статьи](skills/granki-tools/assets/templates/plan.md), [заметки автора](skills/granki-tools/assets/templates/author-notes.md), [канон](skills/granki-tools/assets/templates/canon.md)
 
 **Пример** ([examples/bread/](examples/bread/README.md)) — вымышленная серия «Хлеб на закваске»
-- [редполитика проекта](examples/bread/.agents/redpolitika.md)
-- серия: [план](examples/bread/articles/bread/series-plan.md), [журнал](examples/bread/articles/bread/journal.md), [заметки автора](examples/bread/articles/bread/author-notes.md), [редполитика серии](examples/bread/articles/bread/redpolitika.md)
+- [канон проекта](examples/bread/.agents/canon.md)
+- серия: [план](examples/bread/articles/bread/series-plan.md), [журнал](examples/bread/articles/bread/journal.md), [заметки автора](examples/bread/articles/bread/author-notes.md), [канон серии](examples/bread/articles/bread/canon.md)
 - статья 01-flour: [план](examples/bread/articles/bread/01-flour/plan.md), [журнал](examples/bread/articles/bread/01-flour/journal.md), разделы [00-intro](examples/bread/articles/bread/01-flour/sections/00-intro.md), [01-results](examples/bread/articles/bread/01-flour/sections/01-results.md), [02-advice](examples/bread/articles/bread/01-flour/sections/02-advice.md)
 
 ## Тесты

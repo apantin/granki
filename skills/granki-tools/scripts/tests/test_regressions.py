@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -11,7 +12,7 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from test_scripts import (SCRIPTS, SeriesCase, build_html, check, claims, impact, journal, policy,  # noqa: E402
+from test_scripts import (SCRIPTS, SeriesCase, build_html, check, claims, impact, journal, canon,  # noqa: E402
                           run, status)
 from granki_core import decimal_tokens, integer_tokens, prose, render, split_frontmatter  # noqa: E402
 
@@ -198,13 +199,22 @@ class StatusImpactPolicyTests(SeriesCase):
         report = run(impact, '--series', self.series, '--claim', 'T-best-temp')[1]
         self.assertTrue(report['articles'][0]['affected_sections'])
 
-    def test_policy_warns_about_empty_replacements_and_code_headings(self):
-        (self.green / 'redpolitika.md').write_text('## Регистр\n\n```\n## Не заголовок\n```\n', encoding='utf-8')
-        (self.tmp / 'redpolitika.md').write_text('## Как я говорю и не говорю\n\n', encoding='utf-8')
-        merged = run(policy, '--series', self.series, '--article', str(self.green), '--format', 'json')[1]
+    def test_canon_warns_about_empty_replacements_and_code_headings(self):
+        (self.green / 'canon.md').write_text('## Регистр\n\n```\n## Не заголовок\n```\n', encoding='utf-8')
+        (self.tmp / 'canon.md').write_text('## Как я говорю и не говорю\n\n', encoding='utf-8')
+        merged = run(canon, '--series', self.series, '--article', str(self.green), '--format', 'json')[1]
         self.assertTrue(any('empty section' in w for w in merged['warnings']))
         self.assertEqual([s['title'] for s in merged['sections']], ['Регистр', 'Как я говорю и не говорю', 'Площадки'])
         self.assertIn('## Не заголовок', merged['sections'][0]['body'])
+
+    def test_canon_warns_when_append_or_remove_misses_the_upper_section(self):
+        # a project file made by another tool may name the voice section differently
+        (self.tmp / 'canon.md').write_text(
+            '## Примеры голоса и уточнения (+)\n\n- пара\n\n## Площадка (-)\n', encoding='utf-8')
+        merged = run(canon, '--series', self.series, '--article', str(self.green), '--format', 'json')[1]
+        self.assertTrue(any('appends to «Примеры голоса и уточнения»' in w for w in merged['warnings']))
+        self.assertTrue(any('removes «Площадка»' in w for w in merged['warnings']))
+        self.assertIn('Площадки', [s['title'] for s in merged['sections']])
 
 
 @unittest.skipUnless(os.environ.get('GRANKI_PANDOC') or shutil.which('pandoc'), 'Pandoc is not available')
@@ -224,6 +234,31 @@ class BuildRegressionTests(SeriesCase):
         results.write_text(results.read_text(encoding='utf-8') + '\n<video src="//example.com/v.mp4"></video>\n',
                            encoding='utf-8')
         self.assertEqual(run(build_html, '--series', self.series, '--output', out)[0], 1)
+
+
+class PolicyTemplateTests(unittest.TestCase):
+    """Layers merge by exact section titles, so every place that names them must agree."""
+
+    STANDARD = ['Проект и читатель', 'Площадки и форматы', 'Регистр и тональность', 'Словарь: запрещено/принято',
+                'Фактура: на что опираемся', 'Примеры голоса', 'Как я говорю и не говорю', 'Открытые вопросы']
+    REPO = Path(__file__).resolve().parents[4]
+
+    def titles(self, path: Path) -> list[str]:
+        return re.findall(r'^## (.+?)(?: \([+-]\))?$', path.read_text(encoding='utf-8'), re.M)
+
+    def test_template_documents_and_skills_name_the_same_sections(self):
+        template = self.titles(self.REPO / 'skills/granki-tools/assets/templates/canon.md')
+        self.assertEqual(template, self.STANDARD, 'a renamed section breaks existing layers; update docs and examples')
+        documented = (self.REPO / 'skills/granki-tools/references/formats.md').read_text(encoding='utf-8')
+        voice = (self.REPO / 'skills/granki-editorial/references/voice.md').read_text(encoding='utf-8')
+        for title in template:
+            self.assertIn(f'«{title}»', documented, 'formats.md lists the standard sections')
+            self.assertIn(f'«{title}»', voice, 'voice.md lists the standard sections')
+
+    def test_example_project_layer_uses_template_titles_in_order(self):
+        template = self.titles(self.REPO / 'skills/granki-tools/assets/templates/canon.md')
+        example = self.titles(self.REPO / 'examples/bread/.agents/canon.md')
+        self.assertEqual(example, [t for t in template if t in example])
 
 
 if __name__ == '__main__':

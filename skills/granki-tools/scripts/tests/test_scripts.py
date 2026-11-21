@@ -26,7 +26,7 @@ import journal  # noqa: E402
 import plan  # noqa: E402
 import rooms  # noqa: E402
 import impact  # noqa: E402
-import policy  # noqa: E402
+import canon  # noqa: E402
 import status  # noqa: E402
 from fixture import make_series  # noqa: E402
 from granki_core import GrankiError, decimal_tokens, prose, render, section_paths  # noqa: E402
@@ -363,7 +363,7 @@ class RoomsTests(unittest.TestCase):
 
 class PolicyTests(SeriesCase):
     def test_layers_replace_append_remove(self):
-        code, merged = run(policy, '--series', self.series, '--article', '01-green', '--format', 'json')
+        code, merged = run(canon, '--series', self.series, '--article', '01-green', '--format', 'json')
         self.assertEqual(code, 0)
         self.assertEqual([l['layer'] for l in merged['layers']], ['project', 'series', 'article'])
         sections = {s['title']: s for s in merged['sections']}
@@ -376,15 +376,15 @@ class PolicyTests(SeriesCase):
         self.assertIn('брендами', voice['body'])
 
     def test_article_without_own_layer_and_markdown_output(self):
-        code, text = run(policy, '--series', self.series, '--article', '02-black')
+        code, text = run(canon, '--series', self.series, '--article', '02-black')
         self.assertEqual(code, 0)
         self.assertIn('Авторский, на «ты».', text)
         self.assertIn('<!-- источник: project, series -->', text)
-        self.assertTrue(text.startswith('# Редполитика проекта'))
+        self.assertTrue(text.startswith('# Канон проекта'))
 
-    def test_missing_project_policy_is_an_error(self):
-        (self.tmp / 'project-redpolitika.md').unlink()
-        self.assertEqual(run(policy, '--series', self.series)[0], 2)
+    def test_missing_project_canon_is_an_error(self):
+        (self.tmp / 'project-canon.md').unlink()
+        self.assertEqual(run(canon, '--series', self.series)[0], 2)
 
 
 class TemplateTests(unittest.TestCase):
@@ -395,9 +395,9 @@ class TemplateTests(unittest.TestCase):
         tmp = Path(tempfile.mkdtemp())
         self.addCleanup(shutil.rmtree, tmp)
         series = (templates / 'series-plan.md').read_text(encoding='utf-8')
-        series = series.replace('articles: []', 'articles: [01-demo]').replace('policy: ""', 'policy: redpolitika-project.md')
+        series = series.replace('articles: []', 'articles: [01-demo]').replace('canon: ""', 'canon: canon-project.md')
         (tmp / 'series-plan.md').write_text(series, encoding='utf-8')
-        shutil.copy(templates / 'redpolitika.md', tmp / 'redpolitika-project.md')
+        shutil.copy(templates / 'canon.md', tmp / 'canon-project.md')
         article = tmp / '01-demo'
         (article / 'sections').mkdir(parents=True)
         (article / 'data').mkdir()
@@ -410,7 +410,7 @@ class TemplateTests(unittest.TestCase):
         self.assertEqual(run(check, '--plan', article / 'plan.md')[0], 0)
         code, state = run(status, '--series', tmp / 'series-plan.md')
         self.assertEqual((code, state['articles'][0]['status']), (0, 'plan-draft'))
-        code, merged = run(policy, '--series', tmp / 'series-plan.md', '--format', 'json')
+        code, merged = run(canon, '--series', tmp / 'series-plan.md', '--format', 'json')
         self.assertEqual(code, 0)
         self.assertIn('Как я говорю и не говорю', [s['title'] for s in merged['sections']])
         for name in ['author-notes.md']:

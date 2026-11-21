@@ -15,7 +15,7 @@ title: Заварка чая
 status: writing
 articles: [01-green, 02-black]
 known_divergences: []
-policy: project-redpolitika.md
+canon: project-canon.md
 html: {brand: Чай, tagline: Опыты на кухне, index_kicker: Серия о чае}
 ---
 
@@ -105,8 +105,8 @@ T-best-share,Доля за лучшую чашку,0.875,tasting.csv: cup=b; col
 """
 
 
-PROJECT_POLICY = """\
-# Редполитика проекта
+PROJECT_CANON = """\
+# Канон проекта
 
 Общие правила для всех текстов.
 
@@ -123,7 +123,7 @@ PROJECT_POLICY = """\
 Блог.
 """
 
-SERIES_POLICY = """\
+SERIES_CANON = """\
 ## Как я говорю и не говорю (+)
 
 - В серии о чае не называю сорта брендами.
@@ -135,7 +135,7 @@ SERIES_POLICY = """\
 Любители чая без опыта дегустаций.
 """
 
-ARTICLE_POLICY = """\
+ARTICLE_CANON = """\
 ## Регистр
 
 Строгий, без обращения к читателю.
@@ -155,9 +155,9 @@ def make_series(root: Path) -> Path:
     import hashlib
     sha = lambda t: hashlib.sha256(t.encode()).hexdigest()  # noqa: E731
     write(root / 'series-plan.md', SERIES)
-    write(root / 'project-redpolitika.md', PROJECT_POLICY)
-    write(root / 'redpolitika.md', SERIES_POLICY)
-    write(root / '01-green/redpolitika.md', ARTICLE_POLICY)
+    write(root / 'project-canon.md', PROJECT_CANON)
+    write(root / 'canon.md', SERIES_CANON)
+    write(root / '01-green/canon.md', ARTICLE_CANON)
     green = root / '01-green'
     write(green / 'plan.md', GREEN_PLAN.replace('SHA_INTRO', sha(INTRO)))
     write(green / 'sections/00-intro.md', INTRO)

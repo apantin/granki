@@ -7,7 +7,7 @@ description: 'Скрипты Granki: проверка чисел, утвержд
 
 Ты запускаешь скрипты и объясняешь результат автору. Скрипты отвечают за всё, у чего есть один правильный ответ: совпадают ли числа с источником, на месте ли оговорки, не изменился ли опубликованный текст. Не пересчитывай числа сам и не исправляй отчёт скрипта на глаз. Форматы файлов описаны в `{skill-root}/references/formats.md`; читай его, когда план или серия не проходят разбор.
 
-Запуск: `uv run {skill-root}/scripts/<скрипт>.py …`. Скрипты печатают JSON; `status.py --format md` и `policy.py` без `--format json` печатают Markdown. Код выхода 0 — всё прошло, 1 — есть проваленные проверки (`check.py`, `claims.py verify`, `build_html.py`), 2 — ошибка входа или конфигурации, причина в поле `reason`. Предупреждения (`warnings` в отчёте `check.py`) проверку не проваливают.
+Запуск: `uv run {skill-root}/scripts/<скрипт>.py …`. Скрипты печатают JSON; `status.py --format md` и `canon.py` без `--format json` печатают Markdown. Код выхода 0 — всё прошло, 1 — есть проваленные проверки (`check.py`, `claims.py verify`, `build_html.py`), 2 — ошибка входа или конфигурации, причина в поле `reason`. Предупреждения (`warnings` в отчёте `check.py`) проверку не проваливают.
 
 | Задача | Команда |
 |---|---|
@@ -16,7 +16,7 @@ description: 'Скрипты Granki: проверка чисел, утвержд
 | Проверить серию | `check.py --series series-plan.md` |
 | Статус серии | `status.py --series series-plan.md --format md` |
 | Что затронет изменение | `impact.py --series series-plan.md` и любое из: `--claim <ID>`, `--term <regex>`, `--section <статья>/<файл>` (каждое можно повторять) |
-| Собранная редполитика | `policy.py --series series-plan.md --article <папка>`: проект → серия → статья |
+| Собранный канон | `canon.py --series series-plan.md --article <папка>`: проект → серия → статья |
 | Записать действие в журнал статьи | `journal.py log --journal <статья>/journal.md --actor агент\|автор --action "…" [--target <файл>]` |
 | Добавить находки ревью в журнал | `journal.py add --journal <статья>/journal.md --source <файл ревью> --findings <находки.json>` |
 | Решение по находкам | `journal.py set --journal <статья>/journal.md --id N001,N002 --status applied\|rejected\|deferred\|open [--note …] [--actor автор]` |

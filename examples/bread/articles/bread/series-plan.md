@@ -6,7 +6,7 @@ articles:
 - 01-flour
 - 02-starter
 known_divergences: []
-policy: ../../.agents/redpolitika.md
+canon: ../../.agents/canon.md
 html:
   brand: Хлеб
   tagline: Опыты на домашней кухне

@@ -20,7 +20,7 @@ description: 'Ведёт серию статей Granki: замысел и пл�
    - общие оговорки и глоссарий;
    - публичность.
 
-   Впиши папки статей в `articles:` фронтматтера в порядке чтения: без них скрипты серии не работают. В `policy:` укажи редполитику проекта. Если её нет, настрой её по `voice.md` скилла `granki-editorial`.
+   Впиши папки статей в `articles:` фронтматтера в порядке чтения: без них скрипты серии не работают. В `canon:` укажи канон проекта, обычно `.agents/canon.md`. Если его нет, настрой его по `voice.md` скилла `granki-editorial`.
 3. План обсуждает автор. По желанию открой «Планёрку серии»: `bmad-party-mode --party granki-series-planning`.
 4. Интервью автора (`granki-intake`, `author-notes.md`) — до ревью агентами: линзам нужно знать, что говорит автор.
 5. Потом план проверяют агенты: линзы `evidence.md` и `fresh-reader.md` скилла `granki-review` по замыслу, отчёты с `scope: series-plan`, `reviewed_sha` — поле `series_plan_sha256` вывода `status.py`. Утверждение — по слову автора: `plan.py series --series … --set approved --actor автор`. Если автор утверждает «как есть», находки решаются по `decisions.md` скилла `granki-review`. Дальше `granki-intake` собирает материалы, а `granki-article-plan` создаёт планы статей.

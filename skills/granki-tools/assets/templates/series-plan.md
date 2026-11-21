@@ -4,7 +4,7 @@ title: ""                     # название серии
 status: draft                 # draft | approved | writing | done — меняет plan.py series
 articles: []                  # папки статей в порядке чтения: [01-slug, 02-slug]
 known_divergences: []         # ID утверждений, расхождение которых между статьями принято
-policy: ""                    # путь к редполитике проекта, например ../../.agents/redpolitika.md
+canon: ""                     # путь к канону проекта, например ../../.agents/canon.md
 html: {brand: "", tagline: "", index_kicker: ""}
 ---
 

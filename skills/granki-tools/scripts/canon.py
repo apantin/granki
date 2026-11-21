@@ -3,19 +3,23 @@
 # requires-python = ">=3.10"
 # dependencies = ["pyyaml>=6"]
 # ///
-"""Merge the editorial policy for an article from project, series and article layers.
+"""Merge the canon (editorial rules) for an article from project, series and article layers.
 
 Layers, from general to specific:
-  project  the file named by `policy:` in series-plan.md (for example the
-           project's .agents/redpolitika.md)
-  series   redpolitika.md next to series-plan.md, if present
-  article  redpolitika.md in the article folder, if present
+  project  the file named by `canon:` in series-plan.md (for example the
+           project's .agents/canon.md)
+  series   canon.md next to series-plan.md, if present
+  article  canon.md in the article folder, if present
 
 Each layer is Markdown split into `##` sections. In a more specific layer:
   ## Title       replaces the section with the same title
   ## Title (+)   appends to that section
   ## Title (-)   removes that section
   any other title is added at the end.
+A (+) or (-) for a title no upper layer has is reported in `warnings`: it is
+usually a typo or a section named differently in the project layer.
+The standard section titles are those of the template
+assets/templates/canon.md.
 Text before the first `##` of the project layer is kept as the preamble.
 
 Prints the merged Markdown with a source note per section, or JSON with
@@ -33,7 +37,7 @@ from granki_core import GrankiError, dump_json, load_series, split_frontmatter  
 
 HEADING = re.compile(r'^## +(.+?)\s*$', re.M)
 MODIFIER = re.compile(r'^(.*?)\s*\((\+|-)\)$')
-POLICY_FILE = 'redpolitika.md'
+CANON_FILE = 'canon.md'
 
 
 FENCE = re.compile(r'(```|~~~).*?\1', re.S)
@@ -72,11 +76,16 @@ def merge(layers: list[tuple[str, Path]]) -> dict:
                 if key in content:
                     order.remove(key)
                     del content[key], sources[key]
+                elif index:
+                    warnings.append(f'{name} layer removes «{title}», but no upper layer has it; check the title')
                 continue
             if modifier == '+' and key in content:
                 content[key] = (content[key][0], content[key][1].rstrip() + '\n\n' + body)
                 sources[key].append(name)
                 continue
+            if modifier == '+' and index:
+                warnings.append(f'{name} layer appends to «{title}», but no upper layer has it; '
+                                'added as a new section, check the title')
             if key not in content:
                 order.append(key)
             elif not re.sub(r'<!--.*?-->', '', body, flags=re.S).strip() and content[key][1].strip():
@@ -93,21 +102,21 @@ def layers_for(series_path: Path, article: str | None) -> list[tuple[str, Path]]
     series = load_series(series_path)
     root = series_path.parent.resolve()
     layers = []
-    if series.get('policy'):
-        project = (root / series['policy']).resolve()
+    if series.get('canon'):
+        project = (root / series['canon']).resolve()
         if not project.is_file():
-            raise GrankiError(f'Project policy not found: {project}')
+            raise GrankiError(f'Project canon not found: {project}')
         layers.append(('project', project))
-    if (root / POLICY_FILE).is_file():
-        layers.append(('series', root / POLICY_FILE))
+    if (root / CANON_FILE).is_file():
+        layers.append(('series', root / CANON_FILE))
     if article:
         article = Path(article).name  # accept a path to the article folder too
         if article not in series['articles']:
             raise GrankiError(f'Article {article} is not listed in {series_path.name}')
-        if (root / article / POLICY_FILE).is_file():
-            layers.append(('article', root / article / POLICY_FILE))
+        if (root / article / CANON_FILE).is_file():
+            layers.append(('article', root / article / CANON_FILE))
     if not layers:
-        raise GrankiError('No policy layers: set `policy:` in series-plan.md or add redpolitika.md')
+        raise GrankiError('No canon layers: set `canon:` in series-plan.md or add canon.md')
     return layers
 
 
