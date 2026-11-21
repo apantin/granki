@@ -264,7 +264,7 @@ def render_article(pandoc, plan_path: Path, number: int, html_vars: dict) -> dic
     # would pass the resource check. Raw HTML that loads external content is refused before rendering.
     for node in [*nodes(ast, 'RawBlock'), *nodes(ast, 'RawInline')]:
         fmt, content = node['c']
-        if fmt == 'html' and EXTERNAL.search(re.sub(r'<a\b[^>]*>', '<a>', content)):
+        if fmt in ('html', 'html4', 'html5') and EXTERNAL.search(re.sub(r'<a\b[^>]*>', '<a>', content)):
             raise BuildError(f'{article.name}: external resource in raw HTML: {content.strip()[:80]}')
     baseline = run_pandoc(pandoc, ['--from=json', '--to=html5', '--wrap=none'], json.dumps(ast).encode()).decode()
     original = Inspect()

@@ -231,11 +231,12 @@ def decimal_tokens(text: str, decimal: str = ',') -> list[str]:
     return [re.sub(r'[ \u00a0\u202f]', '', t) for t in re.findall(pattern, text)]
 
 
-MONTHS = r'(?:январ|феврал|март|апрел|ма[йяе]|июн|июл|август|сентябр|октябр|ноябр|декабр)[а-яё]*'
+MONTHS = (r'(?:январ[ьяе]|феврал[ьяе]|март[ае]?|апрел[ьяе]|ма[йяе]|июн[ьяе]|июл[ьяе]|август[ае]?|сентябр[ьяе]'
+          r'|октябр[ьяе]|ноябр[ьяе]|декабр[ьяе])(?![а-яё])')
 DATE = re.compile(
-    r'(?<![\w.,])\d{1,2}(?:\s*[–—-]\s*\d{1,2})?\s+' + MONTHS + r'(?:\s+\d{4}(?:\s*(?:г\.|год[а-я]*))?)?'
-    r'|(?<![\w.,])' + MONTHS + r'\s+\d{4}(?:\s*(?:г\.|год[а-я]*))?'
-    r'|(?<![\w.,])\d{4}(?:\s*[–—-]\s*\d{2,4})?\s*(?:г\.|год[а-я]*)(?![а-яё])', re.I)
+    r'(?<![\w.,])\d{1,2}(?:\s*[–—-]\s*\d{1,2})?\s+' + MONTHS + r'(?:\s+(?:19|20)\d{2}(?:\s*(?:г\.|год[а-я]*))?)?'
+    r'|(?<![\w.,])' + MONTHS + r'\s+(?:19|20)\d{2}(?:\s*(?:г\.|год[а-я]*))?'
+    r'|(?<![\w.,])(?:19|20)\d{2}(?:\s*[–—-]\s*(?:19|20)?\d{2})?\s*(?:гг?\.|год[а-я]*)(?![а-яё])', re.I)
 
 
 def without_dates(text: str) -> str:
@@ -351,8 +352,8 @@ def parse_locator(locator: str) -> tuple[str, list[tuple[str, str]], str]:
 
 
 def aggregate(kind: str, rows: list[dict], column: str | None, locator: str) -> float:
-    if kind == 'count':
-        return float(len(rows))
+    if kind == 'count':  # with column=, rows whose cell is blank do not count
+        return float(len([r for r in rows if column is None or (r.get(column) or '').strip()]))
     numbers = []
     for row in rows:
         cell = (row.get(column) or '').strip().replace(',', '.')
@@ -425,7 +426,7 @@ def resolve_locator(locator: str, dirs: list[Path], cache: dict | None = None) -
         if unknown:
             raise BadLocator(f'Column {unknown[0]!r} not in {name}')
         # in an aggregate a condition may list alternatives: cache=hit|miss
-        selected = [r for r in rows if all(r.get(k) in v.split('|') for k, v in conditions)]
+        selected = [r for r in rows if all(r.get(k) in [x.strip() for x in v.split('|')] for k, v in conditions)]
         return [aggregate(agg, selected, column, locator)]
     if rows and column not in rows[0]:
         raise BadLocator(f'Column {column!r} not in {name}')

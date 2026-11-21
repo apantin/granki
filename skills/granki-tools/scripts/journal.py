@@ -234,9 +234,12 @@ def set_status(path: Path, ids: list[str], status: str, note: str | None, actor:
     report = {'status': 'passed', 'journal': str(path), 'updated': found, 'pending': pending}
     if status == 'applied':  # an edit that silently failed leaves the quoted text in place
         series = path.parent / 'series-plan.md'
-        text = series_reader(series) if series.is_file() else section_reader(path.parent / 'plan.md')
-        stale = [f'{row["ID"]}: the quote from «Было» is still in {row.get("Раздел")}; check that the edit was made'
-                 for row in applied if still_present(row.get('Было', ''), text(row.get('Раздел'))) is True]
+        try:  # the status is already saved; a plan that does not load only skips the warning
+            text = series_reader(series) if series.is_file() else section_reader(path.parent / 'plan.md')
+            stale = [f'{row["ID"]}: the quote from «Было» is still in {row.get("Раздел")}; check that the edit was made'
+                     for row in applied if still_present(row.get('Было', ''), text(row.get('Раздел'))) is True]
+        except GrankiError:
+            stale = []
         if stale:
             report['warnings'] = stale
     return report

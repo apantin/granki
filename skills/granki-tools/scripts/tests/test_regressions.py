@@ -456,6 +456,54 @@ class PublishGateTests(SeriesCase):
         self.assertEqual(run(plan_cli, 'publish', '--plan', plan, '--force')[0], 0)
 
 
+class BranchReviewTests(SeriesCase):
+    """Cases from an independent review of the pilot changes."""
+
+    def test_locator_details(self):
+        tmp = Path(tempfile.mkdtemp())
+        try:
+            (tmp / 'log.csv').write_text('id,cache,secs\n1,hit,10\n2,miss,\n3,hit,30\n', encoding='utf-8')
+            rows = [dict(zip(['ID', 'formulation', 'value', 'source'], r)) for r in [
+                ('spaced', 'n', '3', 'log.csv: cache=hit | miss; agg=count'),
+                ('counted', 'n', '2', 'log.csv: agg=count; column=secs'),
+                ('minus', 'n', '−20', 'expr: 10 - 30'),
+                ('tiny', 'n', '1e-3', 'expr: 1 / 1000'),
+                ('not-tiny', 'n', '1e-3', 'expr: 0.4'),
+            ]]
+            report = claims.verify_rows(rows, [tmp])
+            self.assertEqual([d['id'] for d in report['drift']], ['not-tiny'], report)
+        finally:
+            shutil.rmtree(tmp)
+
+    def test_dates_do_not_hide_other_numbers(self):
+        from granki_core import without_dates
+        text = '10 маяков, 20 маек, 1500 г. муки, в мае 4096 токенов, 2024–2025 гг. и 3 мая.'
+        self.assertEqual(integer_tokens(without_dates(text)), ['10', '20', '1500', '4096'])
+
+    def test_heading_edge_cases(self):
+        intro = self.green / 'sections/00-intro.md'
+        body = intro.read_text(encoding='utf-8')
+        title = re.search(r'^# (.+)$', body, re.M).group(1)
+        for opening, status in [('  # ' + title, 'passed'), ('<!-- note -->\n# ' + title, 'passed'), ('# ', 'failed')]:
+            intro.write_text(re.sub(r'^# .+$', lambda _: opening, body, count=1, flags=re.M), encoding='utf-8')
+            code, report = run(check, '--plan', self.green / 'plan.md', '--section', '00-intro.md')
+            headings = next(c for c in report['checks'] if c['name'] == 'headings')
+            self.assertEqual(headings['status'], status, (opening, headings))
+
+    def test_empty_sections_folder_is_the_plan_stage(self):
+        shutil.rmtree(self.green / 'sections')
+        (self.green / 'sections').mkdir()
+        self.assertNotEqual(run(check, '--plan', self.green / 'plan.md')[0], 2)
+
+    def test_publish_needs_every_section_accepted(self):
+        from test_scripts import plan as plan_cli
+        plan = self.green / 'plan.md'  # 01-results.md is drafted and has no accepted_sha
+        run(plan_cli, 'status', '--plan', plan, '--set', 'ready', '--force')
+        code, report = run(plan_cli, 'publish', '--plan', plan)
+        self.assertEqual(code, 2)
+        self.assertIn('01-results.md', report['reason'])
+
+
 class SeriesGateTests(SeriesCase):
     def test_article_plan_waits_for_the_series_plan(self):
         # pilot: an article plan was approved while the series plan was still a draft

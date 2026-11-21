@@ -29,7 +29,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from granki_core import (without_dates, strip_code, GrankiError, bare_markers, caveat_markers, decimal_tokens, dump_json,  # noqa: E402
+from granki_core import (SECTION_NAME, without_dates, strip_code, GrankiError, bare_markers, caveat_markers, decimal_tokens, dump_json,  # noqa: E402
                          has_sections, integer_tokens, join_sections, link_targets, load_plan, load_series, prose,
                          read_csv, render, section_paths, series_of, sha256_file, sha256_text)
 from claims import verify_rows  # noqa: E402
@@ -164,13 +164,17 @@ def check_lock(plan, shas, scope_files=None):
 def check_headings(texts, plan, first):
     """The first section opens with «# <article title>»; other sections use ## and below."""
     problems, mismatch = [], None
+    heading = re.compile(r'^ {0,3}#[ \t]+(.*?)[ \t#]*$', re.M)
     for name, text in texts:
-        h1 = [m.group(1).strip() for m in re.finditer(r'^# (.+)$', strip_code(text), re.M)]
+        h1 = [m.group(1).strip() for m in heading.finditer(strip_code(text))]
         if name == first:
-            if not re.match(r'\s*# ', strip_code(text)):
+            lead = re.sub(r'<!--.*?-->', '', text.lstrip('\ufeff'), flags=re.S).lstrip()
+            opening = heading.match(lead.splitlines()[0]) if lead else None
+            if not opening or not opening.group(1).strip():
                 problems.append(f'{name}: must start with the article title as a first-level heading')
-            elif plan.get('title') and h1[0] != str(plan['title']).strip():
-                mismatch = {'section': name, 'heading': h1[0], 'plan_title': plan['title']}
+            elif plan.get('title') and opening.group(1).strip() != str(plan['title']).strip():
+                mismatch = {'section': name, 'heading': opening.group(1).strip(), 'plan_title': plan['title']}
+            continue
         elif h1:
             problems.append(f'{name}: first-level heading «{h1[0]}» outside the first section')
     return result('headings', not problems and not mismatch, warn=not problems, problems=problems,
@@ -198,7 +202,8 @@ def check_article(plan_path: Path, article_dir: Path | None = None, section: str
     article = (article_dir or plan['_root']).resolve()
     sections_dir = (article / plan['sections_dir']).resolve()
     # before the first section is written the folder may not exist; the plan can still be checked
-    paths = section_paths(sections_dir) if sections_dir.is_dir() or section is not None else []
+    has_files = sections_dir.is_dir() and any(SECTION_NAME.fullmatch(p.name) for p in sections_dir.glob('*.md'))
+    paths = section_paths(sections_dir) if has_files or section is not None else []
     names = [p.name for p in paths]
     if section is not None and section not in names:
         raise GrankiError(f'Section {section} not found in {sections_dir}')

@@ -26,6 +26,7 @@ from __future__ import annotations
 
 import argparse
 import ast
+from decimal import Decimal, InvalidOperation
 import operator
 import re
 import csv
@@ -97,13 +98,13 @@ def short(value: float) -> str:
 
 def close(stated: str, computed: float) -> bool:
     """A computed value matches the stated one rounded to the stated number of decimals."""
-    text = (stated or '').strip().replace(',', '.')
+    text = (stated or '').strip().replace(',', '.').replace('−', '-')
     try:
-        number = float(text)
-    except ValueError:
+        exact = Decimal(text)
+    except InvalidOperation:
         return False
-    decimals = len(text.split('.', 1)[1]) if '.' in text else 0
-    return abs(number - computed) <= 0.5 * 10 ** -decimals + 1e-9
+    decimals = max(0, -exact.as_tuple().exponent) if exact.is_finite() else 0
+    return abs(float(exact) - computed) <= 0.5 * 10 ** -decimals + 1e-9
 
 
 OPERATORS = {ast.Add: operator.add, ast.Sub: operator.sub, ast.Mult: operator.mul, ast.Div: operator.truediv}
@@ -124,7 +125,7 @@ def evaluate(expression: str, values: dict, own_id: str) -> float:
     numbers = {}
     for claim_id, var in names.items():
         try:
-            numbers[var] = float(str(values[claim_id]).replace(',', '.'))
+            numbers[var] = float(str(values[claim_id]).replace(',', '.').replace('−', '-'))
         except ValueError:
             raise BadLocator(f'expr: {claim_id} is not a number') from None
 
@@ -139,10 +140,10 @@ def evaluate(expression: str, values: dict, own_id: str) -> float:
             return float(node.value)
         if isinstance(node, ast.Name) and node.id in numbers:
             return numbers[node.id]
-        raise BadLocator(f'expr: only claim IDs, numbers and + - * / ( ) are allowed: {expression!r}')
+        raise BadLocator(f'expr: only claim IDs, numbers and + - * / ( ) are allowed; separate operators from IDs with spaces: {expression!r}')
     try:
         return walk(ast.parse(code.replace('−', '-'), mode='eval'))
-    except (SyntaxError, ZeroDivisionError) as error:
+    except (SyntaxError, ZeroDivisionError, OverflowError) as error:
         raise BadLocator(f'expr: {error}: {expression!r}') from None
 
 

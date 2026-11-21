@@ -244,9 +244,9 @@ def publish(path: Path, url: str | None, date: str | None, actor: str, html: Pat
     shas = {p.name: sha256_text(p.read_text(encoding='utf-8')) for p in section_paths(sections_dir(plan))}
     # the author accepted a text; a later edit must be accepted again before it goes out
     changed = [e.get('file') for e in meta.get('sections', [])
-               if e.get('accepted_sha') and shas.get(e.get('file')) != e.get('accepted_sha')]
+               if e.get('status') != 'accepted' or shas.get(e.get('file')) != e.get('accepted_sha')]
     if changed and not force:
-        raise GrankiError('Sections changed after acceptance: ' + ', '.join(changed) +
+        raise GrankiError('Sections not accepted or changed after acceptance: ' + ', '.join(changed) +
                           '. Accept them again (plan.py section --set accepted), or pass --force')
     version = int(meta.get('version', 1))
     release = {'version': version, 'date': date or datetime.date.today().isoformat()}
