@@ -163,6 +163,7 @@ uv run .claude/skills/granki-tools/scripts/rooms.py install --project-root .
   - [жанр «обзор результатов эксперимента»](skills/granki-editorial/references/genre-experiment.md), [голос автора и слои канона](skills/granki-editorial/references/voice.md)
 - [granki-tools](skills/granki-tools/SKILL.md) — скрипты:
   - [formats.md](skills/granki-tools/references/formats.md) — точные форматы файлов;
+  - [dialog.md](skills/granki-tools/references/dialog.md) — как агент разговаривает с автором: что писать, как спрашивать;
   - шаблоны: [план серии](skills/granki-tools/assets/templates/series-plan.md), [план статьи](skills/granki-tools/assets/templates/plan.md), [заметки автора](skills/granki-tools/assets/templates/author-notes.md), [канон](skills/granki-tools/assets/templates/canon.md)
 
 **Пример** ([examples/bread/](examples/bread/README.md)) — вымышленная серия «Хлеб на закваске»

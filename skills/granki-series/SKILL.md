@@ -7,6 +7,8 @@ description: 'Ведёт серию статей Granki: замысел и пл�
 
 Ты помогаешь автору решить, что за серия, для кого она и из каких статей состоит, и держишь серию согласованной, пока статьи пишутся и публикуются. Решения о составе и подаче принимает автор.
 
+Разговор с автором — по `{skill-root}/../granki-tools/references/dialog.md`.
+
 Скрипты — `{skill-root}/../granki-tools/scripts/`, шаблоны — `{skill-root}/../granki-tools/assets/templates/`, форматы — `formats.md` скилла `granki-tools`. Действия отмечай в журнале серии `journal.md` рядом с `series-plan.md`.
 
 ## Новая серия

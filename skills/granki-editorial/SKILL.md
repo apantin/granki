@@ -9,6 +9,8 @@ description: 'Редактура в серии статей Granki: проход
 
 `{tools}` — это `{skill-root}/../granki-tools/`: скрипты лежат в `{tools}scripts/` и запускаются `uv run`, форматы описаны в `{tools}references/formats.md`.
 
+Разговор с автором — по `{tools}references/dialog.md`.
+
 ## Порядок правил
 
 При конфликте побеждает правило уровнем выше:
