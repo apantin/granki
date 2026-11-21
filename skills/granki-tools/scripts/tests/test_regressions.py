@@ -170,6 +170,16 @@ class JournalRegressionTests(SeriesCase):
         report = run(journal, 'list', '--series', self.series)[1]
         self.assertEqual(report['journals'][0]['findings'][0]['still_present'], True)
 
+    def test_applied_warns_when_the_quote_is_still_in_the_text(self):
+        # pilot: an edit failed, the finding was marked applied anyway
+        (self.green / 'sections/01-results.md').write_text('## Р\n\nстарая фраза тут.\n', encoding='utf-8')
+        self.add([{**FINDING, 'before': '«старая фраза»'}, {**FINDING, 'before': '«старая фраза»'}])
+        report = run(journal, 'set', '--journal', self.journal, '--id', 'N001', '--status', 'applied')[1]
+        self.assertTrue(any(w.startswith('N001') for w in report['warnings']))
+        (self.green / 'sections/01-results.md').write_text('## Р\n\nновая фраза тут.\n', encoding='utf-8')
+        report = run(journal, 'set', '--journal', self.journal, '--id', 'N002', '--status', 'applied')[1]
+        self.assertNotIn('warnings', report)
+
     def test_parallel_adds_lose_nothing(self):
         self.payload.write_text(json.dumps([FINDING] * 5, ensure_ascii=False), encoding='utf-8')
         cmd = [sys.executable, str(SCRIPTS / 'journal.py'), 'add', '--journal', str(self.journal),
