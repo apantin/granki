@@ -127,6 +127,21 @@ class CheckRegressionTests(SeriesCase):
         self.assertEqual(error.returncode, 2)
 
 
+class PlanStageCheckTests(SeriesCase):
+    def test_plan_is_checked_before_any_section_is_written(self):
+        # pilot: check.py --plan on a fresh plan failed with "Sections folder not found"
+        shutil.rmtree(self.green / 'sections')
+        plan = self.green / 'plan.md'
+        text = plan.read_text(encoding='utf-8')
+        text = re.sub(r'status: (accepted|drafted), (accepted_sha: \w+, )?', 'status: planned, ', text)
+        plan.write_text(text, encoding='utf-8')
+        code, report = run(check, '--plan', plan)
+        sections = next(c for c in report['checks'] if c['name'] == 'plan-sections')
+        self.assertEqual(sections['not_written'], ['00-intro.md', '01-results.md'])
+        self.assertEqual(sections['missing_files'], [])
+        self.assertEqual(sections['status'], 'passed')
+
+
 class JournalRegressionTests(SeriesCase):
     def setUp(self):
         super().setUp()

@@ -165,12 +165,14 @@ def check_plan_sections(plan, names, claim_ids):
     planned = [e.get('file') for e in plan['sections']]
     if not planned:
         return result('plan-sections', True, planned=0)
-    missing = [f for f in planned if f not in names]
+    # a planned section is not written yet: that is the plan stage, not a lost file
+    missing = [e.get('file') for e in plan['sections'] if e.get('file') not in names and e.get('status') != 'planned']
+    not_written = [e.get('file') for e in plan['sections'] if e.get('file') not in names and e.get('status') == 'planned']
     unplanned = [f for f in names if f not in planned]
     unknown_claims = sorted({c for e in plan['sections'] for c in e.get('claims', []) if c not in claim_ids})
     unknown_caveats = sorted({c for e in plan['sections'] for c in e.get('caveats', []) if c not in plan['caveats']})
     ok = not (missing or unplanned or unknown_claims or unknown_caveats)
-    return result('plan-sections', ok, planned=len(planned), missing_files=missing, unplanned_files=unplanned,
+    return result('plan-sections', ok, planned=len(planned), not_written=not_written, missing_files=missing, unplanned_files=unplanned,
                   unknown_claims=unknown_claims, unknown_caveats=unknown_caveats)
 
 
@@ -178,7 +180,8 @@ def check_article(plan_path: Path, article_dir: Path | None = None, section: str
     plan = load_plan(plan_path)
     article = (article_dir or plan['_root']).resolve()
     sections_dir = (article / plan['sections_dir']).resolve()
-    paths = section_paths(sections_dir)
+    # before the first section is written the folder may not exist; the plan can still be checked
+    paths = section_paths(sections_dir) if sections_dir.is_dir() or section is not None else []
     names = [p.name for p in paths]
     if section is not None and section not in names:
         raise GrankiError(f'Section {section} not found in {sections_dir}')

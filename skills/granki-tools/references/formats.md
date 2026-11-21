@@ -63,7 +63,7 @@ published:
 ---
 ```
 
-Статусы раздела: `planned`, `drafted`, `agent-reviewed`, `accepted`, `needs-rework`.
+Статусы раздела: `planned`, `drafted`, `agent-reviewed`, `accepted`, `needs-rework`. Проверка статьи (`check.py --plan`) работает и до первого раздела: записи `planned` без файла попадают в `not_written`, а не в `missing_files`.
 
 Статусы меняет `plan.py`, а не правка руками. Скрипт переписывает только фронтматтер (комментарии YAML в нём не сохраняются), тело плана не трогает и пишет каждое изменение в хронологию журнала. Переходы статьи:
 
