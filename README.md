@@ -145,6 +145,7 @@ uv run .claude/skills/granki-tools/scripts/rooms.py install --project-root .
 - [lessons.md](docs/dev/lessons.md) — уроки первой серии
 - [decisions/0001-bmad-v6-foundation.md](docs/dev/decisions/0001-bmad-v6-foundation.md) — ADR: основа на BMad Method v6.12
 - [history.md](docs/dev/history.md) — как собиралась и проверялась версия 0.1.0
+- [pilot.md](docs/dev/pilot.md) — пилот на вымышленных сериях: метод, находки, эксперименты
 - [roadmap.md](docs/dev/roadmap.md) — пилот и то, что не сделано
 
 **Скиллы**
