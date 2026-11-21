@@ -127,6 +127,15 @@ class CheckRegressionTests(SeriesCase):
         self.assertEqual(error.returncode, 2)
 
 
+class DateNumbersTests(unittest.TestCase):
+    def test_dates_are_not_traced_as_integers(self):
+        # pilot: the agent made a claim for every day of month to pass integers: true
+        from granki_core import without_dates
+        text = 'С 6–31 октября было 145 сборок, кэш включили 3 ноября 2025 года, в ноябре 2025 — 12 промахов.'
+        self.assertEqual(integer_tokens(without_dates(text)), ['145', '12'])
+        self.assertIn('31', integer_tokens(text))
+
+
 class AggregateClaimTests(unittest.TestCase):
     """Pilot: on a raw log 44 of 46 claims were 'derived:' and nobody checked them."""
 

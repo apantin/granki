@@ -29,7 +29,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from granki_core import (GrankiError, bare_markers, caveat_markers, decimal_tokens, dump_json,  # noqa: E402
+from granki_core import (without_dates, GrankiError, bare_markers, caveat_markers, decimal_tokens, dump_json,  # noqa: E402
                          has_sections, integer_tokens, join_sections, link_targets, load_plan, load_series, prose,
                          read_csv, render, section_paths, series_of, sha256_file, sha256_text)
 from claims import verify_rows  # noqa: E402
@@ -66,7 +66,7 @@ def check_numbers(texts, claims, plan):
         body = prose(text)
         tokens = decimal_tokens(body, numbers['decimal'])
         if integers:
-            tokens += integer_tokens(body, numbers['decimal'])
+            tokens += integer_tokens(body if numbers.get('dates') else without_dates(body), numbers['decimal'])
         for token in tokens:
             total += 1
             if token not in allowed:

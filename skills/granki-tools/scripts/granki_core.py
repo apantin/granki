@@ -33,7 +33,7 @@ KINDS = ('бесспорная', 'спорная', 'вопрос')
 
 DEFAULTS = {
     'sections_dir': 'sections',
-    'numbers': {'decimal': ',', 'renderers': ['percent:2', 'fixed:2'], 'allow': [], 'integers': False},
+    'numbers': {'decimal': ',', 'renderers': ['percent:2', 'fixed:2'], 'allow': [], 'integers': False, 'dates': False},
     'claims': [],
     'data_dirs': ['data'],
     'caveats': {},
@@ -229,6 +229,18 @@ def decimal_tokens(text: str, decimal: str = ',') -> list[str]:
     sep = re.escape(decimal)
     pattern = r'(?<![\d.,])(\d{1,3}(?:[ \u00a0\u202f]\d{3})+' + sep + r'\d+|\d+' + sep + r'\d+)'
     return [re.sub(r'[ \u00a0\u202f]', '', t) for t in re.findall(pattern, text)]
+
+
+MONTHS = r'(?:январ|феврал|март|апрел|ма[йяе]|июн|июл|август|сентябр|октябр|ноябр|декабр)[а-яё]*'
+DATE = re.compile(
+    r'(?<![\w.,])\d{1,2}(?:\s*[–—-]\s*\d{1,2})?\s+' + MONTHS + r'(?:\s+\d{4}(?:\s*(?:г\.|год[а-я]*))?)?'
+    r'|(?<![\w.,])' + MONTHS + r'\s+\d{4}(?:\s*(?:г\.|год[а-я]*))?'
+    r'|(?<![\w.,])\d{4}(?:\s*[–—-]\s*\d{2,4})?\s*(?:г\.|год[а-я]*)(?![а-яё])', re.I)
+
+
+def without_dates(text: str) -> str:
+    """Dates like «3–14 ноября», «ноябрь 2025», «2025 года» are not traced as numbers."""
+    return DATE.sub(' ', text)
 
 
 def integer_tokens(text: str, decimal: str = ',') -> list[str]:
