@@ -1,0 +1,11 @@
+module,skill,display-name,menu-code,description,action,args,phase,preceded-by,followed-by,required,output-location,outputs
+Granki,_meta,,,,,,,,,false,https://github.com/apantin/granki,
+Granki,granki-agent-editor,Главред,GE,"Агент серии: показывает состояние статей и разделов, нерешённые находки и следующий шаг, передаёт работу нужному скиллу.",,,anytime,,,false,,
+Granki,granki-series,План серии,GS,"Замысел и план серии статей, состав статей, изменения на несколько статей, статус и ревью серии.",,,series,,granki-intake,true,series folder,series-plan.md and journal.md
+Granki,granki-intake,Заметки и материалы,GI,"Интервью автора и материалы: author-notes.md, опись источников, таблица утверждений, кандидаты в тезисы.",,,intake,granki-series,granki-article-plan,true,series and article folders,author-notes.md and claims
+Granki,granki-article-plan,План статьи,GP,"План статьи по разделам: черновик, обсуждение с автором, ревью агентами, утверждение, перестройка.",,,plan,granki-intake,granki-section,true,article folder,plan.md
+Granki,granki-section,Раздел,GW,"Пишет раздел по плану, передаёт на ревью агентами, разбирает замечания автора, принимает раздел.",,,write,granki-article-plan,granki-review,true,article sections folder,section files
+Granki,granki-review,Ревью агентами,GR,"Ревью раздела, статьи или серии независимыми линзами, находки в журнал, решение по ним с автором, возврат к отложенным.",,,review,granki-section,granki-publish,true,article reviews folder,reviews and journal.md
+Granki,granki-publish,Публикация,GB,"HTML статей, проверка публичного состава, отметка публикации, новая версия опубликованной статьи.",,,publish,granki-review,,false,output folder,HTML and published version
+Granki,granki-editorial,Редактура,GD,"Проход редактуры по семи проходам, правила письма раздела, голос автора и редполитика.",,,anytime,,,false,article reviews folder,review and findings
+Granki,granki-tools,Проверки и сборка,GT,"Скрипты: проверка, статус, журнал, план, редполитика, влияние изменений, HTML, комнаты.",,,anytime,,,false,,

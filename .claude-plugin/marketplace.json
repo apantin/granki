@@ -1,0 +1,28 @@
+{
+  "name": "granki",
+  "owner": {"name": "apantin"},
+  "license": "MIT",
+  "homepage": "https://github.com/apantin/granki",
+  "repository": "https://github.com/apantin/granki",
+  "keywords": ["articles", "editorial", "agent-skills", "bmad-compatible"],
+  "plugins": [
+    {
+      "name": "granki",
+      "source": "./",
+      "description": "Статьи и серии статей по разделам: план автора, ревью агентами, журнал находок, публикация с версиями. Нужно ядро BMad Method v6.",
+      "version": "0.1.0",
+      "author": {"name": "apantin"},
+      "skills": [
+        "./skills/granki-agent-editor",
+        "./skills/granki-series",
+        "./skills/granki-intake",
+        "./skills/granki-article-plan",
+        "./skills/granki-section",
+        "./skills/granki-review",
+        "./skills/granki-publish",
+        "./skills/granki-editorial",
+        "./skills/granki-tools"
+      ]
+    }
+  ]
+}

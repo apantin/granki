@@ -1,0 +1,15 @@
+ID,formulation,value,source
+B-wheat-8-rise,"пшеничная, 8 ч: rise",1.8,bake.csv: flour_id=wheat; hours=8; column=rise
+B-wheat-8-liked,"пшеничная, 8 ч: liked",0.583,bake.csv: flour_id=wheat; hours=8; column=liked
+B-whole-8-rise,"цельнозерновая, 8 ч: rise",1.4,bake.csv: flour_id=whole; hours=8; column=rise
+B-whole-8-liked,"цельнозерновая, 8 ч: liked",0.417,bake.csv: flour_id=whole; hours=8; column=liked
+B-rye-8-rise,"ржаная, 8 ч: rise",1.2,bake.csv: flour_id=rye; hours=8; column=rise
+B-rye-8-liked,"ржаная, 8 ч: liked",0.25,bake.csv: flour_id=rye; hours=8; column=liked
+B-wheat-12-rise,"пшеничная, 12 ч: rise",2.1,bake.csv: flour_id=wheat; hours=12; column=rise
+B-wheat-12-liked,"пшеничная, 12 ч: liked",0.75,bake.csv: flour_id=wheat; hours=12; column=liked
+B-whole-12-rise,"цельнозерновая, 12 ч: rise",1.7,bake.csv: flour_id=whole; hours=12; column=rise
+B-whole-12-liked,"цельнозерновая, 12 ч: liked",0.5,bake.csv: flour_id=whole; hours=12; column=liked
+B-rye-12-rise,"ржаная, 12 ч: rise",1.5,bake.csv: flour_id=rye; hours=12; column=rise
+B-rye-12-liked,"ржаная, 12 ч: liked",0.333,bake.csv: flour_id=rye; hours=12; column=liked
+B-tasters,Число гостей,12,setup.json#/tasters
+B-long,Длинная расстойка в часах,12,setup.json#/hours/1
