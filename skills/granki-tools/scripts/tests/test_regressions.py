@@ -442,6 +442,20 @@ class HeadingTests(SeriesCase):
         self.assertIn('headings', report['failed'])
 
 
+class PublishGateTests(SeriesCase):
+    def test_publish_refuses_sections_changed_after_acceptance(self):
+        # pilot: a link was replaced two minutes after the author accepted the section, and the article went out
+        from test_scripts import plan as plan_cli
+        plan = self.green / 'plan.md'
+        self.assertEqual(run(plan_cli, 'status', '--plan', plan, '--set', 'ready', '--force')[0], 0)
+        intro = self.green / 'sections/00-intro.md'
+        intro.write_text(intro.read_text(encoding='utf-8') + '\nЕщё одна фраза после приёмки.\n', encoding='utf-8')
+        code, report = run(plan_cli, 'publish', '--plan', plan)
+        self.assertEqual(code, 2)
+        self.assertIn('00-intro.md', report['reason'])
+        self.assertEqual(run(plan_cli, 'publish', '--plan', plan, '--force')[0], 0)
+
+
 class SeriesGateTests(SeriesCase):
     def test_article_plan_waits_for_the_series_plan(self):
         # pilot: an article plan was approved while the series plan was still a draft

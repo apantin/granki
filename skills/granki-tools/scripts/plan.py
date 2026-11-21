@@ -236,11 +236,18 @@ def git_commit(directory: Path) -> str | None:
         return None
 
 
-def publish(path: Path, url: str | None, date: str | None, actor: str, html: Path | None = None) -> dict:
+def publish(path: Path, url: str | None, date: str | None, actor: str, html: Path | None = None,
+            force: bool = False) -> dict:
     meta, body, plan = load(path)
     if plan['status'] not in ('ready',):
         raise GrankiError(f'Publish needs status "ready", the article is "{plan["status"]}"')
     shas = {p.name: sha256_text(p.read_text(encoding='utf-8')) for p in section_paths(sections_dir(plan))}
+    # the author accepted a text; a later edit must be accepted again before it goes out
+    changed = [e.get('file') for e in meta.get('sections', [])
+               if e.get('accepted_sha') and shas.get(e.get('file')) != e.get('accepted_sha')]
+    if changed and not force:
+        raise GrankiError('Sections changed after acceptance: ' + ', '.join(changed) +
+                          '. Accept them again (plan.py section --set accepted), or pass --force')
     version = int(meta.get('version', 1))
     release = {'version': version, 'date': date or datetime.date.today().isoformat()}
     if url:
@@ -316,7 +323,7 @@ def main(argv=None) -> int:
         elif args.command == 'sync':
             report = sync(args.plan, args.actor)
         elif args.command == 'publish':
-            report = publish(args.plan, args.url, args.date, args.actor, args.html)
+            report = publish(args.plan, args.url, args.date, args.actor, args.html, args.force)
         else:
             report = revise(args.plan, args.actor)
     except (GrankiError, OSError) as error:
