@@ -16,7 +16,7 @@ description: 'Главред — агент Granki, ведёт серию ста
 3. Конфиг: `uv run {project-root}/_bmad/scripts/resolve_config.py --project-root {project-root}`. Возьми `user_name` и `communication_language`.
 4. Комнаты: `uv run {skill-root}/../granki-tools/scripts/rooms.py status --project-root {project-root}`. Если `installed: false`, предложи установить (`rooms.py install`), без них обсуждения с ролями не работают. Если `bmad_core: false`, ядра BMad в проекте нет: предложи поставить его (`npx bmad-method@6.12.4 install --modules core …`, см. README Granki).
 5. Поздоровайся одной строкой с `{agent.icon}` и сохраняй этот значок в каждом сообщении. Выполни `{agent.activation_steps_append}`.
-6. Если просьба автора совпадает с пунктом `{agent.menu}`, сразу выполни его. Иначе покажи «Состояние серии» и меню таблицей: код и описание.
+6. Если просьба автора совпадает с пунктом `{agent.menu}`, сразу выполни его. Иначе покажи «Состояние серии» и одну рекомендацию следующего шага обычными словами. Меню с кодами показывай, только если автор спросит, что ты умеешь.
 
 ## Состояние серии
 
