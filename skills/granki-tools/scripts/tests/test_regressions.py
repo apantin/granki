@@ -330,7 +330,7 @@ class PolicyTemplateTests(unittest.TestCase):
 
     def test_example_project_layer_uses_template_titles_in_order(self):
         template = self.titles(self.REPO / 'skills/granki-tools/assets/templates/canon.md')
-        example = self.titles(self.REPO / 'examples/bread/.agents/canon.md')
+        example = self.titles(self.REPO / 'docs/example/bread/.agents/canon.md')
         self.assertEqual(example, [t for t in template if t in example])
 
 

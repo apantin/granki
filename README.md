@@ -116,7 +116,7 @@ uv run .claude/skills/granki-tools/scripts/rooms.py install --project-root .
 
 Позови Главреда («Главред, начнём серию») или сразу `granki-series`. Главред покажет, где серия, и предложит следующий шаг.
 
-Как выглядит весь цикл на примере — в [туториале](docs/user/tutorial.md): вымышленная серия «Хлеб на закваске» из [examples/bread/](examples/bread/), раздел за разделом до публикации.
+Как выглядит весь цикл на примере — в [туториале](docs/user/tutorial.md): вымышленная серия «Хлеб на закваске» из [docs/example/bread/](docs/example/bread/), раздел за разделом до публикации.
 
 ## Известные ограничения
 
@@ -134,7 +134,6 @@ uv run .claude/skills/granki-tools/scripts/rooms.py install --project-root .
 - [tutorial.md](docs/user/tutorial.md) — туториал: статья от плана до публикации на примере
 - [process.md](docs/user/process.md) — уровни работы, циклы плана и раздела, ревью, журнал, статусы
 - [roles.md](docs/user/roles.md) — роли агентов и комнаты
-- [example/](docs/example/README.md) — HTML-версии статей и серий пилота
 - [conflicts.md](docs/user/conflicts.md) — конфликты с другими скиллами и как их отключить в разных средах
 - [CHANGELOG.md](CHANGELOG.md) — изменения по версиям и что сделать при обновлении
 
@@ -168,10 +167,11 @@ uv run .claude/skills/granki-tools/scripts/rooms.py install --project-root .
   - [dialog.md](skills/granki-tools/references/dialog.md) — как агент разговаривает с автором: что писать, как спрашивать;
   - шаблоны: [план серии](skills/granki-tools/assets/templates/series-plan.md), [план статьи](skills/granki-tools/assets/templates/plan.md), [заметки автора](skills/granki-tools/assets/templates/author-notes.md), [канон](skills/granki-tools/assets/templates/canon.md)
 
-**Пример** ([examples/bread/](examples/bread/README.md)) — вымышленная серия «Хлеб на закваске»
-- [канон проекта](examples/bread/.agents/canon.md)
-- серия: [план](examples/bread/articles/bread/series-plan.md), [журнал](examples/bread/articles/bread/journal.md), [заметки автора](examples/bread/articles/bread/author-notes.md), [канон серии](examples/bread/articles/bread/canon.md)
-- статья 01-flour: [план](examples/bread/articles/bread/01-flour/plan.md), [журнал](examples/bread/articles/bread/01-flour/journal.md), разделы [00-intro](examples/bread/articles/bread/01-flour/sections/00-intro.md), [01-results](examples/bread/articles/bread/01-flour/sections/01-results.md), [02-advice](examples/bread/articles/bread/01-flour/sections/02-advice.md)
+**Примеры** ([docs/example/](docs/example/README.md)) — HTML-версии статей и серий пилота
+- [bread/](docs/example/bread/README.md) — вымышленная серия «Хлеб на закваске» для туториала
+  - [канон проекта](docs/example/bread/.agents/canon.md)
+  - серия: [план](docs/example/bread/articles/bread/series-plan.md), [журнал](docs/example/bread/articles/bread/journal.md), [заметки автора](docs/example/bread/articles/bread/author-notes.md), [канон серии](docs/example/bread/articles/bread/canon.md)
+  - статья 01-flour: [план](docs/example/bread/articles/bread/01-flour/plan.md), [журнал](docs/example/bread/articles/bread/01-flour/journal.md), разделы [00-intro](docs/example/bread/articles/bread/01-flour/sections/00-intro.md), [01-results](docs/example/bread/articles/bread/01-flour/sections/01-results.md), [02-advice](docs/example/bread/articles/bread/01-flour/sections/02-advice.md)
 
 ## Тесты
 
