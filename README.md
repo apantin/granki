@@ -146,6 +146,7 @@ uv run .claude/skills/granki-tools/scripts/rooms.py install --project-root .
 - [decisions/0001-bmad-v6-foundation.md](docs/dev/decisions/0001-bmad-v6-foundation.md) — ADR: основа на BMad Method v6.12
 - [history.md](docs/dev/history.md) — как собиралась и проверялась версия 0.1.0
 - [evaluation.md](docs/dev/evaluation.md) — методика оценки пилота и её ограничения
+- [research/](docs/research/README.md) — обзор методик оценки текстов: [модели-судьи](docs/research/01-llm-judges.md), [оценка людьми](docs/research/02-human-evaluation.md), [распознавание ИИ-текста](docs/research/03-ai-text-detection.md), [голос и стиль](docs/research/04-voice-and-style.md), [фактическая точность](docs/research/05-factuality.md)
 - [pilot.md](docs/dev/pilot.md) — пилот на вымышленных сериях: метод, находки, эксперименты
 - [roadmap.md](docs/dev/roadmap.md) — пилот и то, что не сделано
 
