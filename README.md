@@ -149,6 +149,7 @@ uv run .claude/skills/granki-tools/scripts/rooms.py install --project-root .
 - [research/](docs/research/README.md) — исследования
   - [text-evaluation/](docs/research/text-evaluation/README.md) — как оценивают тексты: [модели-судьи](docs/research/text-evaluation/01-llm-judges.md), [оценка людьми](docs/research/text-evaluation/02-human-evaluation.md), [распознавание ИИ-текста](docs/research/text-evaluation/03-ai-text-detection.md), [голос и стиль](docs/research/text-evaluation/04-voice-and-style.md), [фактическая точность](docs/research/text-evaluation/05-factuality.md)
   - [text-checkers/](docs/research/text-checkers/README.md) — проверка текста по правилам: [Главред](docs/research/text-checkers/01-glavred.md), [русские инструменты](docs/research/text-checkers/02-russian-tools.md), [линтеры прозы](docs/research/text-checkers/03-prose-linters.md)
+  - [anti-ai-style/](docs/research/anti-ai-style/README.md) — как текст модели перестаёт звучать как ИИ: структурные признаки, правила письма и ревью, метрики
 - [pilot.md](docs/dev/pilot.md) — пилот на вымышленных сериях: метод, находки, эксперименты
 - [style.md](docs/dev/style.md) — эксперименты со стилем после пилота: структурные следы нейротекста, гипотезы, журнал прогонов
 - [roadmap.md](docs/dev/roadmap.md) — пилот и то, что не сделано
