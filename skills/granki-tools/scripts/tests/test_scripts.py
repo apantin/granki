@@ -28,6 +28,7 @@ import rooms  # noqa: E402
 import impact  # noqa: E402
 import canon  # noqa: E402
 import status  # noqa: E402
+import style  # noqa: E402
 from fixture import make_series  # noqa: E402
 from granki_core import GrankiError, decimal_tokens, prose, render, section_paths  # noqa: E402
 
@@ -332,6 +333,74 @@ class PlanTests(SeriesCase):
         self.assertIn('plan-sections', self.failed(run(check, '--plan', self.green / 'plan.md')[1]))
         self.assertEqual(run(plan, 'sync', '--plan', self.green / 'plan.md')[1]['added'], ['02-extra.md'])
         self.assertEqual(run(check, '--plan', self.green / 'plan.md')[0], 0)
+
+
+STYLE_TEXT = """\
+---
+title: Пуэр
+---
+
+# Пуэр на даче
+
+<!-- caveat:C1 --> Один чайник, одна кружка, одна неделя. Выводов я не делаю.
+
+Заваривал утром: вода из колодца, шумовка вместо сита. Всего три заварки, время по памяти, около пяти минут.
+
+```
+выводов не делаю
+```
+
+| Чай | Минуты |
+|---|---|
+| пуэр | 5 |
+
+## Вкус
+
+Горечь записана в таблице, так она и стоит в таблице. Журнал не говорит, откуда она.
+
+Итог: «волшебный» не напишу, хотя напрашивается.
+
+- Было: горько
+- Стало: мягче
+"""
+
+
+class StyleTests(SeriesCase):
+    def test_counts_traces_in_prose_only(self):
+        path = self.tmp / 'puer.md'
+        path.write_text(STYLE_TEXT, encoding='utf-8')
+        code, report = run(style, '--file', path)
+        self.assertEqual(code, 0, report)
+        cat = report['categories']
+        where = lambda kind: [(m['heading'], m['paragraph'], m['quote']) for m in cat[kind]['matches']]  # noqa: E731
+        # code, tables, comments and the frontmatter are not prose; a limit with a fact is not a refusal
+        self.assertEqual(where('refusal'), [('Пуэр на даче', 1, 'Выводов я не делаю'), ('Вкус', 1, 'Журнал не говорит')])
+        self.assertEqual(where('self_ref'), [('Вкус', 1, 'в таблице'), ('Вкус', 1, 'так она и стоит в таблице')])
+        self.assertEqual(where('inoculation'), [('Вкус', 2, '«волшебный» не напишу, хотя напрашивается')])
+        self.assertEqual(where('anaphora'), [('Пуэр на даче', 1, 'Один чайник, одна кружка, одна неделя.')])
+        # a one-word label, a colon before a quotation and list items are not explanation colons
+        self.assertEqual([m['quote'] for m in cat['colon']['matches']], ['Заваривал утром: вода из колодца, шумовка'])
+        dist = report['distribution']
+        self.assertEqual((dist['paragraphs'], dist['flagged_paragraphs']), (5, 2))
+        self.assertEqual(cat['refusal']['matches'][0]['file'], 'puer.md')
+        # the sentence opened by a caveat marker is the required caveat: marked, not hidden
+        self.assertEqual(cat['anaphora']['matches'][0].get('caveat'), 'C1')
+        self.assertNotIn('caveat', cat['refusal']['matches'][0])
+        self.assertIn('фразы-отказы в 2 из 5 абзацев', report['signals'][0])
+        self.assertTrue(any(s.startswith('«прививка»') for s in report['signals']))
+        self.assertTrue(any(s.startswith('анафорическая тройка') for s in report['signals']))
+
+    def test_plan_scope_and_input_errors(self):
+        p = self.green / 'plan.md'
+        code, report = run(style, '--plan', p)
+        self.assertEqual((code, report['scope'], report['sections']), (0, 'article', ['00-intro.md', '01-results.md']))
+        self.assertEqual(report['categories']['refusal']['count'], 0)
+        code, report = run(style, '--plan', p, '--section', 'sections/01-results.md')
+        self.assertEqual((code, report['sections']), (0, ['01-results.md']))
+        self.assertEqual(report['categories']['colon']['matches'][0]['heading'], 'Результаты')
+        self.assertEqual(run(style, '--plan', p, '--section', '07-none.md')[0], 2)
+        self.assertEqual(run(style, '--section', '01-results.md')[0], 2)
+        self.assertEqual(run(style, '--file', self.tmp / 'none.md')[0], 2)
 
 
 class RoomsTests(unittest.TestCase):
