@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Кэш зависимостей в CI: что он нам дал</title>
+<style>
+:root { color-scheme: light; --ink: #18232e; --muted: #596775; --line: #dbe2e7; --accent: #185e5c; --paper: #fff; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 17px/1.78 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+a { color: var(--accent); text-underline-offset: .2em; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible, summary:focus-visible, .table-scroll:focus-visible { outline: 3px solid #78aba6; outline-offset: 4px; }
+.topbar { max-width: 1200px; margin: auto; padding: 22px 32px; display: flex; gap: 24px; justify-content: space-between; border-bottom: 1px solid var(--line); font-size: 14px; }
+.brand { text-decoration: none; font-weight: 750; letter-spacing: .03em; }
+.topbar span { color: var(--muted); }
+.layout { display: grid; grid-template-columns: 232px minmax(0, 820px); gap: 52px; max-width: 1200px; margin: 48px auto 80px; padding: 0 32px; align-items: start; }
+.toc-desktop { position: sticky; top: 24px; max-height: calc(100vh - 48px); overflow-y: auto; padding-right: 12px; font-size: 13px; line-height: 1.6; }
+.toc-label { margin: 0 0 18px; font-size: 11px; font-weight: 750; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); }
+.toc-desktop ul, .toc-mobile ul { list-style: none; margin: 0; padding: 0; }
+.toc-desktop ul ul, .toc-mobile ul ul { margin: 8px 0 0 12px; padding-left: 12px; border-left: 1px solid var(--line); }
+.toc-desktop li, .toc-mobile li { margin-bottom: 11px; }
+.toc-desktop a, .toc-mobile a { color: var(--muted); text-decoration: none; }
+.toc-desktop a:hover, .toc-mobile a:hover { color: var(--accent); text-decoration: underline; }
+.toc-mobile { display: none; }
+article { min-width: 0; }
+.kicker { margin: 0 0 16px; color: var(--accent); font-size: 12px; font-weight: 750; text-transform: uppercase; letter-spacing: .12em; }
+h1 { margin: 0 0 30px; font-size: clamp(30px, 3.1vw, 42px); line-height: 1.18; letter-spacing: -.035em; font-weight: 760; overflow-wrap: anywhere; }
+h2 { margin: 54px 0 20px; font-size: 27px; line-height: 1.3; letter-spacing: -.025em; overflow-wrap: anywhere; }
+h3 { margin: 38px 0 16px; font-size: 21px; line-height: 1.4; letter-spacing: -.01em; }
+p { margin: 0 0 22px; }
+.article-header + p { font-size: 19px; line-height: 1.7; }
+strong { font-weight: 700; }
+blockquote { margin: 28px 0; padding: 4px 0 4px 22px; border-left: 3px solid #8eb7af; color: #3a4c59; }
+blockquote p:last-child { margin-bottom: 0; }
+img { display: block; max-width: 100%; height: auto; margin: 32px auto 12px; }
+p:has(> img) { margin: 0; }
+p:has(> img) + p:has(> em:only-child) { margin: 12px 0 32px; color: var(--muted); font-size: 14px; line-height: 1.65; }
+.table-scroll { overflow-x: auto; overscroll-behavior-x: contain; max-width: 100%; margin: 28px 0; border: 1px solid var(--line); border-radius: 8px; }
+table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 13px; line-height: 1.55; font-variant-numeric: tabular-nums; }
+th, td { padding: 11px 13px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; overflow-wrap: normal; }
+th { min-width: 88px; background: #f0f5f4; color: #293d45; font-weight: 650; }
+th:first-child { min-width: 150px; }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:nth-child(even) { background: #f9fbfb; }
+tbody tr:hover { background: #edf5f3; }
+code { padding: .15em .3em; border-radius: 3px; background: #edf2f4; font: .86em/1.6 ui-monospace, "SFMono-Regular", Consolas, monospace; overflow-wrap: anywhere; }
+pre { max-width: 100%; overflow-x: auto; padding: 20px; margin: 24px 0; border: 1px solid var(--line); border-radius: 8px; background: #f5f8fa; font-size: 13px; line-height: 1.65; }
+pre code { padding: 0; background: none; white-space: pre; overflow-wrap: normal; }
+details { margin: 24px 0; border: 1px solid var(--line); border-radius: 8px; padding: 0 20px; }
+summary { padding: 17px 0; cursor: pointer; color: var(--accent); font-size: 15px; font-weight: 650; line-height: 1.6; }
+details[open] > summary { margin-bottom: 18px; border-bottom: 1px solid var(--line); }
+details > :last-child { margin-bottom: 20px; }
+.article-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 14px 24px; margin-top: 54px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 14px; }
+.index { max-width: 900px; margin: 64px auto; padding: 0 32px; }
+.index > p { color: var(--muted); }
+.article-list { list-style: none; padding: 0; margin-top: 40px; }
+.article-list li { padding: 28px 0; border-top: 1px solid var(--line); }
+.article-list a { display: block; font-size: 24px; line-height: 1.4; font-weight: 650; letter-spacing: -.02em; text-decoration: none; }
+.article-list p { margin: 12px 0 0; font-size: 16px; }
+@media (max-width: 1050px) {
+.layout { display: block; max-width: 850px; margin-top: 34px; }
+.toc-desktop { display: none; }
+.toc-mobile { display: block; margin-bottom: 34px; }
+.toc-mobile ul { padding-bottom: 10px; font-size: 14px; }
+}
+@media (max-width: 600px) {
+body { font-size: 16px; line-height: 1.75; }
+.topbar { padding: 18px 20px; gap: 12px; font-size: 12px; }
+.layout { margin: 24px auto 48px; padding: 0 20px; }
+h1 { font-size: 30px; line-height: 1.22; }
+h2 { margin-top: 40px; font-size: 24px; }
+h3 { font-size: 20px; }
+.article-header + p { font-size: 17px; }
+.table-scroll { margin: 24px 0; }
+th, td { padding: 10px; }
+details { padding: 0 14px; }
+.index { margin-top: 40px; padding: 0 20px; }
+.article-list a { font-size: 21px; }
+}
+@media print {
+body { font-size: 11pt; }
+.topbar, .toc-desktop, .toc-mobile, .article-footer { display: none; }
+.layout { display: block; margin: 0; padding: 0; max-width: none; }
+h1 { font-size: 26pt; } h2 { font-size: 18pt; break-after: avoid; }
+img { max-height: 95vh; object-fit: contain; break-inside: avoid; }
+.table-scroll { overflow: visible; }
+table { min-width: 0; font-size: 8pt; }
+th { min-width: 0; } th:first-child { min-width: 0; }
+}
+</style>
+</head>
+<body id="top">
+<div class="topbar"><a class="brand" href="index.html">Granki</a></div>
+<div class="layout">
+<aside class="toc-desktop"><p class="toc-label">Содержание</p><nav aria-label="Содержание статьи"><ul>
+<li><a href="#как-устроен-кэш">Как устроен кэш</a></li>
+<li><a href="#что-и-как-мерили">Что и как мерили</a></li>
+<li><a href="#сколько-дал-кэш-на-тех-же-раннерах">Сколько дал кэш на тех же раннерах</a></li>
+<li><a href="#промах-на-старых-раннерах-не-быстрее-сборки-без-кэша">Промах на старых раннерах не быстрее сборки без кэша</a></li>
+<li><a href="#как-прикинуть-выигрыш-у-себя">Как прикинуть выигрыш у себя</a></li>
+</ul></nav></aside>
+<article id="article-content">
+<details class="toc-mobile"><summary>Содержание статьи</summary><nav aria-label="Содержание статьи"><ul>
+<li><a href="#как-устроен-кэш">Как устроен кэш</a></li>
+<li><a href="#что-и-как-мерили">Что и как мерили</a></li>
+<li><a href="#сколько-дал-кэш-на-тех-же-раннерах">Сколько дал кэш на тех же раннерах</a></li>
+<li><a href="#промах-на-старых-раннерах-не-быстрее-сборки-без-кэша">Промах на старых раннерах не быстрее сборки без кэша</a></li>
+<li><a href="#как-прикинуть-выигрыш-у-себя">Как прикинуть выигрыш у себя</a></li>
+</ul></nav></details>
+<header class="article-header"><p class="kicker">Статья 1</p><h1>Кэш зависимостей в CI: что он нам дал</h1></header>
+<p>Мы включили в CI кэш зависимостей 3 ноября 2025 года, а 17 ноября заменили старые раннеры old-4cpu на новые new-8cpu. На одних и тех же старых раннерах медиана полного пайплайна без кэша, с 6 по 31 октября 2025 года, была 888 с (145 сборок), а с кэшем, с 3 по 14 ноября, — 502 с (75 сборок). Это на 43% меньше, примерно в 1,8 раза. После замены раннеров сборки ускорились ещё (насколько — в разделе «Сколько дал кэш на тех же раннерах»), но выигрыш от кэша мы считаем только на одних и тех же раннерах. Остальные условия замера — в разделе «Что и как мерили».</p>
+<p>Промахов кэша оказалось больше, чем я ожидала. Всего сборок с кэшем было 144: 75 на старых раннерах и 69 на новых. Из них промахов 12, около 8%; я прикидывала около 3%. Этот текст для тех, кто решает, включать ли кэш у себя. Рецепта внедрения в нём не будет. С другими способами не качать зависимости каждый раз (зеркало артефактов, образ раннера) мы кэш не сравнивали.</p>
+<h2 id="как-устроен-кэш">Как устроен кэш</h2>
+<p>Полный пайплайн у нас — это стадии зависимостей, компиляции и юнит-тестов. Кэшируются скачанные зависимости и артефакты сборки зависимостей. Компиляцию мы не кэшируем. Кэш лежит в S3-совместимом хранилище в том же датацентре, что и раннеры.</p>
+<p>Ключ кэша — хеш lock-файлов, то есть файлов, где зафиксированы версии зависимостей. Сборка ищет кэш по своему ключу: нашла — попадание, не нашла — промах. Основная причина промахов, по нашему опыту, — обновление зависимостей: меняются lock-файлы, а с ними и ключ. Бывают ли промахи по другим причинам, например из-за вытеснения или сбоя хранилища, мы не проверяли. Причины конкретных промахов в выгрузке из CI не видны: там есть только отметка, попала сборка в кэш или промахнулась.</p>
+<h2 id="что-и-как-мерили">Что и как мерили</h2>
+<p>Мерили на нашем монорепозитории бэкенда: около 40 сервисов, Gradle и Kotlin. Данные — выгрузка из CI за 8 недель, всего 289 сборок. Мы разбили их на три периода по двум событиям: включению кэша и замене раннеров. Первый период, без кэша, — база для сравнения.</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Таблица; прокрутка по горизонтали"><table>
+<thead>
+<tr>
+<th>Период</th>
+<th>Раннер</th>
+<th>Кэш</th>
+<th>Сборок</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>6–31 октября 2025</td>
+<td>old-4cpu</td>
+<td>нет</td>
+<td>145</td>
+</tr>
+<tr>
+<td>3–14 ноября</td>
+<td>old-4cpu</td>
+<td>есть</td>
+<td>75</td>
+</tr>
+<tr>
+<td>17–28 ноября</td>
+<td>new-8cpu</td>
+<td>есть</td>
+<td>69</td>
+</tr>
+</tbody>
+</table></div>
+<p>1–2 и 15–16 ноября — выходные, сборок нет.</p>
+<p>Выигрыш от кэша считаем только по первым двум строкам таблицы: раннеры там одни и те же. Замер с кэшем на старых раннерах короче базы вдвое: две недели против четырёх. Что ещё менялось в CI около 3 ноября, мы не проверяли.</p>
+<p>В выгрузке только сборки полного пайплайна. Медиана считается по всем сборкам, включая упавшие и флаки: разработчик ждёт любую сборку, а не только зелёную. Флаки-сборок по периодам — 8, 2 и 1; причины мы не искали. Медиану мы везде даём с числом сборок в скобках.</p>
+<h2 id="сколько-дал-кэш-на-тех-же-раннерах">Сколько дал кэш на тех же раннерах</h2>
+<p>На старых раннерах медиана полного пайплайна упала с 888 с (145) без кэша до 502 с (75) с кэшем: на 43%, примерно в 1,8 раза. Если оставить только успешные сборки, со статусом ok, медиана меньше на 45%: с 881,5 с (130) до 486 с (66).</p>
+<p>На новых раннерах, тоже с кэшем, медиана — 338 с (69). Сборок на новых раннерах без кэша нет, поэтому отдельно вклад раннеров мы не мерили, только их вместе с кэшем. Разница между 502 с (75) и 338 с (69) включает замену раннеров и всё остальное, что менялось в эти недели; разделить это по нашим данным нельзя.</p>
+<p>Все три медианы с кэшем, в том числе по успешным сборкам, считаются вместе с промахами.</p>
+<h2 id="промах-на-старых-раннерах-не-быстрее-сборки-без-кэша">Промах на старых раннерах не быстрее сборки без кэша</h2>
+<p>Из 144 сборок с кэшем на обоих раннерах промахов 12, около 8%. Попадания и промахи на каждом раннере — в таблице.</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Таблица; прокрутка по горизонтали"><table>
+<thead>
+<tr>
+<th>Раннер</th>
+<th>Попадание</th>
+<th>Промах</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>old-4cpu</td>
+<td>484,5 с (68)</td>
+<td>1001 с (7)</td>
+</tr>
+<tr>
+<td>new-8cpu</td>
+<td>335 с (64)</td>
+<td>552 с (5)</td>
+</tr>
+</tbody>
+</table></div>
+<p>В ячейках — медиана длительности полного пайплайна, в скобках — число сборок. На новых раннерах промахов всего пять, выводов по ним мы не делаем.</p>
+<p>На старых раннерах сборка с промахом шла не быстрее, чем совсем без кэша: медиана по промахам — 1001 с (7), в базе без кэша (6–31 октября) — 888 с (145). На семи сборках с промахом медиана выше, чем без кэша. Причину мы не искали.</p>
+<h2 id="как-прикинуть-выигрыш-у-себя">Как прикинуть выигрыш у себя</h2>
+<p>Измерить нужно две величины: долю стадии зависимостей в вашем пайплайне и долю сборок, где менялись lock-файлы. Ключ кэша — хеш lock-файлов, поэтому чем больше доля стадии зависимостей и чем реже меняются lock-файлы, тем больше выигрыш. Наших значений для сравнения нет: долю стадии зависимостей в пайплайне до кэша мы не замеряли, разбивки по стадиям нет; 43% — это изменение медианы всего пайплайна, а не доля стадии зависимостей. И условия у нас свои: один монорепозиторий, старые раннеры old-4cpu, хранилище кэша S3-совместимое и стоит в том же датацентре, что и раннеры.</p>
+<p>Стоимость хранилища кэша и новых 8-ядерных раннеров мы не оценивали.</p>
+<footer class="article-footer"><a href="index.html">К списку статей</a><a href="#top">Наверх ↑</a></footer>
+</article>
+</div>
+</body>
+</html>

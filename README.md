@@ -134,6 +134,7 @@ uv run .claude/skills/granki-tools/scripts/rooms.py install --project-root .
 - [tutorial.md](docs/user/tutorial.md) — туториал: статья от плана до публикации на примере
 - [process.md](docs/user/process.md) — уровни работы, циклы плана и раздела, ревью, журнал, статусы
 - [roles.md](docs/user/roles.md) — роли агентов и комнаты
+- [example/](docs/example/README.md) — HTML-версии статей и серий пилота
 - [conflicts.md](docs/user/conflicts.md) — конфликты с другими скиллами и как их отключить в разных средах
 - [CHANGELOG.md](CHANGELOG.md) — изменения по версиям и что сделать при обновлении
 
