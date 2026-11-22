@@ -1,0 +1,163 @@
+ID,formulation,value,source
+R-reg-all-trips,"Обычная резина, all: trips",26,summary.csv: key=reg-all; group=обычные; column=trips
+R-reg-all-detours,"Обычная резина, all: detours",2,summary.csv: key=reg-all; group=обычные; column=detours
+R-reg-all-minutes_mean,"Обычная резина, all: minutes_mean",89.0,summary.csv: key=reg-all; group=обычные; column=minutes_mean
+R-reg-all-minutes_min,"Обычная резина, all: minutes_min",71,summary.csv: key=reg-all; group=обычные; column=minutes_min
+R-reg-all-minutes_max,"Обычная резина, all: minutes_max",104,summary.csv: key=reg-all; group=обычные; column=minutes_max
+R-reg-all-falls,"Обычная резина, all: falls",7,summary.csv: key=reg-all; group=обычные; column=falls
+R-reg-all-fall_days,"Обычная резина, all: fall_days",7,summary.csv: key=reg-all; group=обычные; column=fall_days
+R-reg-all-skids,"Обычная резина, all: skids",63,summary.csv: key=reg-all; group=обычные; column=skids
+R-reg-all-skids_per_trip,"Обычная резина, all: skids_per_trip",2.4,summary.csv: key=reg-all; group=обычные; column=skids_per_trip
+R-reg-all-temp_mean,"Обычная резина, all: temp_mean",-4.3,summary.csv: key=reg-all; group=обычные; column=temp_mean
+R-reg-all-temp_min,"Обычная резина, all: temp_min",-16,summary.csv: key=reg-all; group=обычные; column=temp_min
+R-reg-all-temp_max,"Обычная резина, all: temp_max",2,summary.csv: key=reg-all; group=обычные; column=temp_max
+R-reg-dry-trips,"Обычная резина, сухо: trips",4,summary.csv: key=reg-dry; group=обычные; column=trips
+R-reg-dry-detours,"Обычная резина, сухо: detours",0,summary.csv: key=reg-dry; group=обычные; column=detours
+R-reg-dry-minutes_mean,"Обычная резина, сухо: minutes_mean",74.5,summary.csv: key=reg-dry; group=обычные; column=minutes_mean
+R-reg-dry-minutes_min,"Обычная резина, сухо: minutes_min",71,summary.csv: key=reg-dry; group=обычные; column=minutes_min
+R-reg-dry-minutes_max,"Обычная резина, сухо: minutes_max",78,summary.csv: key=reg-dry; group=обычные; column=minutes_max
+R-reg-dry-falls,"Обычная резина, сухо: falls",0,summary.csv: key=reg-dry; group=обычные; column=falls
+R-reg-dry-fall_days,"Обычная резина, сухо: fall_days",0,summary.csv: key=reg-dry; group=обычные; column=fall_days
+R-reg-dry-skids,"Обычная резина, сухо: skids",0,summary.csv: key=reg-dry; group=обычные; column=skids
+R-reg-dry-skids_per_trip,"Обычная резина, сухо: skids_per_trip",0.0,summary.csv: key=reg-dry; group=обычные; column=skids_per_trip
+R-reg-dry-temp_mean,"Обычная резина, сухо: temp_mean",-7.5,summary.csv: key=reg-dry; group=обычные; column=temp_mean
+R-reg-dry-temp_min,"Обычная резина, сухо: temp_min",-11,summary.csv: key=reg-dry; group=обычные; column=temp_min
+R-reg-dry-temp_max,"Обычная резина, сухо: temp_max",0,summary.csv: key=reg-dry; group=обычные; column=temp_max
+R-reg-wet-trips,"Обычная резина, мокро: trips",2,summary.csv: key=reg-wet; group=обычные; column=trips
+R-reg-wet-detours,"Обычная резина, мокро: detours",0,summary.csv: key=reg-wet; group=обычные; column=detours
+R-reg-wet-minutes_mean,"Обычная резина, мокро: minutes_mean",78.0,summary.csv: key=reg-wet; group=обычные; column=minutes_mean
+R-reg-wet-minutes_min,"Обычная резина, мокро: minutes_min",76,summary.csv: key=reg-wet; group=обычные; column=minutes_min
+R-reg-wet-minutes_max,"Обычная резина, мокро: minutes_max",80,summary.csv: key=reg-wet; group=обычные; column=minutes_max
+R-reg-wet-falls,"Обычная резина, мокро: falls",0,summary.csv: key=reg-wet; group=обычные; column=falls
+R-reg-wet-fall_days,"Обычная резина, мокро: fall_days",0,summary.csv: key=reg-wet; group=обычные; column=fall_days
+R-reg-wet-skids,"Обычная резина, мокро: skids",0,summary.csv: key=reg-wet; group=обычные; column=skids
+R-reg-wet-skids_per_trip,"Обычная резина, мокро: skids_per_trip",0.0,summary.csv: key=reg-wet; group=обычные; column=skids_per_trip
+R-reg-wet-temp_mean,"Обычная резина, мокро: temp_mean",1.5,summary.csv: key=reg-wet; group=обычные; column=temp_mean
+R-reg-wet-temp_min,"Обычная резина, мокро: temp_min",1,summary.csv: key=reg-wet; group=обычные; column=temp_min
+R-reg-wet-temp_max,"Обычная резина, мокро: temp_max",2,summary.csv: key=reg-wet; group=обычные; column=temp_max
+R-reg-packed-trips,"Обычная резина, накат: trips",4,summary.csv: key=reg-packed; group=обычные; column=trips
+R-reg-packed-detours,"Обычная резина, накат: detours",0,summary.csv: key=reg-packed; group=обычные; column=detours
+R-reg-packed-minutes_mean,"Обычная резина, накат: minutes_mean",88.2,summary.csv: key=reg-packed; group=обычные; column=minutes_mean
+R-reg-packed-minutes_min,"Обычная резина, накат: minutes_min",85,summary.csv: key=reg-packed; group=обычные; column=minutes_min
+R-reg-packed-minutes_max,"Обычная резина, накат: minutes_max",92,summary.csv: key=reg-packed; group=обычные; column=minutes_max
+R-reg-packed-falls,"Обычная резина, накат: falls",0,summary.csv: key=reg-packed; group=обычные; column=falls
+R-reg-packed-fall_days,"Обычная резина, накат: fall_days",0,summary.csv: key=reg-packed; group=обычные; column=fall_days
+R-reg-packed-skids,"Обычная резина, накат: skids",7,summary.csv: key=reg-packed; group=обычные; column=skids
+R-reg-packed-skids_per_trip,"Обычная резина, накат: skids_per_trip",1.8,summary.csv: key=reg-packed; group=обычные; column=skids_per_trip
+R-reg-packed-temp_mean,"Обычная резина, накат: temp_mean",-6.5,summary.csv: key=reg-packed; group=обычные; column=temp_mean
+R-reg-packed-temp_min,"Обычная резина, накат: temp_min",-11,summary.csv: key=reg-packed; group=обычные; column=temp_min
+R-reg-packed-temp_max,"Обычная резина, накат: temp_max",0,summary.csv: key=reg-packed; group=обычные; column=temp_max
+R-reg-ice-trips,"Обычная резина, лёд: trips",13,summary.csv: key=reg-ice; group=обычные; column=trips
+R-reg-ice-detours,"Обычная резина, лёд: detours",0,summary.csv: key=reg-ice; group=обычные; column=detours
+R-reg-ice-minutes_mean,"Обычная резина, лёд: minutes_mean",94.2,summary.csv: key=reg-ice; group=обычные; column=minutes_mean
+R-reg-ice-minutes_min,"Обычная резина, лёд: minutes_min",88,summary.csv: key=reg-ice; group=обычные; column=minutes_min
+R-reg-ice-minutes_max,"Обычная резина, лёд: minutes_max",97,summary.csv: key=reg-ice; group=обычные; column=minutes_max
+R-reg-ice-falls,"Обычная резина, лёд: falls",7,summary.csv: key=reg-ice; group=обычные; column=falls
+R-reg-ice-fall_days,"Обычная резина, лёд: fall_days",7,summary.csv: key=reg-ice; group=обычные; column=fall_days
+R-reg-ice-skids,"Обычная резина, лёд: skids",48,summary.csv: key=reg-ice; group=обычные; column=skids
+R-reg-ice-skids_per_trip,"Обычная резина, лёд: skids_per_trip",3.7,summary.csv: key=reg-ice; group=обычные; column=skids_per_trip
+R-reg-ice-temp_mean,"Обычная резина, лёд: temp_mean",-3.4,summary.csv: key=reg-ice; group=обычные; column=temp_mean
+R-reg-ice-temp_min,"Обычная резина, лёд: temp_min",-16,summary.csv: key=reg-ice; group=обычные; column=temp_min
+R-reg-ice-temp_max,"Обычная резина, лёд: temp_max",2,summary.csv: key=reg-ice; group=обычные; column=temp_max
+R-reg-snow-trips,"Обычная резина, свежий снег: trips",3,summary.csv: key=reg-snow; group=обычные; column=trips
+R-reg-snow-detours,"Обычная резина, свежий снег: detours",2,summary.csv: key=reg-snow; group=обычные; column=detours
+R-reg-snow-minutes_mean,"Обычная резина, свежий снег: minutes_mean",104.0,summary.csv: key=reg-snow; group=обычные; column=minutes_mean
+R-reg-snow-minutes_min,"Обычная резина, свежий снег: minutes_min",104,summary.csv: key=reg-snow; group=обычные; column=minutes_min
+R-reg-snow-minutes_max,"Обычная резина, свежий снег: minutes_max",104,summary.csv: key=reg-snow; group=обычные; column=minutes_max
+R-reg-snow-falls,"Обычная резина, свежий снег: falls",0,summary.csv: key=reg-snow; group=обычные; column=falls
+R-reg-snow-fall_days,"Обычная резина, свежий снег: fall_days",0,summary.csv: key=reg-snow; group=обычные; column=fall_days
+R-reg-snow-skids,"Обычная резина, свежий снег: skids",8,summary.csv: key=reg-snow; group=обычные; column=skids
+R-reg-snow-skids_per_trip,"Обычная резина, свежий снег: skids_per_trip",2.7,summary.csv: key=reg-snow; group=обычные; column=skids_per_trip
+R-reg-snow-temp_mean,"Обычная резина, свежий снег: temp_mean",-5.0,summary.csv: key=reg-snow; group=обычные; column=temp_mean
+R-reg-snow-temp_min,"Обычная резина, свежий снег: temp_min",-9,summary.csv: key=reg-snow; group=обычные; column=temp_min
+R-reg-snow-temp_max,"Обычная резина, свежий снег: temp_max",-2,summary.csv: key=reg-snow; group=обычные; column=temp_max
+R-studs-all-trips,"Шипы, all: trips",28,summary.csv: key=studs-all; group=шипы; column=trips
+R-studs-all-detours,"Шипы, all: detours",1,summary.csv: key=studs-all; group=шипы; column=detours
+R-studs-all-minutes_mean,"Шипы, all: minutes_mean",92.1,summary.csv: key=studs-all; group=шипы; column=minutes_mean
+R-studs-all-minutes_min,"Шипы, all: minutes_min",78,summary.csv: key=studs-all; group=шипы; column=minutes_min
+R-studs-all-minutes_max,"Шипы, all: minutes_max",104,summary.csv: key=studs-all; group=шипы; column=minutes_max
+R-studs-all-falls,"Шипы, all: falls",1,summary.csv: key=studs-all; group=шипы; column=falls
+R-studs-all-fall_days,"Шипы, all: fall_days",1,summary.csv: key=studs-all; group=шипы; column=fall_days
+R-studs-all-skids,"Шипы, all: skids",13,summary.csv: key=studs-all; group=шипы; column=skids
+R-studs-all-skids_per_trip,"Шипы, all: skids_per_trip",0.5,summary.csv: key=studs-all; group=шипы; column=skids_per_trip
+R-studs-all-temp_mean,"Шипы, all: temp_mean",-9.9,summary.csv: key=studs-all; group=шипы; column=temp_mean
+R-studs-all-temp_min,"Шипы, all: temp_min",-21,summary.csv: key=studs-all; group=шипы; column=temp_min
+R-studs-all-temp_max,"Шипы, all: temp_max",-3,summary.csv: key=studs-all; group=шипы; column=temp_max
+R-studs-dry-trips,"Шипы, сухо: trips",6,summary.csv: key=studs-dry; group=шипы; column=trips
+R-studs-dry-detours,"Шипы, сухо: detours",0,summary.csv: key=studs-dry; group=шипы; column=detours
+R-studs-dry-minutes_mean,"Шипы, сухо: minutes_mean",83.7,summary.csv: key=studs-dry; group=шипы; column=minutes_mean
+R-studs-dry-minutes_min,"Шипы, сухо: minutes_min",78,summary.csv: key=studs-dry; group=шипы; column=minutes_min
+R-studs-dry-minutes_max,"Шипы, сухо: minutes_max",88,summary.csv: key=studs-dry; group=шипы; column=minutes_max
+R-studs-dry-falls,"Шипы, сухо: falls",0,summary.csv: key=studs-dry; group=шипы; column=falls
+R-studs-dry-fall_days,"Шипы, сухо: fall_days",0,summary.csv: key=studs-dry; group=шипы; column=fall_days
+R-studs-dry-skids,"Шипы, сухо: skids",1,summary.csv: key=studs-dry; group=шипы; column=skids
+R-studs-dry-skids_per_trip,"Шипы, сухо: skids_per_trip",0.2,summary.csv: key=studs-dry; group=шипы; column=skids_per_trip
+R-studs-dry-temp_mean,"Шипы, сухо: temp_mean",-11.2,summary.csv: key=studs-dry; group=шипы; column=temp_mean
+R-studs-dry-temp_min,"Шипы, сухо: temp_min",-21,summary.csv: key=studs-dry; group=шипы; column=temp_min
+R-studs-dry-temp_max,"Шипы, сухо: temp_max",-6,summary.csv: key=studs-dry; group=шипы; column=temp_max
+R-studs-packed-trips,"Шипы, накат: trips",15,summary.csv: key=studs-packed; group=шипы; column=trips
+R-studs-packed-detours,"Шипы, накат: detours",0,summary.csv: key=studs-packed; group=шипы; column=detours
+R-studs-packed-minutes_mean,"Шипы, накат: minutes_mean",94.8,summary.csv: key=studs-packed; group=шипы; column=minutes_mean
+R-studs-packed-minutes_min,"Шипы, накат: minutes_min",89,summary.csv: key=studs-packed; group=шипы; column=minutes_min
+R-studs-packed-minutes_max,"Шипы, накат: minutes_max",99,summary.csv: key=studs-packed; group=шипы; column=minutes_max
+R-studs-packed-falls,"Шипы, накат: falls",0,summary.csv: key=studs-packed; group=шипы; column=falls
+R-studs-packed-fall_days,"Шипы, накат: fall_days",0,summary.csv: key=studs-packed; group=шипы; column=fall_days
+R-studs-packed-skids,"Шипы, накат: skids",8,summary.csv: key=studs-packed; group=шипы; column=skids
+R-studs-packed-skids_per_trip,"Шипы, накат: skids_per_trip",0.5,summary.csv: key=studs-packed; group=шипы; column=skids_per_trip
+R-studs-packed-temp_mean,"Шипы, накат: temp_mean",-8.7,summary.csv: key=studs-packed; group=шипы; column=temp_mean
+R-studs-packed-temp_min,"Шипы, накат: temp_min",-14,summary.csv: key=studs-packed; group=шипы; column=temp_min
+R-studs-packed-temp_max,"Шипы, накат: temp_max",-3,summary.csv: key=studs-packed; group=шипы; column=temp_max
+R-studs-ice-trips,"Шипы, лёд: trips",3,summary.csv: key=studs-ice; group=шипы; column=trips
+R-studs-ice-detours,"Шипы, лёд: detours",0,summary.csv: key=studs-ice; group=шипы; column=detours
+R-studs-ice-minutes_mean,"Шипы, лёд: minutes_mean",89.7,summary.csv: key=studs-ice; group=шипы; column=minutes_mean
+R-studs-ice-minutes_min,"Шипы, лёд: minutes_min",86,summary.csv: key=studs-ice; group=шипы; column=minutes_min
+R-studs-ice-minutes_max,"Шипы, лёд: minutes_max",94,summary.csv: key=studs-ice; group=шипы; column=minutes_max
+R-studs-ice-falls,"Шипы, лёд: falls",0,summary.csv: key=studs-ice; group=шипы; column=falls
+R-studs-ice-fall_days,"Шипы, лёд: fall_days",0,summary.csv: key=studs-ice; group=шипы; column=fall_days
+R-studs-ice-skids,"Шипы, лёд: skids",2,summary.csv: key=studs-ice; group=шипы; column=skids
+R-studs-ice-skids_per_trip,"Шипы, лёд: skids_per_trip",0.7,summary.csv: key=studs-ice; group=шипы; column=skids_per_trip
+R-studs-ice-temp_mean,"Шипы, лёд: temp_mean",-10.3,summary.csv: key=studs-ice; group=шипы; column=temp_mean
+R-studs-ice-temp_min,"Шипы, лёд: temp_min",-16,summary.csv: key=studs-ice; group=шипы; column=temp_min
+R-studs-ice-temp_max,"Шипы, лёд: temp_max",-7,summary.csv: key=studs-ice; group=шипы; column=temp_max
+R-studs-snow-trips,"Шипы, свежий снег: trips",4,summary.csv: key=studs-snow; group=шипы; column=trips
+R-studs-snow-detours,"Шипы, свежий снег: detours",1,summary.csv: key=studs-snow; group=шипы; column=detours
+R-studs-snow-minutes_mean,"Шипы, свежий снег: minutes_mean",98.0,summary.csv: key=studs-snow; group=шипы; column=minutes_mean
+R-studs-snow-minutes_min,"Шипы, свежий снег: minutes_min",94,summary.csv: key=studs-snow; group=шипы; column=minutes_min
+R-studs-snow-minutes_max,"Шипы, свежий снег: minutes_max",104,summary.csv: key=studs-snow; group=шипы; column=minutes_max
+R-studs-snow-falls,"Шипы, свежий снег: falls",1,summary.csv: key=studs-snow; group=шипы; column=falls
+R-studs-snow-fall_days,"Шипы, свежий снег: fall_days",1,summary.csv: key=studs-snow; group=шипы; column=fall_days
+R-studs-snow-skids,"Шипы, свежий снег: skids",2,summary.csv: key=studs-snow; group=шипы; column=skids
+R-studs-snow-skids_per_trip,"Шипы, свежий снег: skids_per_trip",0.5,summary.csv: key=studs-snow; group=шипы; column=skids_per_trip
+R-studs-snow-temp_mean,"Шипы, свежий снег: temp_mean",-11.8,summary.csv: key=studs-snow; group=шипы; column=temp_mean
+R-studs-snow-temp_min,"Шипы, свежий снег: temp_min",-21,summary.csv: key=studs-snow; group=шипы; column=temp_min
+R-studs-snow-temp_max,"Шипы, свежий снег: temp_max",-3,summary.csv: key=studs-snow; group=шипы; column=temp_max
+R-all-all-trips,"Все поездки, all: trips",54,summary.csv: key=all-all; group=all; column=trips
+R-all-all-falls,"Все поездки, all: falls",8,summary.csv: key=all-all; group=all; column=falls
+R-all-all-skids,"Все поездки, all: skids",76,summary.csv: key=all-all; group=all; column=skids
+R-all-dry-trips,"Все поездки, сухо: trips",10,summary.csv: key=all-dry; group=all; column=trips
+R-all-dry-falls,"Все поездки, сухо: falls",0,summary.csv: key=all-dry; group=all; column=falls
+R-all-dry-skids,"Все поездки, сухо: skids",1,summary.csv: key=all-dry; group=all; column=skids
+R-all-wet-trips,"Все поездки, мокро: trips",2,summary.csv: key=all-wet; group=all; column=trips
+R-all-wet-falls,"Все поездки, мокро: falls",0,summary.csv: key=all-wet; group=all; column=falls
+R-all-wet-skids,"Все поездки, мокро: skids",0,summary.csv: key=all-wet; group=all; column=skids
+R-all-packed-trips,"Все поездки, накат: trips",19,summary.csv: key=all-packed; group=all; column=trips
+R-all-packed-falls,"Все поездки, накат: falls",0,summary.csv: key=all-packed; group=all; column=falls
+R-all-packed-skids,"Все поездки, накат: skids",15,summary.csv: key=all-packed; group=all; column=skids
+R-all-ice-trips,"Все поездки, лёд: trips",16,summary.csv: key=all-ice; group=all; column=trips
+R-all-ice-falls,"Все поездки, лёд: falls",7,summary.csv: key=all-ice; group=all; column=falls
+R-all-ice-skids,"Все поездки, лёд: skids",50,summary.csv: key=all-ice; group=all; column=skids
+R-all-snow-trips,"Все поездки, свежий снег: trips",7,summary.csv: key=all-snow; group=all; column=trips
+R-all-snow-falls,"Все поездки, свежий снег: falls",1,summary.csv: key=all-snow; group=all; column=falls
+R-all-snow-skids,"Все поездки, свежий снег: skids",10,summary.csv: key=all-snow; group=all; column=skids
+S-studs-date,Дата установки шипов,2026-01-15,setup.json#/studded_installed
+S-route-km,"Маршрут туда-обратно, км",23.6,setup.json#/route_km_round_trip
+S-reg-tire-mm,"Обычная резина, ширина, мм",42,derived: setup.json tires_regular «городская резина 42 мм»
+S-studs-tire-mm,"Шипованная резина, ширина, мм",40,derived: setup.json tires_studded «40 мм»
+S-studs-count,"Шипов на колесо",120,derived: setup.json tires_studded «120 шипов на колесо»
+A-studs-price,"Цена шипов за пару, руб., около (со слов автора, в данных нет)",9000,derived: со слов автора — author-notes.md, «около девяти тысяч за пару, ставил сам»
+D-studs-dry-diff,"Сухо: шипы медленнее обычной резины, мин туда-обратно",9.2,derived: R-studs-dry-minutes_mean 83.7 − R-reg-dry-minutes_mean 74.5
+D-studs-packed-diff,"Накат: шипы медленнее обычной резины, мин туда-обратно",6.6,derived: R-studs-packed-minutes_mean 94.8 − R-reg-packed-minutes_mean 88.2
+T-2025-12-10-falls,"Поездка 10 декабря (лёд, −11°, обычная резина): падений",1,trips.csv: row=9; column=falls
+T-2026-01-13-falls,"Поездка 13 января (лёд, −16°, обычная резина): падений",1,trips.csv: row=26; column=falls
+D-reg-ice-frost-falls,"Обычная резина: падений на морозном льду (10 декабря и 13 января), из 7",2,expr: T-2025-12-10-falls + T-2026-01-13-falls
+D-reg-ice-frost-trips,Обычная резина: ледовых поездок в мороз (−9° и холоднее; остальные ледовые без шипов не холоднее −4°),3,trips.csv: surface=лёд; tires=обычные; temp_c=-11|-16|-9; agg=count

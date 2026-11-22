@@ -15,6 +15,13 @@ def markdown_files() -> list[Path]:
                   if not any(part in {'.git', '.venv', 'node_modules'} for part in p.parts))
 
 
+def sample_material(path: Path) -> bool:
+    """Files of an example series in docs/example/<name>/ are material, not documentation:
+    only the README.md of the example folder goes to the table of contents."""
+    parts = path.relative_to(REPO).parts
+    return parts[:2] == ('docs', 'example') and len(parts) > 3
+
+
 def code_free(text: str) -> str:
     """Drop fenced blocks and inline code: links inside them are examples."""
     text = re.sub(r'```.*?```', '', text, flags=re.S)
@@ -25,7 +32,7 @@ class ReadmeTests(unittest.TestCase):
     def test_table_of_contents_lists_every_markdown_file(self):
         readme = (REPO / 'README.md').read_text(encoding='utf-8')
         linked = {Path(m).as_posix() for m in re.findall(r'\]\(([^)#\s]+\.md)\)', readme)}
-        files = {p.relative_to(REPO).as_posix() for p in markdown_files()}
+        files = {p.relative_to(REPO).as_posix() for p in markdown_files() if not sample_material(p)}
         missing = sorted(files - linked - SKIP)
         self.assertEqual(missing, [], 'add these files to the README table of contents')
 

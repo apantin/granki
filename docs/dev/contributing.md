@@ -44,7 +44,7 @@ uv run --no-project --with pyyaml python -m unittest discover -s skills/granki-t
 | `test_scripts.py` | Поведение каждого скрипта на маленькой вымышленной серии (`fixture.py`) |
 | `test_regressions.py` | Ошибки, которые уже находили: на каждую по тесту |
 | `test_tutorial.py` | Выполняет все команды из [туториала](../user/tutorial.md) и сверяет вывод с тем, что показано в тексте |
-| `test_readme.py` | Каждый `.md` есть в оглавлении README; относительные ссылки во всех `.md` ведут на существующие файлы |
+| `test_readme.py` | Каждый `.md` есть в оглавлении README, кроме материалов примеров внутри `docs/example/<пример>/`; относительные ссылки во всех `.md` ведут на существующие файлы |
 | `test_version.py` | Номер версии совпадает в `module.yaml`, `marketplace.json`, README и `CHANGELOG.md` |
 
 ## Что обновить вместе с изменением
