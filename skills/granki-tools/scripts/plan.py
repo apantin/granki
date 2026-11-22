@@ -43,7 +43,7 @@ from pathlib import Path
 import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from granki_core import (ARTICLE_STATUSES, SECTION_NAME, SECTION_STATUSES, GrankiError, atomic_write,  # noqa: E402
+from granki_core import (series_of, ARTICLE_STATUSES, SECTION_NAME, SECTION_STATUSES, GrankiError, atomic_write,  # noqa: E402
                          dump_json, load_plan, load_series, section_paths, sha256_text, split_frontmatter)
 from journal import log_event, read as read_journal, state, table  # noqa: E402
 
@@ -88,6 +88,11 @@ def set_status(path: Path, status: str, actor: str, force: bool) -> dict:
     allowed = TRANSITIONS.get(current, set())
     if status not in allowed and not force:
         raise GrankiError(f'Transition {current} -> {status} is not in the lifecycle; allowed: {", ".join(sorted(allowed))}')
+    if status == 'plan-approved' and not force:
+        context = series_of(path)
+        if context and context[1].get('status') == 'draft':
+            raise GrankiError('The series plan is still a draft: approve it first (plan.py series --set approved), '
+                              'or pass --force when the author approves the article plan anyway')
     if status == 'article-review' and not force:
         pending = []
         for e in meta.get('sections', []):
@@ -231,11 +236,18 @@ def git_commit(directory: Path) -> str | None:
         return None
 
 
-def publish(path: Path, url: str | None, date: str | None, actor: str, html: Path | None = None) -> dict:
+def publish(path: Path, url: str | None, date: str | None, actor: str, html: Path | None = None,
+            force: bool = False) -> dict:
     meta, body, plan = load(path)
     if plan['status'] not in ('ready',):
         raise GrankiError(f'Publish needs status "ready", the article is "{plan["status"]}"')
     shas = {p.name: sha256_text(p.read_text(encoding='utf-8')) for p in section_paths(sections_dir(plan))}
+    # the author accepted a text; a later edit must be accepted again before it goes out
+    changed = [e.get('file') for e in meta.get('sections', [])
+               if e.get('status') != 'accepted' or shas.get(e.get('file')) != e.get('accepted_sha')]
+    if changed and not force:
+        raise GrankiError('Sections not accepted or changed after acceptance: ' + ', '.join(changed) +
+                          '. Accept them again (plan.py section --set accepted), or pass --force')
     version = int(meta.get('version', 1))
     release = {'version': version, 'date': date or datetime.date.today().isoformat()}
     if url:
@@ -311,7 +323,7 @@ def main(argv=None) -> int:
         elif args.command == 'sync':
             report = sync(args.plan, args.actor)
         elif args.command == 'publish':
-            report = publish(args.plan, args.url, args.date, args.actor, args.html)
+            report = publish(args.plan, args.url, args.date, args.actor, args.html, args.force)
         else:
             report = revise(args.plan, args.actor)
     except (GrankiError, OSError) as error:

@@ -260,6 +260,12 @@ def render_article(pandoc, plan_path: Path, number: int, html_vars: dict) -> dic
         if not path.is_relative_to(assets) or path.suffix.lower() not in IMAGE_SUFFIXES:
             raise GrankiError(f'{article.name}: image outside {assets.name}/ or of unsupported type: {path.name}')
         images.append(path)
+    # Pandoc's --embed-resources downloads remote files and inlines them as data: URIs, so the rendered page
+    # would pass the resource check. Raw HTML that loads external content is refused before rendering.
+    for node in [*nodes(ast, 'RawBlock'), *nodes(ast, 'RawInline')]:
+        fmt, content = node['c']
+        if fmt in ('html', 'html4', 'html5') and EXTERNAL.search(re.sub(r'<a\b[^>]*>', '<a>', content)):
+            raise BuildError(f'{article.name}: external resource in raw HTML: {content.strip()[:80]}')
     baseline = run_pandoc(pandoc, ['--from=json', '--to=html5', '--wrap=none'], json.dumps(ast).encode()).decode()
     original = Inspect()
     original.feed('<article>' + baseline + '</article>')

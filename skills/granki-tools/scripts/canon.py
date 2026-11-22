@@ -105,7 +105,8 @@ def layers_for(series_path: Path, article: str | None) -> list[tuple[str, Path]]
     if series.get('canon'):
         project = (root / series['canon']).resolve()
         if not project.is_file():
-            raise GrankiError(f'Project canon not found: {project}')
+            raise GrankiError(f'Project canon not found: {project}. Create it from assets/templates/canon.md '
+                              '(granki-editorial, references/voice.md) before writing sections')
         layers.append(('project', project))
     if (root / CANON_FILE).is_file():
         layers.append(('series', root / CANON_FILE))

@@ -27,7 +27,7 @@ html: {brand: Чай, tagline: Опыты на кухне, index_kicker: Сер�
 GREEN_PLAN = """\
 ---
 granki: 1
-title: Зелёный чай
+title: "Зелёный чай: сколько держать"
 status: writing
 version: 1
 description: Сколько держать зелёный чай.

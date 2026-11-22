@@ -127,6 +127,69 @@ class CheckRegressionTests(SeriesCase):
         self.assertEqual(error.returncode, 2)
 
 
+class DateNumbersTests(unittest.TestCase):
+    def test_dates_are_not_traced_as_integers(self):
+        # pilot: the agent made a claim for every day of month to pass integers: true
+        from granki_core import without_dates
+        text = 'С 6–31 октября было 145 сборок, кэш включили 3 ноября 2025 года, в ноябре 2025 — 12 промахов.'
+        self.assertEqual(integer_tokens(without_dates(text)), ['145', '12'])
+        self.assertIn('31', integer_tokens(text))
+
+
+class AggregateClaimTests(unittest.TestCase):
+    """Pilot: on a raw log 44 of 46 claims were 'derived:' and nobody checked them."""
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp())
+        (self.tmp / 'log.csv').write_text('run,cache,secs\n1,off,800\n2,off,900\n3,off,1000\n4,hit,400\n5,miss,950\n6,hit,\n',
+                                         encoding='utf-8')
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp)
+
+    def verify(self, table):
+        rows = [dict(zip(['ID', 'formulation', 'value', 'source'], r)) for r in table]
+        return claims.verify_rows(rows, [self.tmp])
+
+    def test_aggregates_and_expressions_are_recomputed(self):
+        report = self.verify([
+            ('n-off', 'n', '3', 'log.csv: cache=off; agg=count'),
+            ('med-off', 'm', '900', 'log.csv: cache=off; agg=median; column=secs'),
+            ('med-cache', 'm', '675', 'log.csv: cache=hit|miss; agg=median; column=secs'),
+            ('mean-all', 'm', '810', 'log.csv: agg=mean; column=secs'),
+            ('effect', 'e', '-0.25', 'expr: med-cache / med-off - 1'),
+            ('minutes', 'e', '15.0', 'expr: med-off / 60'),
+        ])
+        self.assertEqual(report['status'], 'passed', report)
+        self.assertEqual(report['unverifiable'], [])
+
+    def test_drift_and_bad_aggregates_fail(self):
+        report = self.verify([
+            ('med-off', 'm', '850', 'log.csv: cache=off; agg=median; column=secs'),
+            ('rounded', 'm', '0.3', 'expr: med-off / 3000'),
+            ('typo', 'm', '1', 'log.csv: cache=off; agg=avg; column=secs'),
+            ('nope', 'm', '1', 'expr: med-off / missing-id'),
+            ('text', 'm', '1', 'log.csv: agg=sum; column=cache'),
+        ])
+        self.assertEqual([d['id'] for d in report['drift']], ['med-off'])
+        self.assertEqual(sorted(i['id'] for i in report['invalid']), ['nope', 'text', 'typo'])
+
+
+class PlanStageCheckTests(SeriesCase):
+    def test_plan_is_checked_before_any_section_is_written(self):
+        # pilot: check.py --plan on a fresh plan failed with "Sections folder not found"
+        shutil.rmtree(self.green / 'sections')
+        plan = self.green / 'plan.md'
+        text = plan.read_text(encoding='utf-8')
+        text = re.sub(r'status: (accepted|drafted), (accepted_sha: \w+, )?', 'status: planned, ', text)
+        plan.write_text(text, encoding='utf-8')
+        code, report = run(check, '--plan', plan)
+        sections = next(c for c in report['checks'] if c['name'] == 'plan-sections')
+        self.assertEqual(sections['not_written'], ['00-intro.md', '01-results.md'])
+        self.assertEqual(sections['missing_files'], [])
+        self.assertEqual(sections['status'], 'passed')
+
+
 class JournalRegressionTests(SeriesCase):
     def setUp(self):
         super().setUp()
@@ -169,6 +232,16 @@ class JournalRegressionTests(SeriesCase):
         run(journal, 'add', '--journal', series_journal, '--source', 'reviews/series.md', '--findings', self.payload)
         report = run(journal, 'list', '--series', self.series)[1]
         self.assertEqual(report['journals'][0]['findings'][0]['still_present'], True)
+
+    def test_applied_warns_when_the_quote_is_still_in_the_text(self):
+        # pilot: an edit failed, the finding was marked applied anyway
+        (self.green / 'sections/01-results.md').write_text('## Р\n\nстарая фраза тут.\n', encoding='utf-8')
+        self.add([{**FINDING, 'before': '«старая фраза»'}, {**FINDING, 'before': '«старая фраза»'}])
+        report = run(journal, 'set', '--journal', self.journal, '--id', 'N001', '--status', 'applied')[1]
+        self.assertTrue(any(w.startswith('N001') for w in report['warnings']))
+        (self.green / 'sections/01-results.md').write_text('## Р\n\nновая фраза тут.\n', encoding='utf-8')
+        report = run(journal, 'set', '--journal', self.journal, '--id', 'N002', '--status', 'applied')[1]
+        self.assertNotIn('warnings', report)
 
     def test_parallel_adds_lose_nothing(self):
         self.payload.write_text(json.dumps([FINDING] * 5, ensure_ascii=False), encoding='utf-8')
@@ -257,7 +330,7 @@ class PolicyTemplateTests(unittest.TestCase):
 
     def test_example_project_layer_uses_template_titles_in_order(self):
         template = self.titles(self.REPO / 'skills/granki-tools/assets/templates/canon.md')
-        example = self.titles(self.REPO / 'examples/bread/.agents/canon.md')
+        example = self.titles(self.REPO / 'docs/example/bread/.agents/canon.md')
         self.assertEqual(example, [t for t in template if t in example])
 
 
@@ -344,6 +417,106 @@ class PlanRegressionTests(SeriesCase):
         self.assertEqual(states(), ['stale'])
         run(journal, 'set', '--journal', self.green / 'journal.md', '--id', 'N001', '--status', 'applied')
         self.assertEqual(states(), ['processed'])
+
+
+class SectionPathTests(SeriesCase):
+    def test_section_may_be_given_as_a_path(self):
+        # pilot: every section session first called check.py --section sections/NN-x.md and failed
+        code, report = run(check, '--plan', self.green / 'plan.md', '--section', 'sections/01-results.md')
+        self.assertNotEqual(code, 2, report)
+        self.assertEqual(report['section'], '01-results.md')
+
+
+class HeadingTests(SeriesCase):
+    def test_first_heading_is_the_article_title(self):
+        # pilot: the intro opened with «# Что получилось», the section name, not the article title
+        intro = self.green / 'sections/00-intro.md'
+        intro.write_text(re.sub(r'^# .+$', '# Что получилось', intro.read_text(encoding='utf-8'), count=1, flags=re.M),
+                         encoding='utf-8')
+        report = run(check, '--plan', self.green / 'plan.md')[1]
+        headings = next(c for c in report['checks'] if c['name'] == 'headings')
+        self.assertEqual((headings['status'], headings['title_mismatch']['heading']), ('warning', 'Что получилось'))
+        results = self.green / 'sections/01-results.md'
+        results.write_text('# Лишний заголовок\n\n' + results.read_text(encoding='utf-8'), encoding='utf-8')
+        report = run(check, '--plan', self.green / 'plan.md')[1]
+        self.assertIn('headings', report['failed'])
+
+
+class PublishGateTests(SeriesCase):
+    def test_publish_refuses_sections_changed_after_acceptance(self):
+        # pilot: a link was replaced two minutes after the author accepted the section, and the article went out
+        from test_scripts import plan as plan_cli
+        plan = self.green / 'plan.md'
+        self.assertEqual(run(plan_cli, 'status', '--plan', plan, '--set', 'ready', '--force')[0], 0)
+        intro = self.green / 'sections/00-intro.md'
+        intro.write_text(intro.read_text(encoding='utf-8') + '\nЕщё одна фраза после приёмки.\n', encoding='utf-8')
+        code, report = run(plan_cli, 'publish', '--plan', plan)
+        self.assertEqual(code, 2)
+        self.assertIn('00-intro.md', report['reason'])
+        self.assertEqual(run(plan_cli, 'publish', '--plan', plan, '--force')[0], 0)
+
+
+class BranchReviewTests(SeriesCase):
+    """Cases from an independent review of the pilot changes."""
+
+    def test_locator_details(self):
+        tmp = Path(tempfile.mkdtemp())
+        try:
+            (tmp / 'log.csv').write_text('id,cache,secs\n1,hit,10\n2,miss,\n3,hit,30\n', encoding='utf-8')
+            rows = [dict(zip(['ID', 'formulation', 'value', 'source'], r)) for r in [
+                ('spaced', 'n', '3', 'log.csv: cache=hit | miss; agg=count'),
+                ('counted', 'n', '2', 'log.csv: agg=count; column=secs'),
+                ('minus', 'n', '−20', 'expr: 10 - 30'),
+                ('tiny', 'n', '1e-3', 'expr: 1 / 1000'),
+                ('not-tiny', 'n', '1e-3', 'expr: 0.4'),
+            ]]
+            report = claims.verify_rows(rows, [tmp])
+            self.assertEqual([d['id'] for d in report['drift']], ['not-tiny'], report)
+        finally:
+            shutil.rmtree(tmp)
+
+    def test_dates_do_not_hide_other_numbers(self):
+        from granki_core import without_dates
+        text = '10 маяков, 20 маек, 1500 г. муки, в мае 4096 токенов, 2024–2025 гг. и 3 мая.'
+        self.assertEqual(integer_tokens(without_dates(text)), ['10', '20', '1500', '4096'])
+
+    def test_heading_edge_cases(self):
+        intro = self.green / 'sections/00-intro.md'
+        body = intro.read_text(encoding='utf-8')
+        title = re.search(r'^# (.+)$', body, re.M).group(1)
+        for opening, status in [('  # ' + title, 'passed'), ('<!-- note -->\n# ' + title, 'passed'), ('# ', 'failed')]:
+            intro.write_text(re.sub(r'^# .+$', lambda _: opening, body, count=1, flags=re.M), encoding='utf-8')
+            code, report = run(check, '--plan', self.green / 'plan.md', '--section', '00-intro.md')
+            headings = next(c for c in report['checks'] if c['name'] == 'headings')
+            self.assertEqual(headings['status'], status, (opening, headings))
+
+    def test_empty_sections_folder_is_the_plan_stage(self):
+        shutil.rmtree(self.green / 'sections')
+        (self.green / 'sections').mkdir()
+        self.assertNotEqual(run(check, '--plan', self.green / 'plan.md')[0], 2)
+
+    def test_publish_needs_every_section_accepted(self):
+        from test_scripts import plan as plan_cli
+        plan = self.green / 'plan.md'  # 01-results.md is drafted and has no accepted_sha
+        run(plan_cli, 'status', '--plan', plan, '--set', 'ready', '--force')
+        code, report = run(plan_cli, 'publish', '--plan', plan)
+        self.assertEqual(code, 2)
+        self.assertIn('01-results.md', report['reason'])
+
+
+class SeriesGateTests(SeriesCase):
+    def test_article_plan_waits_for_the_series_plan(self):
+        # pilot: an article plan was approved while the series plan was still a draft
+        from test_scripts import plan as plan_cli
+        text = self.series.read_text(encoding='utf-8')
+        self.series.write_text(re.sub(r'^status: \w+', 'status: draft', text, count=1, flags=re.M), encoding='utf-8')
+        plan = self.green / 'plan.md'
+        plan.write_text(re.sub(r'^status: \w+', 'status: plan-draft', plan.read_text(encoding='utf-8'), count=1, flags=re.M),
+                        encoding='utf-8')
+        code, report = run(plan_cli, 'status', '--plan', plan, '--set', 'plan-approved')
+        self.assertEqual(code, 2)
+        self.assertIn('series plan is still a draft', report['reason'])
+        self.assertEqual(run(plan_cli, 'status', '--plan', plan, '--set', 'plan-approved', '--force')[0], 0)
 
 
 class SecondRunRegressionTests(SeriesCase):

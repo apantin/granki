@@ -116,7 +116,7 @@ uv run .claude/skills/granki-tools/scripts/rooms.py install --project-root .
 
 Позови Главреда («Главред, начнём серию») или сразу `granki-series`. Главред покажет, где серия, и предложит следующий шаг.
 
-Как выглядит весь цикл на примере — в [туториале](docs/user/tutorial.md): вымышленная серия «Хлеб на закваске» из [examples/bread/](examples/bread/), раздел за разделом до публикации.
+Как выглядит весь цикл на примере — в [туториале](docs/user/tutorial.md): вымышленная серия «Хлеб на закваске» из [docs/example/bread/](docs/example/bread/), раздел за разделом до публикации.
 
 ## Известные ограничения
 
@@ -145,6 +145,11 @@ uv run .claude/skills/granki-tools/scripts/rooms.py install --project-root .
 - [lessons.md](docs/dev/lessons.md) — уроки первой серии
 - [decisions/0001-bmad-v6-foundation.md](docs/dev/decisions/0001-bmad-v6-foundation.md) — ADR: основа на BMad Method v6.12
 - [history.md](docs/dev/history.md) — как собиралась и проверялась версия 0.1.0
+- [evaluation.md](docs/dev/evaluation.md) — методика оценки пилота и её ограничения
+- [research/](docs/research/README.md) — исследования
+  - [text-evaluation/](docs/research/text-evaluation/README.md) — как оценивают тексты: [модели-судьи](docs/research/text-evaluation/01-llm-judges.md), [оценка людьми](docs/research/text-evaluation/02-human-evaluation.md), [распознавание ИИ-текста](docs/research/text-evaluation/03-ai-text-detection.md), [голос и стиль](docs/research/text-evaluation/04-voice-and-style.md), [фактическая точность](docs/research/text-evaluation/05-factuality.md)
+  - [text-checkers/](docs/research/text-checkers/README.md) — проверка текста по правилам: [Главред](docs/research/text-checkers/01-glavred.md), [русские инструменты](docs/research/text-checkers/02-russian-tools.md), [линтеры прозы](docs/research/text-checkers/03-prose-linters.md)
+- [pilot.md](docs/dev/pilot.md) — пилот на вымышленных сериях: метод, находки, эксперименты
 - [roadmap.md](docs/dev/roadmap.md) — пилот и то, что не сделано
 
 **Скиллы**
@@ -163,12 +168,14 @@ uv run .claude/skills/granki-tools/scripts/rooms.py install --project-root .
   - [жанр «обзор результатов эксперимента»](skills/granki-editorial/references/genre-experiment.md), [голос автора и слои канона](skills/granki-editorial/references/voice.md)
 - [granki-tools](skills/granki-tools/SKILL.md) — скрипты:
   - [formats.md](skills/granki-tools/references/formats.md) — точные форматы файлов;
+  - [dialog.md](skills/granki-tools/references/dialog.md) — как агент разговаривает с автором: что писать, как спрашивать;
   - шаблоны: [план серии](skills/granki-tools/assets/templates/series-plan.md), [план статьи](skills/granki-tools/assets/templates/plan.md), [заметки автора](skills/granki-tools/assets/templates/author-notes.md), [канон](skills/granki-tools/assets/templates/canon.md)
 
-**Пример** ([examples/bread/](examples/bread/README.md)) — вымышленная серия «Хлеб на закваске»
-- [канон проекта](examples/bread/.agents/canon.md)
-- серия: [план](examples/bread/articles/bread/series-plan.md), [журнал](examples/bread/articles/bread/journal.md), [заметки автора](examples/bread/articles/bread/author-notes.md), [канон серии](examples/bread/articles/bread/canon.md)
-- статья 01-flour: [план](examples/bread/articles/bread/01-flour/plan.md), [журнал](examples/bread/articles/bread/01-flour/journal.md), разделы [00-intro](examples/bread/articles/bread/01-flour/sections/00-intro.md), [01-results](examples/bread/articles/bread/01-flour/sections/01-results.md), [02-advice](examples/bread/articles/bread/01-flour/sections/02-advice.md)
+**Примеры** ([docs/example/](docs/example/README.md)) — HTML-версии статей и серий пилота
+- [bread/](docs/example/bread/README.md) — вымышленная серия «Хлеб на закваске» для туториала
+  - [канон проекта](docs/example/bread/.agents/canon.md)
+  - серия: [план](docs/example/bread/articles/bread/series-plan.md), [журнал](docs/example/bread/articles/bread/journal.md), [заметки автора](docs/example/bread/articles/bread/author-notes.md), [канон серии](docs/example/bread/articles/bread/canon.md)
+  - статья 01-flour: [план](docs/example/bread/articles/bread/01-flour/plan.md), [журнал](docs/example/bread/articles/bread/01-flour/journal.md), разделы [00-intro](docs/example/bread/articles/bread/01-flour/sections/00-intro.md), [01-results](docs/example/bread/articles/bread/01-flour/sections/01-results.md), [02-advice](docs/example/bread/articles/bread/01-flour/sections/02-advice.md)
 
 ## Тесты
 

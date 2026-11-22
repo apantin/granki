@@ -29,7 +29,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from granki_core import (GrankiError, bare_markers, caveat_markers, decimal_tokens, dump_json,  # noqa: E402
+from granki_core import (SECTION_NAME, without_dates, strip_code, GrankiError, bare_markers, caveat_markers, decimal_tokens, dump_json,  # noqa: E402
                          has_sections, integer_tokens, join_sections, link_targets, load_plan, load_series, prose,
                          read_csv, render, section_paths, series_of, sha256_file, sha256_text)
 from claims import verify_rows  # noqa: E402
@@ -66,7 +66,7 @@ def check_numbers(texts, claims, plan):
         body = prose(text)
         tokens = decimal_tokens(body, numbers['decimal'])
         if integers:
-            tokens += integer_tokens(body, numbers['decimal'])
+            tokens += integer_tokens(body if numbers.get('dates') else without_dates(body), numbers['decimal'])
         for token in tokens:
             total += 1
             if token not in allowed:
@@ -161,16 +161,39 @@ def check_lock(plan, shas, scope_files=None):
                   hint='switch the article to "revising" before editing a published version' if changed else None)
 
 
+def check_headings(texts, plan, first):
+    """The first section opens with «# <article title>»; other sections use ## and below."""
+    problems, mismatch = [], None
+    heading = re.compile(r'^ {0,3}#[ \t]+(.*?)[ \t#]*$', re.M)
+    for name, text in texts:
+        h1 = [m.group(1).strip() for m in heading.finditer(strip_code(text))]
+        if name == first:
+            lead = re.sub(r'<!--.*?-->', '', text.lstrip('\ufeff'), flags=re.S).lstrip()
+            opening = heading.match(lead.splitlines()[0]) if lead else None
+            if not opening or not opening.group(1).strip():
+                problems.append(f'{name}: must start with the article title as a first-level heading')
+            elif plan.get('title') and opening.group(1).strip() != str(plan['title']).strip():
+                mismatch = {'section': name, 'heading': opening.group(1).strip(), 'plan_title': plan['title']}
+            continue
+        elif h1:
+            problems.append(f'{name}: first-level heading «{h1[0]}» outside the first section')
+    return result('headings', not problems and not mismatch, warn=not problems, problems=problems,
+                  title_mismatch=mismatch,
+                  hint='the first heading is the article title; a section title goes into ## ' if (problems or mismatch) else None)
+
+
 def check_plan_sections(plan, names, claim_ids):
     planned = [e.get('file') for e in plan['sections']]
     if not planned:
         return result('plan-sections', True, planned=0)
-    missing = [f for f in planned if f not in names]
+    # a planned section is not written yet: that is the plan stage, not a lost file
+    missing = [e.get('file') for e in plan['sections'] if e.get('file') not in names and e.get('status') != 'planned']
+    not_written = [e.get('file') for e in plan['sections'] if e.get('file') not in names and e.get('status') == 'planned']
     unplanned = [f for f in names if f not in planned]
     unknown_claims = sorted({c for e in plan['sections'] for c in e.get('claims', []) if c not in claim_ids})
     unknown_caveats = sorted({c for e in plan['sections'] for c in e.get('caveats', []) if c not in plan['caveats']})
     ok = not (missing or unplanned or unknown_claims or unknown_caveats)
-    return result('plan-sections', ok, planned=len(planned), missing_files=missing, unplanned_files=unplanned,
+    return result('plan-sections', ok, planned=len(planned), not_written=not_written, missing_files=missing, unplanned_files=unplanned,
                   unknown_claims=unknown_claims, unknown_caveats=unknown_caveats)
 
 
@@ -178,7 +201,9 @@ def check_article(plan_path: Path, article_dir: Path | None = None, section: str
     plan = load_plan(plan_path)
     article = (article_dir or plan['_root']).resolve()
     sections_dir = (article / plan['sections_dir']).resolve()
-    paths = section_paths(sections_dir)
+    # before the first section is written the folder may not exist; the plan can still be checked
+    has_files = sections_dir.is_dir() and any(SECTION_NAME.fullmatch(p.name) for p in sections_dir.glob('*.md'))
+    paths = section_paths(sections_dir) if has_files or section is not None else []
     names = [p.name for p in paths]
     if section is not None and section not in names:
         raise GrankiError(f'Section {section} not found in {sections_dir}')
@@ -211,6 +236,7 @@ def check_article(plan_path: Path, article_dir: Path | None = None, section: str
                              drift=verified['drift'], ambiguous=verified['ambiguous'], missing=verified['missing'],
                              invalid=verified['invalid'], duplicates=verified['duplicates'],
                              unverifiable=verified['unverifiable'], accepted_divergences=accepted))
+    checks.append(check_headings(texts, plan, names[0] if names else None))
     checks.append(check_caveats(texts, plan, None if section is None else {section}))
     checks.append(check_links(texts, sections_dir, article, plan))
     checks.append(check_forbidden(texts, plan))
@@ -265,7 +291,9 @@ def main(argv=None) -> int:
     try:
         if bool(args.plan) == bool(args.series):
             raise GrankiError('Pass exactly one of --plan or --series')
-        report = check_series(args.series) if args.series else check_article(args.plan, args.article_dir, args.section)
+        # a path such as sections/01-results.md names the same section as 01-results.md
+        section = Path(args.section).name if args.section else None
+        report = check_series(args.series) if args.series else check_article(args.plan, args.article_dir, section)
     except (GrankiError, OSError, KeyError, ValueError) as error:
         sys.stdout.write(dump_json({'status': 'error', 'reason': str(error)}))
         return 2

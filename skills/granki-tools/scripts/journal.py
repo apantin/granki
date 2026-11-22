@@ -217,9 +217,10 @@ def set_status(path: Path, ids: list[str], status: str, note: str | None, actor:
         lines = read(path)
         header_at, _, rows = table(lines)
         column = cells(lines[header_at]).index('Статус')
-        found = []
+        found, applied = [], []
         for number, row in rows:
             if row.get('ID') in ids:
+                applied.append(row)
                 values = cells(lines[number])
                 values[column] = status + (f' ({cell(note)})' if note else '')
                 lines[number] = '| ' + ' | '.join(values) + ' |'
@@ -230,7 +231,18 @@ def set_status(path: Path, ids: list[str], status: str, note: str | None, actor:
         lines = append_log(lines, actor, f'{", ".join(found)} → {status}' + (f': {note}' if note else ''))
         write(path, lines)
     pending = sum(1 for _, r in table(lines)[2] if state(r) in PENDING)
-    return {'status': 'passed', 'journal': str(path), 'updated': found, 'pending': pending}
+    report = {'status': 'passed', 'journal': str(path), 'updated': found, 'pending': pending}
+    if status == 'applied':  # an edit that silently failed leaves the quoted text in place
+        series = path.parent / 'series-plan.md'
+        try:  # the status is already saved; a plan that does not load only skips the warning
+            text = series_reader(series) if series.is_file() else section_reader(path.parent / 'plan.md')
+            stale = [f'{row["ID"]}: the quote from «Было» is still in {row.get("Раздел")}; check that the edit was made'
+                     for row in applied if still_present(row.get('Было', ''), text(row.get('Раздел'))) is True]
+        except GrankiError:
+            stale = []
+        if stale:
+            report['warnings'] = stale
+    return report
 
 
 def still_present(before: str, text: str | None):

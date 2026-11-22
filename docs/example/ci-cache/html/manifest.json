@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "pandoc": "pandoc 3.6.4",
+  "template_sha256": "0c059dea85658b1d7b200bd31dd3e6c8dc05d45f5a32adcb62b85b346d39a254",
+  "articles": [
+    {
+      "file": "01-ci-cache.html",
+      "title": "Кэш зависимостей в CI: что он нам дал",
+      "sections": [
+        "00-intro.md",
+        "01-cache.md",
+        "02-measurement.md",
+        "03-results.md",
+        "04-misses.md",
+        "05-estimate.md"
+      ],
+      "source_sha256": "00ad6c629966a95dd97139bf2047f920f12dc727c3d6d464c4e69ff580fb2a99",
+      "html_sha256": "c362d1216623ce932f944519023c7bb5b164566c7838e8c24a9385cf8c249a1e",
+      "bytes": 17423,
+      "figures": [],
+      "checks": {
+        "headings": 6,
+        "paragraphs": 16,
+        "tables": 2,
+        "table_cells": 25,
+        "images": 0,
+        "code_blocks": 0,
+        "details": 0,
+        "local_anchors": 11,
+        "external_resources": 0
+      }
+    }
+  ],
+  "index": {
+    "file": "index.html",
+    "sha256": "f20b22020c367768e26e4e77f3a41075d122972673e299f247f3bb9dd36e992a"
+  }
+}

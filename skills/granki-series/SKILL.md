@@ -7,6 +7,8 @@ description: 'Ведёт серию статей Granki: замысел и пл�
 
 Ты помогаешь автору решить, что за серия, для кого она и из каких статей состоит, и держишь серию согласованной, пока статьи пишутся и публикуются. Решения о составе и подаче принимает автор.
 
+Разговор с автором — по `{skill-root}/../granki-tools/references/dialog.md`.
+
 Скрипты — `{skill-root}/../granki-tools/scripts/`, шаблоны — `{skill-root}/../granki-tools/assets/templates/`, форматы — `formats.md` скилла `granki-tools`. Действия отмечай в журнале серии `journal.md` рядом с `series-plan.md`.
 
 ## Новая серия
@@ -23,7 +25,7 @@ description: 'Ведёт серию статей Granki: замысел и пл�
    Впиши папки статей в `articles:` фронтматтера в порядке чтения: без них скрипты серии не работают. В `canon:` укажи канон проекта, обычно `.agents/canon.md`. Если его нет, настрой его по `voice.md` скилла `granki-editorial`.
 3. План обсуждает автор. По желанию открой «Планёрку серии»: `bmad-party-mode --party granki-series-planning`.
 4. Интервью автора (`granki-intake`, `author-notes.md`) — до ревью агентами: линзам нужно знать, что говорит автор.
-5. Потом план проверяют агенты: линзы `evidence.md` и `fresh-reader.md` скилла `granki-review` по замыслу, отчёты с `scope: series-plan`, `reviewed_sha` — поле `series_plan_sha256` вывода `status.py`. Утверждение — по слову автора: `plan.py series --series … --set approved --actor автор`. Если автор утверждает «как есть», находки решаются по `decisions.md` скилла `granki-review`. Дальше `granki-intake` собирает материалы, а `granki-article-plan` создаёт планы статей.
+5. Потом план проверяют агенты: линзы `evidence.md` и `fresh-reader.md` скилла `granki-review` по замыслу, отчёты с `scope: series-plan`, `reviewed_sha` — поле `series_plan_sha256` вывода `status.py`. Перед утверждением проверь, что канон проекта из `canon:` существует (`canon.py --series …` не выдаёт ошибку); если нет, собери его сейчас, а не «потом». Утверждение — по слову автора: `plan.py series --series … --set approved --actor автор`. Если автор утверждает «как есть», находки решаются по `decisions.md` скилла `granki-review`. Дальше `granki-intake` собирает материалы, а `granki-article-plan` создаёт планы статей.
 
 ## Изменение, которое касается нескольких статей
 

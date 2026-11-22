@@ -1,0 +1,49 @@
+ID,formulation,value,source
+R-total-n,Сборок полного пайплайна в выгрузке за 8 недель,289,"derived: builds.csv, число строк"
+R-base-n,"База без кэша (old-4cpu, 6–31 октября 2025): число сборок",145,"derived: builds.csv, число сборок по строкам cache=off"
+R-base-median,"База без кэша: медиана длительности, с, все статусы",888,"derived: builds.csv, медиана duration_s по строкам cache=off"
+R-base-median-min,"База без кэша: медиана, мин",14.8,derived: R-base-median / 60
+R-cacheold-n,С кэшем на old-4cpu (3–14 ноября 2025): число сборок,75,"derived: builds.csv, число сборок по строкам cache in (hit, miss), runner=old-4cpu"
+R-cacheold-median,"С кэшем на old-4cpu: медиана, с, все статусы, hit и miss",502,"derived: builds.csv, медиана duration_s по строкам cache in (hit, miss), runner=old-4cpu"
+R-cacheold-median-min,"С кэшем на old-4cpu: медиана, мин",8.3667,derived: R-cacheold-median / 60
+R-cache-effect,Эффект кэша на old-4cpu: изменение медианы,-0.4347,derived: R-cacheold-median / R-base-median − 1
+R-cache-ratio,Эффект кэша на old-4cpu: во сколько раз быстрее,1.7689,derived: R-base-median / R-cacheold-median
+R-ok-base-n,"База без кэша, только status=ok: число сборок",130,"derived: builds.csv, число сборок по строкам cache=off, status=ok"
+R-ok-base-median,"База без кэша, только status=ok: медиана, с",881.5,"derived: builds.csv, медиана duration_s по строкам cache=off, status=ok"
+R-ok-cacheold-n,"С кэшем на old-4cpu, только status=ok: число сборок",66,"derived: builds.csv, число сборок по строкам cache in (hit, miss), runner=old-4cpu, status=ok"
+R-ok-cacheold-median,"С кэшем на old-4cpu, только status=ok: медиана, с",486,"derived: builds.csv, медиана duration_s по строкам cache in (hit, miss), runner=old-4cpu, status=ok"
+R-ok-effect,Эффект кэша на old-4cpu по успешным сборкам: изменение медианы,-0.4487,derived: R-ok-cacheold-median / R-ok-base-median − 1
+R-cache-n,"Сборок с кэшем (hit или miss), 3–28 ноября 2025, оба типа раннеров",144,"derived: builds.csv, число сборок по строкам cache in (hit, miss)"
+R-miss-n,"Промахов кэша (cache=miss), всего",12,"derived: builds.csv, число сборок по строкам cache=miss"
+R-miss-share,Доля промахов среди сборок с кэшем,0.0833,derived: R-miss-n / R-cache-n
+R-miss-expected,Ожидание автора по доле промахов,0.03,"derived: слова автора, blog/author-notes.md, «Что автору кажется интересным»; не данные"
+R-oldhit-n,"old-4cpu, попадания: число сборок",68,"derived: builds.csv, число сборок по строкам cache=hit, runner=old-4cpu"
+R-oldhit-median,"old-4cpu, попадания: медиана, с",484.5,"derived: builds.csv, медиана duration_s по строкам cache=hit, runner=old-4cpu"
+R-oldmiss-n,"old-4cpu, промахи: число сборок",7,"derived: builds.csv, число сборок по строкам cache=miss, runner=old-4cpu"
+R-oldmiss-median,"old-4cpu, промахи: медиана, с",1001,"derived: builds.csv, медиана duration_s по строкам cache=miss, runner=old-4cpu"
+R-new-n,new-8cpu с кэшем (17–28 ноября 2025): число сборок,69,"derived: builds.csv, число сборок по строкам runner=new-8cpu"
+R-new-median,"new-8cpu с кэшем: медиана, с, все статусы, hit и miss",338,"derived: builds.csv, медиана duration_s по строкам runner=new-8cpu"
+R-new-median-min,"new-8cpu с кэшем: медиана, мин",5.6333,derived: R-new-median / 60
+R-runner-step,Переход old-4cpu с кэшем → new-8cpu с кэшем: изменение медианы,-0.3267,derived: R-new-median / R-cacheold-median − 1
+R-total-effect,Кэш и новые раннеры вместе: изменение медианы от базы,-0.6194,derived: R-new-median / R-base-median − 1
+R-newhit-n,"new-8cpu, попадания: число сборок",64,"derived: builds.csv, число сборок по строкам cache=hit, runner=new-8cpu"
+R-newhit-median,"new-8cpu, попадания: медиана, с",335,"derived: builds.csv, медиана duration_s по строкам cache=hit, runner=new-8cpu"
+R-newmiss-n,"new-8cpu, промахи: число сборок",5,"derived: builds.csv, число сборок по строкам cache=miss, runner=new-8cpu"
+R-newmiss-median,"new-8cpu, промахи: медиана, с",552,"derived: builds.csv, медиана duration_s по строкам cache=miss, runner=new-8cpu"
+R-flaky-base,Флаки-сборок в базе без кэша,8,"derived: builds.csv, число сборок по строкам cache=off, status=flaky"
+R-flaky-cacheold,Флаки-сборок с кэшем на old-4cpu,2,"derived: builds.csv, число сборок по строкам cache in (hit, miss), runner=old-4cpu, status=flaky"
+R-flaky-new,Флаки-сборок на new-8cpu,1,"derived: builds.csv, число сборок по строкам runner=new-8cpu, status=flaky"
+R-cache-enabled,Дата включения кэша,2025-11-03,context.json#/cache_enabled
+R-runners-upgraded,Дата замены раннеров,2025-11-17,context.json#/runners_upgraded
+R-services,"Сервисов в монорепозитории, около",40,derived: context.json#/repo «~40 сервисов»
+R-year,Год замера,2025,"derived: builds.csv, колонка date; context.json"
+R-day-base-start,"База: первый день, 6 октября 2025",6,"derived: builds.csv, колонка date; даты кэша и раннеров — context.json"
+R-day-base-end,"База: последний день, 31 октября 2025",31,"derived: builds.csv, колонка date; даты кэша и раннеров — context.json"
+R-day-cache,Кэш включён 3 ноября 2025,3,"derived: builds.csv, колонка date; даты кэша и раннеров — context.json"
+R-day-cacheold-end,"Последний день на old-4cpu, 14 ноября 2025",14,"derived: builds.csv, колонка date; даты кэша и раннеров — context.json"
+R-day-weekend-nov1,Выходные без сборок: 1 ноября 2025,1,"derived: builds.csv, колонка date; даты кэша и раннеров — context.json"
+R-day-weekend-nov2,Выходные без сборок: 2 ноября 2025,2,"derived: builds.csv, колонка date; даты кэша и раннеров — context.json"
+R-day-weekend-1,Выходные без сборок: 15 ноября 2025,15,"derived: builds.csv, колонка date; даты кэша и раннеров — context.json"
+R-day-weekend-2,Выходные без сборок: 16 ноября 2025,16,"derived: builds.csv, колонка date; даты кэша и раннеров — context.json"
+R-day-runners,Раннеры заменены 17 ноября 2025,17,"derived: builds.csv, колонка date; даты кэша и раннеров — context.json"
+R-day-end,"Последний день выгрузки, 28 ноября 2025",28,"derived: builds.csv, колонка date; даты кэша и раннеров — context.json"

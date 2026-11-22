@@ -1,0 +1,61 @@
+{
+  "status": "passed",
+  "pandoc": "pandoc 3.6.4",
+  "template_sha256": "0c059dea85658b1d7b200bd31dd3e6c8dc05d45f5a32adcb62b85b346d39a254",
+  "articles": [
+    {
+      "file": "01-winter-at-all.html",
+      "title": "Зимой вообще можно?",
+      "sections": [
+        "00-intro.md",
+        "01-days.md",
+        "02-time.md",
+        "03-verdict.md"
+      ],
+      "source_sha256": "ab2fe326ea2d7da1eb7cbcf3a0de591175a7c41eaad1531f661bff87b299fd14",
+      "html_sha256": "1a4fcf9227d2b3bcd11c916db06fdb749b2fa8dadb469dce0eba7d10af5143fe",
+      "bytes": 15895,
+      "figures": [],
+      "checks": {
+        "headings": 4,
+        "paragraphs": 21,
+        "tables": 2,
+        "table_cells": 33,
+        "images": 0,
+        "code_blocks": 0,
+        "details": 0,
+        "local_anchors": 7,
+        "external_resources": 0
+      }
+    },
+    {
+      "file": "02-studs.html",
+      "title": "Девять тысяч за шипы",
+      "sections": [
+        "00-intro.md",
+        "01-falls.md",
+        "02-time.md",
+        "03-verdict.md"
+      ],
+      "source_sha256": "032cebcb27e99dac1d519c4e2143571eb62f59292bd445eae415bd03c2b7c23c",
+      "html_sha256": "a86dbbf23d4aa2a221c2e6979868807726ffaeb5acbbf8cc0b3bc7b1e9d806e9",
+      "bytes": 17133,
+      "figures": [],
+      "checks": {
+        "headings": 4,
+        "paragraphs": 20,
+        "tables": 2,
+        "table_cells": 30,
+        "images": 0,
+        "code_blocks": 0,
+        "details": 0,
+        "local_anchors": 7,
+        "external_resources": 0
+      }
+    }
+  ],
+  "index": {
+    "file": "index.html",
+    "sha256": "ea1647eb1e0df70341d3c70f0c1d6bb0e63caff65e4ec814f9137762fccf5ac2"
+  }
+}

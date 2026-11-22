@@ -38,7 +38,7 @@ granki/
                                     assets/templates/, assets/party-rooms.toml, assets/article.template.html
   docs/user/                        для пользователя: туториал, процесс, роли, конфликты с другими скиллами
   docs/dev/                         для разработчика: порядок изменений и выпуска, замысел, устройство, решения, история
-  examples/bread/                   вымышленная серия для туториала
+  docs/example/                     примеры: HTML-статьи пилота; bread/ — вымышленная серия для туториала
   README.md  CHANGELOG.md  LICENSE
 ```
 

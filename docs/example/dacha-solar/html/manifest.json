@@ -1,0 +1,39 @@
+{
+  "status": "passed",
+  "pandoc": "pandoc 3.6.4",
+  "template_sha256": "0c059dea85658b1d7b200bd31dd3e6c8dc05d45f5a32adcb62b85b346d39a254",
+  "articles": [
+    {
+      "file": "01-first-summer.html",
+      "title": "Первое лето с солнечной станцией на даче",
+      "sections": [
+        "00-intro.md",
+        "01-outages.md",
+        "02-production.md",
+        "03-money.md",
+        "04-weather.md",
+        "05-inverter.md",
+        "06-again.md"
+      ],
+      "source_sha256": "80a7c876c4d892e23173da246f7c441086ed7b523be6605843d38497ec145c0b",
+      "html_sha256": "c70dca8325e89480880d886c524cc3dc9b428199da7ea0c64051d55ff83c9ec8",
+      "bytes": 25538,
+      "figures": [],
+      "checks": {
+        "headings": 7,
+        "paragraphs": 34,
+        "tables": 2,
+        "table_cells": 27,
+        "images": 0,
+        "code_blocks": 0,
+        "details": 0,
+        "local_anchors": 13,
+        "external_resources": 0
+      }
+    }
+  ],
+  "index": {
+    "file": "index.html",
+    "sha256": "0598bb333752e36cde95c385b581c3d4cbf2b1917aeb6e6bd3fe1ab7b85191c5"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "status": "passed",
+  "pandoc": "pandoc 3.6.4",
+  "template_sha256": "0c059dea85658b1d7b200bd31dd3e6c8dc05d45f5a32adcb62b85b346d39a254",
+  "articles": [
+    {
+      "file": "02-studs.html",
+      "title": "Девять тысяч за шипы",
+      "sections": [
+        "00-intro.md",
+        "01-falls.md",
+        "02-time.md",
+        "03-verdict.md"
+      ],
+      "source_sha256": "fc74ef10a093563f342a4bfa9a02dd580f726ffccee7114546e0f01770af09a3",
+      "html_sha256": "785954e6e7d73c0f616ceff43b742af6433d4d1252be44d8fa3e30a83d0d82ff",
+      "bytes": 16508,
+      "figures": [],
+      "checks": {
+        "headings": 4,
+        "paragraphs": 15,
+        "tables": 2,
+        "table_cells": 50,
+        "images": 0,
+        "code_blocks": 0,
+        "details": 0,
+        "local_anchors": 7,
+        "external_resources": 0
+      }
+    }
+  ],
+  "index": {
+    "file": "index.html",
+    "sha256": "699227ce61813c48a92dab85e8fbd2fe1c366a8ea8b715e10f4dedf946fdaaac"
+  }
+}
