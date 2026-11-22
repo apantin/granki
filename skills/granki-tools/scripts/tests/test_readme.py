@@ -12,7 +12,7 @@ LINK = re.compile(r'\]\(([^)\s]+)\)')
 
 def markdown_files() -> list[Path]:
     return sorted(p for p in REPO.rglob('*.md')
-                  if not any(part in {'.git', '.venv', 'node_modules'} for part in p.parts))
+                  if not any(part in {'.git', '.venv', 'node_modules', 'temp'} for part in p.parts))
 
 
 def sample_material(path: Path) -> bool:
