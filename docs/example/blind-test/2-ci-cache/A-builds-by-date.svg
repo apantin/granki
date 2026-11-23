@@ -1,0 +1,341 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 440" width="760" height="440" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="12" role="img" aria-label="Длительность всех сборок полного пайплайна по датам, 6 октября — 28 ноября 2025">
+<rect width="760" height="440" fill="#fcfcfb"/>
+<line x1="64" x2="740" y1="392.0" y2="392.0" stroke="#e1e0d9" stroke-width="1"/>
+<text x="56" y="396.0" text-anchor="end" fill="#898781">0</text>
+<line x1="64" x2="740" y1="340.2" y2="340.2" stroke="#e1e0d9" stroke-width="1"/>
+<text x="56" y="344.2" text-anchor="end" fill="#898781">300</text>
+<line x1="64" x2="740" y1="288.4" y2="288.4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="56" y="292.4" text-anchor="end" fill="#898781">600</text>
+<line x1="64" x2="740" y1="236.6" y2="236.6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="56" y="240.6" text-anchor="end" fill="#898781">900</text>
+<line x1="64" x2="740" y1="184.8" y2="184.8" stroke="#e1e0d9" stroke-width="1"/>
+<text x="56" y="188.8" text-anchor="end" fill="#898781">1200</text>
+<line x1="64" x2="740" y1="133.1" y2="133.1" stroke="#e1e0d9" stroke-width="1"/>
+<text x="56" y="137.1" text-anchor="end" fill="#898781">1500</text>
+<line x1="64" x2="740" y1="81.3" y2="81.3" stroke="#e1e0d9" stroke-width="1"/>
+<text x="56" y="85.3" text-anchor="end" fill="#898781">1800</text>
+<text x="56" y="52" text-anchor="end" fill="#52514e">с</text>
+<text x="70.3" y="410" text-anchor="middle" fill="#898781">6 окт</text>
+<text x="157.9" y="410" text-anchor="middle" fill="#898781">13 окт</text>
+<text x="245.5" y="410" text-anchor="middle" fill="#898781">20 окт</text>
+<text x="333.1" y="410" text-anchor="middle" fill="#898781">27 окт</text>
+<text x="420.8" y="410" text-anchor="middle" fill="#898781">3 ноя</text>
+<text x="508.4" y="410" text-anchor="middle" fill="#898781">10 ноя</text>
+<text x="596.0" y="410" text-anchor="middle" fill="#898781">17 ноя</text>
+<text x="683.7" y="410" text-anchor="middle" fill="#898781">24 ноя</text>
+<line x1="414.5" x2="414.5" y1="58" y2="392" stroke="#52514e" stroke-width="1"/>
+<text x="419.5" y="72" fill="#52514e">кэш включён</text>
+<text x="419.5" y="87" fill="#52514e">3 ноября</text>
+<line x1="589.8" x2="589.8" y1="58" y2="392" stroke="#52514e" stroke-width="1"/>
+<text x="594.8" y="72" fill="#52514e">новые раннеры</text>
+<text x="594.8" y="87" fill="#52514e">17 ноября</text>
+<circle cx="67.0" cy="223.3" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-06: 977 с, без кэша</title></circle>
+<circle cx="67.9" cy="223.5" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-06: 976 с, без кэша</title></circle>
+<circle cx="68.9" cy="242.8" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-06: 864 с, без кэша</title></circle>
+<circle cx="69.8" cy="244.4" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-06: 855 с, без кэша</title></circle>
+<circle cx="70.7" cy="221.6" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-06: 987 с, без кэша</title></circle>
+<circle cx="71.7" cy="247.0" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-06: 840 с, без кэша</title></circle>
+<circle cx="72.6" cy="234.0" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-06: 915 с, без кэша</title></circle>
+<circle cx="73.5" cy="169.7" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-06: 1288 с, без кэша</title></circle>
+<circle cx="79.4" cy="243.5" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-07: 860 с, без кэша</title></circle>
+<circle cx="80.3" cy="240.8" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-07: 876 с, без кэша</title></circle>
+<circle cx="81.1" cy="233.4" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-07: 919 с, без кэша</title></circle>
+<circle cx="81.9" cy="216.1" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-07: 1019 с, без кэша</title></circle>
+<circle cx="82.8" cy="230.9" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-07: 933 с, без кэша</title></circle>
+<circle cx="83.6" cy="252.5" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-07: 808 с, без кэша</title></circle>
+<circle cx="84.4" cy="246.8" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-07: 841 с, без кэша</title></circle>
+<circle cx="85.3" cy="218.2" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-07: 1007 с, без кэша</title></circle>
+<circle cx="86.1" cy="256.7" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-07: 784 с, без кэша</title></circle>
+<circle cx="92.0" cy="230.9" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-08: 933 с, без кэша</title></circle>
+<circle cx="92.9" cy="257.2" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-08: 781 с, без кэша</title></circle>
+<circle cx="93.9" cy="127.2" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-08: 1534 с, без кэша</title></circle>
+<circle cx="94.8" cy="261.3" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-08: 757 с, без кэша</title></circle>
+<circle cx="95.8" cy="264.3" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-08: 740 с, без кэша</title></circle>
+<circle cx="96.7" cy="238.7" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-08: 888 с, без кэша</title></circle>
+<circle cx="97.6" cy="229.7" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-08: 940 с, без кэша</title></circle>
+<circle cx="98.6" cy="261.3" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-08: 757 с, без кэша</title></circle>
+<circle cx="104.7" cy="223.0" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-09: 979 с, без кэша</title></circle>
+<circle cx="105.9" cy="131.3" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-09: 1510 с, без кэша</title></circle>
+<circle cx="107.2" cy="223.5" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-09: 976 с, без кэша</title></circle>
+<circle cx="108.4" cy="216.6" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-09: 1016 с, без кэша</title></circle>
+<circle cx="109.7" cy="227.7" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-09: 952 с, без кэша</title></circle>
+<circle cx="110.9" cy="263.6" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-09: 744 с, без кэша</title></circle>
+<circle cx="117.0" cy="266.5" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-10: 727 с, без кэша</title></circle>
+<circle cx="117.8" cy="260.8" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-10: 760 с, без кэша</title></circle>
+<circle cx="118.7" cy="260.5" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-10: 762 с, без кэша</title></circle>
+<circle cx="119.5" cy="251.5" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-10: 814 с, без кэша</title></circle>
+<circle cx="120.3" cy="230.1" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-10: 938 с, без кэша</title></circle>
+<circle cx="121.2" cy="238.9" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-10: 887 с, без кэша</title></circle>
+<circle cx="122.0" cy="242.5" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-10: 866 с, без кэша</title></circle>
+<circle cx="122.8" cy="261.8" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-10: 754 с, без кэша</title></circle>
+<circle cx="123.7" cy="229.4" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-10: 942 с, без кэша</title></circle>
+<circle cx="154.6" cy="236.8" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-13: 899 с, без кэша</title></circle>
+<circle cx="155.5" cy="230.4" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-13: 936 с, без кэша</title></circle>
+<circle cx="156.5" cy="238.7" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-13: 888 с, без кэша</title></circle>
+<circle cx="157.4" cy="253.0" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-13: 805 с, без кэша</title></circle>
+<circle cx="158.4" cy="266.5" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-13: 727 с, без кэша</title></circle>
+<circle cx="159.3" cy="264.3" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-13: 740 с, без кэша</title></circle>
+<circle cx="160.2" cy="238.0" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-13: 892 с, без кэша</title></circle>
+<circle cx="161.2" cy="221.6" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-13: 987 с, без кэша</title></circle>
+<circle cx="167.1" cy="205.2" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-14: 1082 с, без кэша</title></circle>
+<circle cx="167.9" cy="249.1" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-14: 828 с, без кэша</title></circle>
+<circle cx="168.7" cy="236.6" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-14: 900 с, без кэша</title></circle>
+<circle cx="169.6" cy="251.3" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-14: 815 с, без кэша</title></circle>
+<circle cx="170.4" cy="244.1" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-14: 857 с, без кэша</title></circle>
+<circle cx="171.2" cy="219.2" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-14: 1001 с, без кэша</title></circle>
+<circle cx="172.1" cy="217.8" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-14: 1009 с, без кэша</title></circle>
+<circle cx="172.9" cy="243.0" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-14: 863 с, без кэша</title></circle>
+<circle cx="173.7" cy="78.8" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-14: 1814 с, без кэша</title></circle>
+<circle cx="179.6" cy="233.4" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-15: 919 с, без кэша</title></circle>
+<circle cx="180.4" cy="263.7" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-15: 743 с, без кэша</title></circle>
+<circle cx="181.3" cy="254.1" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-15: 799 с, без кэша</title></circle>
+<circle cx="182.1" cy="219.4" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-15: 1000 с, без кэша</title></circle>
+<circle cx="182.9" cy="243.5" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-15: 860 с, без кэша</title></circle>
+<circle cx="183.8" cy="240.9" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-15: 875 с, без кэша</title></circle>
+<circle cx="184.6" cy="266.2" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-15: 729 с, без кэша</title></circle>
+<circle cx="185.4" cy="227.3" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-15: 954 с, без кэша</title></circle>
+<circle cx="186.3" cy="221.3" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-15: 989 с, без кэша</title></circle>
+<circle cx="192.3" cy="257.0" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-16: 782 с, без кэша</title></circle>
+<circle cx="193.6" cy="233.5" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-16: 918 с, без кэша</title></circle>
+<circle cx="194.8" cy="250.6" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-16: 819 с, без кэша</title></circle>
+<circle cx="196.1" cy="245.3" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-16: 850 с, без кэша</title></circle>
+<circle cx="197.3" cy="222.1" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-16: 984 с, без кэша</title></circle>
+<circle cx="198.6" cy="251.1" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-16: 816 с, без кэша</title></circle>
+<circle cx="204.7" cy="221.4" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-17: 988 с, без кэша</title></circle>
+<circle cx="205.6" cy="217.0" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-17: 1014 с, без кэша</title></circle>
+<circle cx="206.6" cy="243.2" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-17: 862 с, без кэша</title></circle>
+<circle cx="207.5" cy="247.7" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-17: 836 с, без кэша</title></circle>
+<circle cx="208.4" cy="230.6" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-17: 935 с, без кэша</title></circle>
+<circle cx="209.4" cy="251.0" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-17: 817 с, без кэша</title></circle>
+<circle cx="210.3" cy="236.1" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-17: 903 с, без кэша</title></circle>
+<circle cx="211.2" cy="249.2" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-17: 827 с, без кэша</title></circle>
+<circle cx="242.2" cy="260.5" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-20: 762 с, без кэша</title></circle>
+<circle cx="243.0" cy="224.7" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-20: 969 с, без кэша</title></circle>
+<circle cx="243.8" cy="264.9" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-20: 736 с, без кэша</title></circle>
+<circle cx="244.7" cy="235.1" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-20: 909 с, без кэша</title></circle>
+<circle cx="245.5" cy="218.2" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-20: 1007 с, без кэша</title></circle>
+<circle cx="246.4" cy="243.0" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-20: 863 с, без кэша</title></circle>
+<circle cx="247.2" cy="243.2" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-20: 862 с, без кэша</title></circle>
+<circle cx="248.0" cy="253.4" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-20: 803 с, без кэша</title></circle>
+<circle cx="248.9" cy="240.6" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-20: 877 с, без кэша</title></circle>
+<circle cx="254.9" cy="226.6" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-21: 958 с, без кэша</title></circle>
+<circle cx="256.2" cy="219.5" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-21: 999 с, без кэша</title></circle>
+<circle cx="257.4" cy="244.1" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-21: 857 с, без кэша</title></circle>
+<circle cx="258.7" cy="248.0" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-21: 834 с, без кэша</title></circle>
+<circle cx="259.9" cy="226.4" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-21: 959 с, без кэша</title></circle>
+<circle cx="261.2" cy="233.9" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-21: 916 с, без кэша</title></circle>
+<circle cx="267.6" cy="221.1" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-22: 990 с, без кэша</title></circle>
+<circle cx="269.1" cy="239.7" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-22: 882 с, без кэша</title></circle>
+<circle cx="270.6" cy="220.6" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-22: 993 с, без кэша</title></circle>
+<circle cx="272.1" cy="263.0" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-22: 747 с, без кэша</title></circle>
+<circle cx="273.6" cy="227.8" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-22: 951 с, без кэша</title></circle>
+<circle cx="280.1" cy="222.8" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-23: 980 с, без кэша</title></circle>
+<circle cx="281.6" cy="239.9" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-23: 881 с, без кэша</title></circle>
+<circle cx="283.1" cy="243.2" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-23: 862 с, без кэша</title></circle>
+<circle cx="284.6" cy="240.8" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-23: 876 с, без кэша</title></circle>
+<circle cx="286.1" cy="222.1" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-23: 984 с, без кэша</title></circle>
+<circle cx="292.6" cy="244.7" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-24: 853 с, без кэша</title></circle>
+<circle cx="294.1" cy="238.5" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-24: 889 с, без кэша</title></circle>
+<circle cx="295.6" cy="220.7" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-24: 992 с, без кэша</title></circle>
+<circle cx="297.1" cy="218.3" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-24: 1006 с, без кэша</title></circle>
+<circle cx="298.6" cy="251.7" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-24: 813 с, без кэша</title></circle>
+<circle cx="329.8" cy="238.0" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-27: 892 с, без кэша</title></circle>
+<circle cx="330.6" cy="241.5" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-27: 872 с, без кэша</title></circle>
+<circle cx="331.5" cy="217.6" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-27: 1010 с, без кэша</title></circle>
+<circle cx="332.3" cy="226.3" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-27: 960 с, без кэша</title></circle>
+<circle cx="333.1" cy="231.8" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-27: 928 с, без кэша</title></circle>
+<circle cx="334.0" cy="246.1" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-27: 845 с, без кэша</title></circle>
+<circle cx="334.8" cy="253.5" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-27: 802 с, без кэша</title></circle>
+<circle cx="335.7" cy="245.1" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-27: 851 с, без кэша</title></circle>
+<circle cx="336.5" cy="242.8" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-27: 864 с, без кэша</title></circle>
+<circle cx="342.5" cy="265.8" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-28: 731 с, без кэша</title></circle>
+<circle cx="343.8" cy="137.9" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-28: 1472 с, без кэша</title></circle>
+<circle cx="345.0" cy="232.1" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-28: 926 с, без кэша</title></circle>
+<circle cx="346.3" cy="235.6" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-28: 906 с, без кэша</title></circle>
+<circle cx="347.5" cy="261.0" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-28: 759 с, без кэша</title></circle>
+<circle cx="348.8" cy="257.2" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-28: 781 с, без кэша</title></circle>
+<circle cx="354.9" cy="234.9" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-29: 910 с, без кэша</title></circle>
+<circle cx="355.8" cy="239.7" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-29: 882 с, без кэша</title></circle>
+<circle cx="356.8" cy="256.1" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-29: 787 с, без кэша</title></circle>
+<circle cx="357.7" cy="237.1" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-29: 897 с, без кэша</title></circle>
+<circle cx="358.7" cy="235.1" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-29: 909 с, без кэша</title></circle>
+<circle cx="359.6" cy="236.5" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-29: 901 с, без кэша</title></circle>
+<circle cx="360.5" cy="227.3" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-29: 954 с, без кэша</title></circle>
+<circle cx="361.5" cy="221.8" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-29: 986 с, без кэша</title></circle>
+<circle cx="367.7" cy="262.4" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-30: 751 с, без кэша</title></circle>
+<circle cx="369.2" cy="226.8" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-30: 957 с, без кэша</title></circle>
+<circle cx="370.7" cy="145.0" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-30: 1431 с, без кэша</title></circle>
+<circle cx="372.2" cy="249.1" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-30: 828 с, без кэша</title></circle>
+<circle cx="373.7" cy="231.1" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-30: 932 с, без кэша</title></circle>
+<circle cx="380.0" cy="232.1" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-31: 926 с, без кэша</title></circle>
+<circle cx="381.1" cy="112.7" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-31: 1618 с, без кэша</title></circle>
+<circle cx="382.1" cy="220.9" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-31: 991 с, без кэша</title></circle>
+<circle cx="383.2" cy="261.5" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-31: 756 с, без кэша</title></circle>
+<circle cx="384.3" cy="252.9" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-31: 806 с, без кэша</title></circle>
+<circle cx="385.4" cy="260.5" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-31: 762 с, без кэша</title></circle>
+<circle cx="386.4" cy="262.4" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"><title>2025-10-31: 751 с, без кэша</title></circle>
+<circle cx="417.5" cy="247.2" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-03: 839 с, попадание</title></circle>
+<circle cx="418.4" cy="310.2" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-03: 474 с, попадание</title></circle>
+<circle cx="419.4" cy="318.5" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-03: 426 с, попадание</title></circle>
+<path d="M420.3,212.8 L425.8,218.3 L420.3,223.8 L414.8,218.3 Z" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-03: 1006 с, промах кэша</title></path>
+<circle cx="421.2" cy="311.6" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-03: 466 с, попадание</title></circle>
+<circle cx="422.2" cy="300.3" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-03: 531 с, попадание</title></circle>
+<circle cx="423.1" cy="301.0" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-03: 527 с, попадание</title></circle>
+<circle cx="424.1" cy="298.1" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-03: 544 с, попадание</title></circle>
+<circle cx="430.0" cy="302.6" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-04: 518 с, попадание</title></circle>
+<circle cx="430.9" cy="322.8" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-04: 401 с, попадание</title></circle>
+<circle cx="431.9" cy="316.6" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-04: 437 с, попадание</title></circle>
+<circle cx="432.8" cy="304.3" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-04: 508 с, попадание</title></circle>
+<circle cx="433.8" cy="294.8" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-04: 563 с, попадание</title></circle>
+<circle cx="434.7" cy="224.5" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-04: 970 с, попадание</title></circle>
+<circle cx="435.6" cy="311.7" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-04: 465 с, попадание</title></circle>
+<circle cx="436.6" cy="320.4" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-04: 415 с, попадание</title></circle>
+<circle cx="442.6" cy="295.7" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-05: 558 с, попадание</title></circle>
+<circle cx="443.7" cy="300.2" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-05: 532 с, попадание</title></circle>
+<circle cx="444.7" cy="321.9" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-05: 406 с, попадание</title></circle>
+<circle cx="445.8" cy="318.3" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-05: 427 с, попадание</title></circle>
+<circle cx="446.9" cy="296.4" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-05: 554 с, попадание</title></circle>
+<circle cx="448.0" cy="312.8" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-05: 459 с, попадание</title></circle>
+<circle cx="449.0" cy="315.0" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-05: 446 с, попадание</title></circle>
+<path d="M455.1,224.6 L460.6,230.1 L455.1,235.6 L449.6,230.1 Z" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-06: 938 с, промах кэша</title></path>
+<circle cx="456.2" cy="321.6" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-06: 408 с, попадание</title></circle>
+<circle cx="457.3" cy="302.6" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-06: 518 с, попадание</title></circle>
+<circle cx="458.3" cy="302.7" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-06: 517 с, попадание</title></circle>
+<circle cx="459.4" cy="320.4" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-06: 415 с, попадание</title></circle>
+<circle cx="460.5" cy="295.8" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-06: 557 с, попадание</title></circle>
+<circle cx="461.6" cy="311.2" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-06: 468 с, попадание</title></circle>
+<circle cx="467.8" cy="312.8" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-07: 459 с, попадание</title></circle>
+<circle cx="469.3" cy="305.0" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-07: 504 с, попадание</title></circle>
+<circle cx="470.9" cy="300.0" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-07: 533 с, попадание</title></circle>
+<circle cx="472.4" cy="309.5" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-07: 478 с, попадание</title></circle>
+<circle cx="473.9" cy="299.1" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-07: 538 с, попадание</title></circle>
+<circle cx="505.1" cy="306.4" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-10: 496 с, попадание</title></circle>
+<circle cx="505.9" cy="316.0" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-10: 440 с, попадание</title></circle>
+<circle cx="506.7" cy="322.1" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-10: 405 с, попадание</title></circle>
+<circle cx="507.6" cy="305.3" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-10: 502 с, попадание</title></circle>
+<circle cx="508.4" cy="320.7" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-10: 413 с, попадание</title></circle>
+<circle cx="509.2" cy="312.6" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-10: 460 с, попадание</title></circle>
+<circle cx="510.1" cy="301.9" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-10: 522 с, попадание</title></circle>
+<path d="M510.9,212.5 L516.4,218.0 L510.9,223.5 L505.4,218.0 Z" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-10: 1008 с, промах кэша</title></path>
+<circle cx="511.7" cy="311.0" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-10: 469 с, попадание</title></circle>
+<circle cx="517.8" cy="295.0" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-11: 562 с, попадание</title></circle>
+<circle cx="519.0" cy="297.1" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-11: 550 с, попадание</title></circle>
+<circle cx="520.3" cy="298.3" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-11: 543 с, попадание</title></circle>
+<path d="M521.6,229.9 L527.1,235.4 L521.6,240.9 L516.1,235.4 Z" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-11: 907 с, промах кэша</title></path>
+<circle cx="522.8" cy="320.9" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-11: 412 с, попадание</title></circle>
+<circle cx="524.1" cy="314.5" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-11: 449 с, попадание</title></circle>
+<circle cx="530.2" cy="312.9" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-12: 458 с, попадание</title></circle>
+<circle cx="531.3" cy="302.9" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-12: 516 с, попадание</title></circle>
+<circle cx="532.4" cy="297.2" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-12: 549 с, попадание</title></circle>
+<circle cx="533.4" cy="314.1" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-12: 451 с, попадание</title></circle>
+<circle cx="534.5" cy="316.0" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-12: 440 с, попадание</title></circle>
+<circle cx="535.6" cy="311.9" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-12: 464 с, попадание</title></circle>
+<circle cx="536.7" cy="300.5" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-12: 530 с, попадание</title></circle>
+<circle cx="542.6" cy="301.5" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-13: 524 с, попадание</title></circle>
+<circle cx="543.5" cy="308.4" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-13: 484 с, попадание</title></circle>
+<circle cx="544.3" cy="304.6" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-13: 506 с, попадание</title></circle>
+<path d="M545.1,213.7 L550.6,219.2 L545.1,224.7 L539.6,219.2 Z" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-13: 1001 с, промах кэша</title></path>
+<path d="M546.0,207.7 L551.5,213.2 L546.0,218.7 L540.5,213.2 Z" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-13: 1036 с, промах кэша</title></path>
+<circle cx="546.8" cy="301.9" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-13: 522 с, попадание</title></circle>
+<circle cx="547.6" cy="301.4" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-13: 525 с, попадание</title></circle>
+<circle cx="548.5" cy="313.5" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-13: 455 с, попадание</title></circle>
+<circle cx="549.3" cy="307.9" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-13: 487 с, попадание</title></circle>
+<circle cx="555.1" cy="299.6" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-14: 535 с, попадание</title></circle>
+<circle cx="556.0" cy="299.5" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-14: 536 с, попадание</title></circle>
+<circle cx="556.8" cy="308.3" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-14: 485 с, попадание</title></circle>
+<circle cx="557.6" cy="311.2" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-14: 468 с, попадание</title></circle>
+<circle cx="558.5" cy="312.4" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-14: 461 с, попадание</title></circle>
+<circle cx="559.3" cy="314.8" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-14: 447 с, попадание</title></circle>
+<path d="M560.2,249.8 L565.7,255.3 L560.2,260.8 L554.7,255.3 Z" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-14: 792 с, промах кэша</title></path>
+<circle cx="561.0" cy="321.4" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-14: 409 с, попадание</title></circle>
+<circle cx="561.8" cy="322.1" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-14: 405 с, попадание</title></circle>
+<circle cx="592.9" cy="333.7" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-17: 338 с, попадание</title></circle>
+<circle cx="594.2" cy="328.0" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-17: 371 с, попадание</title></circle>
+<circle cx="595.4" cy="333.1" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-17: 341 с, попадание</title></circle>
+<circle cx="596.7" cy="335.9" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-17: 325 с, попадание</title></circle>
+<circle cx="597.9" cy="330.4" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-17: 357 с, попадание</title></circle>
+<circle cx="599.2" cy="341.1" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-17: 295 с, попадание</title></circle>
+<circle cx="605.3" cy="330.2" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-18: 358 с, попадание</title></circle>
+<path d="M606.2,265.1 L611.7,270.6 L606.2,276.1 L600.7,270.6 Z" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-18: 703 с, промах кэша</title></path>
+<circle cx="607.1" cy="340.4" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-18: 299 с, попадание</title></circle>
+<circle cx="608.1" cy="330.2" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-18: 358 с, попадание</title></circle>
+<circle cx="609.0" cy="342.6" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-18: 286 с, попадание</title></circle>
+<circle cx="610.0" cy="344.2" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-18: 277 с, попадание</title></circle>
+<circle cx="610.9" cy="327.4" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-18: 374 с, попадание</title></circle>
+<circle cx="611.8" cy="333.3" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-18: 340 с, попадание</title></circle>
+<circle cx="617.8" cy="330.7" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-19: 355 с, попадание</title></circle>
+<circle cx="618.7" cy="341.6" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-19: 292 с, попадание</title></circle>
+<circle cx="619.7" cy="211.9" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-19: 1043 с, попадание</title></circle>
+<circle cx="620.6" cy="329.2" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-19: 364 с, попадание</title></circle>
+<circle cx="621.5" cy="339.3" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-19: 305 с, попадание</title></circle>
+<circle cx="622.5" cy="331.9" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-19: 348 с, попадание</title></circle>
+<circle cx="623.4" cy="326.6" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-19: 379 с, попадание</title></circle>
+<circle cx="624.4" cy="338.0" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-19: 313 с, попадание</title></circle>
+<circle cx="630.5" cy="330.4" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-20: 357 с, попадание</title></circle>
+<circle cx="631.7" cy="327.8" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-20: 372 с, попадание</title></circle>
+<circle cx="633.0" cy="330.7" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-20: 355 с, попадание</title></circle>
+<circle cx="634.2" cy="343.5" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-20: 281 с, попадание</title></circle>
+<circle cx="635.5" cy="339.2" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-20: 306 с, попадание</title></circle>
+<circle cx="636.7" cy="336.6" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-20: 321 с, попадание</title></circle>
+<circle cx="643.1" cy="332.1" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-21: 347 с, попадание</title></circle>
+<circle cx="644.6" cy="329.0" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-21: 365 с, попадание</title></circle>
+<path d="M646.1,292.1 L651.6,297.6 L646.1,303.1 L640.6,297.6 Z" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-21: 547 с, промах кэша</title></path>
+<circle cx="647.6" cy="327.4" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-21: 374 с, попадание</title></circle>
+<circle cx="649.1" cy="330.4" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-21: 357 с, попадание</title></circle>
+<circle cx="680.4" cy="333.1" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-24: 341 с, попадание</title></circle>
+<circle cx="681.3" cy="330.0" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-24: 359 с, попадание</title></circle>
+<circle cx="682.3" cy="340.2" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-24: 300 с, попадание</title></circle>
+<circle cx="683.2" cy="334.5" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-24: 333 с, попадание</title></circle>
+<circle cx="684.1" cy="343.1" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-24: 283 с, попадание</title></circle>
+<circle cx="685.1" cy="339.3" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-24: 305 с, попадание</title></circle>
+<circle cx="686.0" cy="334.2" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-24: 335 с, попадание</title></circle>
+<circle cx="687.0" cy="331.6" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-24: 350 с, попадание</title></circle>
+<circle cx="692.8" cy="341.4" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-25: 293 с, попадание</title></circle>
+<circle cx="693.7" cy="331.8" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-25: 349 с, попадание</title></circle>
+<circle cx="694.5" cy="336.2" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-25: 323 с, попадание</title></circle>
+<circle cx="695.4" cy="327.8" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-25: 372 с, попадание</title></circle>
+<circle cx="696.2" cy="340.0" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-25: 301 с, попадание</title></circle>
+<circle cx="697.0" cy="333.7" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-25: 338 с, попадание</title></circle>
+<circle cx="697.9" cy="328.0" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-25: 371 с, попадание</title></circle>
+<circle cx="698.7" cy="341.6" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-25: 292 с, попадание</title></circle>
+<path d="M699.5,291.2 L705.0,296.7 L699.5,302.2 L694.0,296.7 Z" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-25: 552 с, промах кэша</title></path>
+<circle cx="705.6" cy="330.9" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-26: 354 с, попадание</title></circle>
+<circle cx="706.8" cy="344.9" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-26: 273 с, попадание</title></circle>
+<circle cx="708.1" cy="337.8" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-26: 314 с, попадание</title></circle>
+<circle cx="709.3" cy="340.0" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-26: 301 с, попадание</title></circle>
+<circle cx="710.6" cy="344.5" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-26: 275 с, попадание</title></circle>
+<circle cx="711.8" cy="333.7" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-26: 338 с, попадание</title></circle>
+<circle cx="717.9" cy="334.3" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-27: 334 с, попадание</title></circle>
+<circle cx="718.9" cy="336.2" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-27: 323 с, попадание</title></circle>
+<circle cx="719.8" cy="343.0" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-27: 284 с, попадание</title></circle>
+<circle cx="720.8" cy="335.2" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-27: 329 с, попадание</title></circle>
+<path d="M721.7,286.9 L727.2,292.4 L721.7,297.9 L716.2,292.4 Z" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-27: 577 с, промах кэша</title></path>
+<circle cx="722.6" cy="339.0" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-27: 307 с, попадание</title></circle>
+<circle cx="723.6" cy="340.6" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-27: 298 с, попадание</title></circle>
+<circle cx="724.5" cy="326.4" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-27: 380 с, попадание</title></circle>
+<circle cx="730.7" cy="339.3" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-28: 305 с, попадание</title></circle>
+<circle cx="732.2" cy="327.6" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-28: 373 с, попадание</title></circle>
+<circle cx="733.7" cy="337.1" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-28: 318 с, попадание</title></circle>
+<circle cx="735.2" cy="334.2" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-28: 335 с, попадание</title></circle>
+<path d="M736.7,293.3 L742.2,298.8 L736.7,304.3 L731.2,298.8 Z" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"><title>2025-11-28: 540 с, промах кэша</title></path>
+<line x1="66.0" x2="412.5" y1="238.7" y2="238.7" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round"/>
+<line x1="239.3" x2="239.3" y1="108.0" y2="235.7" stroke="#898781" stroke-width="1"/>
+<rect x="166.9" y="89.0" width="144.8" height="19" fill="#fcfcfb"/>
+<text x="239.3" y="102.0" text-anchor="middle" fill="#0b0b0b" font-weight="600">медиана 888 с (145)</text>
+<line x1="416.5" x2="587.8" y1="305.3" y2="305.3" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round"/>
+<line x1="502.1" x2="502.1" y1="187.4" y2="302.3" stroke="#898781" stroke-width="1"/>
+<rect x="433.3" y="168.4" width="137.6" height="19" fill="#fcfcfb"/>
+<text x="502.1" y="181.4" text-anchor="middle" fill="#0b0b0b" font-weight="600">медиана 502 с (75)</text>
+<line x1="591.8" x2="738.0" y1="333.7" y2="333.7" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round"/>
+<line x1="664.9" x2="664.9" y1="249.5" y2="330.7" stroke="#898781" stroke-width="1"/>
+<rect x="596.1" y="230.5" width="137.6" height="19" fill="#fcfcfb"/>
+<text x="664.9" y="243.5" text-anchor="middle" fill="#0b0b0b" font-weight="600">медиана 338 с (69)</text>
+<circle cx="69" cy="22" r="5" fill="#2a78d6"/>
+<text x="80" y="26" fill="#0b0b0b">без кэша</text>
+<circle cx="177" cy="22" r="5" fill="#1baf7a"/>
+<text x="188" y="26" fill="#0b0b0b">попадание</text>
+<path d="M293,16 L299,22 L293,28 L287,22 Z" fill="#eb6834"/>
+<text x="304" y="26" fill="#0b0b0b">промах кэша</text>
+<line x1="420" x2="438" y1="22" y2="22" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round"/>
+<text x="444" y="26" fill="#0b0b0b">медиана периода (число сборок)</text>
+</svg>
