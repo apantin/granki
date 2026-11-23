@@ -418,6 +418,16 @@ class StyleTests(SeriesCase):
         self.assertTrue(any(s.startswith('«прививка»') for s in report['signals']))
         self.assertTrue(any(s.startswith('анафорическая тройка') for s in report['signals']))
 
+    def test_dashes_between_words(self):
+        path = self.tmp / 'dash.md'
+        path.write_text('Мешок — около тысячи. Печь одна — у другого выйдет иначе.\n\n'
+                        '— Скажу, — ответил я. Тропа — к реке.\n\n- Было — список, не проза\n', encoding='utf-8')
+        code, report = run(style, '--file', path)
+        quotes = [m['quote'] for m in report['categories']['dash']['matches']]
+        # dialogue dashes and list items are not counted
+        self.assertEqual(quotes, ['Мешок — около тысячи.', 'Печь одна — у другого выйдет иначе.', 'Тропа — к реке.'])
+        self.assertTrue(any(s.startswith('тире между словами: 3') for s in report['signals']))
+
     def test_plan_scope_and_input_errors(self):
         p = self.green / 'plan.md'
         code, report = run(style, '--plan', p)

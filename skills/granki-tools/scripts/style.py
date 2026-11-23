@@ -30,6 +30,8 @@ Categories:
                before a quotation.
   anaphora     three short parallel phrases that open with the same word:
                «один ездок, один маршрут, одна зима».
+  dash         a dash between words inside a prose sentence: «мешок — около
+               тысячи», «— у другого пекаря может выйти иначе».
 
 A match in a sentence that a caveat marker opens carries `caveat: <ID>`:
 it is the required caveat, its content stays.
@@ -54,6 +56,8 @@ on three topics (seven texts). Ranges below are «Granki studs» against
                in no other text; anaphora in two Granki versions and one
                bare-model text.
   colon ≥ 15 per 1000 words: 12–22 against 6–15.
+  dash ≥ 14 per 1000 words (the limit of the blog-eval kit): the authors'
+               old posts 5–9, Granki full runs 15–24, the bare model 0–23.
   sentence length CV < 0.45: 0.33–0.50 against 0.45–0.59.
   paragraph length CV < 0.40 (from 5 prose paragraphs): 0.35–0.63 against
                0.40–0.57.
@@ -147,6 +151,7 @@ HEADING = re.compile(r'^ {0,3}#{1,6}(?:[ \t]+(.*?))?[ \t#]*$')
 LIST_ITEM = re.compile(r'^\s*(?:[-*+]|\d+[.)])\s+')
 # A caveat marker kept in the prose while comments are removed: it tells which sentence is a required caveat.
 KEPT_MARKER = re.compile('\ue000([A-Za-z0-9_.-]+)\ue001')
+DASH = re.compile(r'(?<=\w)[*_»")]*\s+[—–]\s+(?=[\w«"„])')
 COLON = re.compile(r'(?<=[^\s:])[*_]*:\s+(?=[^\s«"„])')
 # Words that start each of three parallel phrases; forms of one word count as one.
 FAMILIES = {f: base for base, forms in {
@@ -163,7 +168,7 @@ FAMILIES = {f: base for base, forms in {
 # Landmarks from the pilot texts, see the module docstring.
 SIGNAL_LIMITS = {'refusal_per_1000': 5, 'refusal_share': 0.25, 'self_ref_per_1000': 10, 'flagged_share': 0.45,
                  'colon_per_1000': 15, 'sentence_cv': 0.45, 'paragraph_cv': 0.40, 'one_sentence_share': 0.25,
-                 'min_cases': 2, 'min_colons': 3}
+                 'dash_per_1000': 14, 'min_cases': 2, 'min_colons': 3}
 
 
 def words(text: str) -> list[str]:
@@ -257,6 +262,11 @@ def colons(sentence: str) -> list[str]:
     return hits
 
 
+def dashes(sentence: str) -> list[str]:
+    return [' '.join(sentence[:m.start()].split()[-3:]) + ' — ' + ' '.join(sentence[m.end():].split()[:4])
+            for m in DASH.finditer(sentence)]
+
+
 def cv(values: list[int]) -> float | None:
     if len(values) < 2 or not statistics.mean(values):
         return None
@@ -272,7 +282,7 @@ def measure(texts: list[tuple[str, str]]) -> dict:
     for index, par in enumerate(pars):
         par['index'] = index
     total = sum(len(words(p['text'])) for p in pars)
-    found = {k: [] for k in ('refusal', 'self_ref', 'inoculation', 'colon', 'anaphora')}
+    found = {k: [] for k in ('refusal', 'self_ref', 'inoculation', 'colon', 'anaphora', 'dash')}
     for par, caveat, sent in [(p, c, s) for p in pars for c, s in p['sentences']]:
         spans = {}
         for kind in ('inoculation', 'refusal', 'self_ref'):
@@ -286,6 +296,7 @@ def measure(texts: list[tuple[str, str]]) -> dict:
         hits = {k: [m.group(0) for m in v] for k, v in spans.items()}
         if not par['list']:
             hits['colon'] = colons(sent)
+            hits['dash'] = dashes(sent)
         hits['anaphora'] = anaphora(sent)
         for kind, quotes in hits.items():
             for quote in quotes:
@@ -353,6 +364,9 @@ def signals(cat: dict, dist: dict, n_pars: int, n_prose: int, total: int) -> lis
             out.append(label + ': ' + '; '.join(quoted(h['quote']) for h in cat[kind]['matches'][:3]))
     if colon['count'] >= lim['min_colons'] and colon['per_1000'] >= lim['colon_per_1000']:
         out.append(f'двоеточия-пояснения: {colon["count"]}, {number(colon["per_1000"])} на 1000 слов')
+    dash = cat['dash']
+    if dash['count'] >= lim['min_colons'] and dash['per_1000'] >= lim['dash_per_1000']:
+        out.append(f'тире между словами: {dash["count"]}, {number(dash["per_1000"])} на 1000 слов')
     if dist['sentence_cv'] is not None and dist['sentences'] >= 10 and dist['sentence_cv'] < lim['sentence_cv']:
         out.append(f'предложения ровной длины: коэффициент вариации {number(dist["sentence_cv"])}, '
                    f'ориентир — от {number(lim["sentence_cv"])}')
