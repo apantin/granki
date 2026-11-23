@@ -18,7 +18,7 @@ Categories:
   refusal      the text says what it will not do or cannot tell:
                «выводов не делаю», «сравнивать не буду», «не назову»,
                «дневник не говорит», «по дневнику не понять», «это опыт
-               одного ездока». A limit stated with a fact («всего три
+               одной кухни». A limit stated with a fact («всего три
                поездки», «по памяти», «около») is not a refusal.
   self_ref     the text talks about its data or its own layout: «в таблице»,
                «так она и стоит в таблице», «эта цифра слабее», «дальше это
@@ -29,7 +29,7 @@ Categories:
                list or table, not after a one-word label («Было: …»), not
                before a quotation.
   anaphora     three short parallel phrases that open with the same word:
-               «один ездок, один маршрут, одна зима».
+               «одна печь, одна мука, одно лето».
   dash         a dash between words inside a prose sentence: «мешок — около
                тысячи», «— у другого пекаря может выйти иначе».
 
