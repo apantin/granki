@@ -6,7 +6,8 @@
 """Check one section, one article or a whole series against its plan.
 
 Checks: plan and section files agree, prose length, every decimal number in
-prose traces to a claim, claims still equal their source cells, required
+prose traces to a claim (with integers: true, «около 900» may round a claim
+to one or two significant digits), claims still equal their source cells, required
 caveats are present, links resolve, forbidden public content is absent,
 figure files match their manifest, published sections are unchanged.
 
@@ -52,26 +53,63 @@ def load_claims(plan, article):
     return rows
 
 
+# A rounded number passes only right after a word that says so; «почти» and its kin also say it is rounded up.
+APPROX = re.compile(r'(?<![а-яё])(около|примерно|приблизительно|порядка|почти|без\s+малого|под)\s+(\d+)(?![\w]|[.,]\d)',
+                    re.I)
+ROUNDED_UP = ('почти', 'без малого', 'под')
+
+
+def rounded_forms(value):
+    """{rounded form: True if it is not below the value} for a claim's value, and its percent form for a share.
+    Two significant digits always; one only when it stays within 5% of the value."""
+    try:
+        number = abs(float(value))
+    except (TypeError, ValueError):
+        return {}
+    forms = {}
+    for scaled in [number] + ([number * 100] if number <= 1 else []):
+        for digits in (1, 2):
+            rounded = float(f'{scaled:.{digits}g}')
+            if scaled >= 10 and (digits == 2 or abs(rounded - scaled) <= 0.05 * scaled):
+                key = str(int(rounded))
+                forms[key] = forms.get(key, False) or rounded >= scaled
+    return forms
+
+
 def check_numbers(texts, claims, plan):
     numbers = plan['numbers']
     allowed = set(str(a) for a in numbers.get('allow', []))
     for claim in claims:
         allowed |= render(claim['value'], numbers['renderers'], numbers['decimal'])
     integers = bool(numbers.get('integers'))
+    rounded = {}
     if integers:
         for claim in claims:
             allowed |= render(claim['value'], ['fixed:0', 'percent:0'], numbers['decimal'])
-    untraced, total = [], 0
+            for form, up in rounded_forms(claim['value']).items():
+                rounded[form] = rounded.get(form, False) or up
+    untraced, approximate, total = [], 0, 0
     for name, text in texts:
         body = prose(text)
         tokens = decimal_tokens(body, numbers['decimal'])
+        hedged = []
         if integers:
-            tokens += integer_tokens(body if numbers.get('dates') else without_dates(body), numbers['decimal'])
+            undated = body if numbers.get('dates') else without_dates(body)
+            tokens += integer_tokens(undated, numbers['decimal'])
+            # «около 900» for 897,76: a rounded number passes only after a word that says it is rounded.
+            hedged = [number for word, number in APPROX.findall(undated)
+                      if number in rounded and (rounded[number] or re.sub(r'\s+', ' ', word.lower()) not in ROUNDED_UP)]
         for token in tokens:
             total += 1
-            if token not in allowed:
-                untraced.append({'section': name, 'number': token})
-    return result('numbers', not untraced, occurrences=total, integers=integers, untraced=untraced)
+            if token in allowed:
+                continue
+            if token in hedged:
+                hedged.remove(token)
+                approximate += 1
+                continue
+            untraced.append({'section': name, 'number': token})
+    return result('numbers', not untraced, occurrences=total, integers=integers, approximate=approximate,
+                  untraced=untraced)
 
 
 def check_caveats(texts, plan, scope_files):

@@ -93,6 +93,34 @@ class CheckTests(SeriesCase):
         self.assertEqual(code, 1)
         self.assertEqual(self.failed(report)['numbers']['untraced'], [{'section': '01-results.md', 'number': '91,00'}])
 
+    def test_hedged_rounded_number_passes(self):
+        self.edit(self.green / 'plan.md', 'allow: ["2,5"]}', 'allow: ["2,5"], integers: true}')
+        self.edit(self.green / 'sections/01-results.md', '87,50% гостей', 'почти 90% гостей')
+        code, report = run(check, '--plan', self.green / 'plan.md')
+        self.assertEqual(code, 0, report)
+        self.assertEqual({c['name']: c for c in report['checks']}['numbers']['approximate'], 1)
+
+    def test_rounded_forms(self):
+        # {form: not below the value}: «почти 90%» fits 87,5% but not 94,4%; 149 is not «около 100».
+        self.assertEqual(check.rounded_forms(0.875), {'88': True, '90': True})
+        self.assertEqual(check.rounded_forms(0.944), {'94': False, '90': False})
+        self.assertEqual(check.rounded_forms(149), {'150': True})
+        self.assertEqual(check.rounded_forms(897.76), {'900': True})
+
+    def test_rounded_number_needs_its_own_hedge_word(self):
+        # «около 90B» is a name, not a rounded 90; 70 is too far from 87,5.
+        self.edit(self.green / 'plan.md', 'allow: ["2,5"]}', 'allow: ["2,5"], integers: true}')
+        for text, number in [('90% гостей, а не почти 90%,', '90'), ('90% гостей ждали около 90B и', '90'),
+                             ('почти 70% гостей', '70'), ('около 70% гостей', '70')]:
+            with self.subTest(text=text):
+                section = self.green / 'sections/01-results.md'
+                original = section.read_text(encoding='utf-8')
+                self.edit(section, '87,50% гостей', text)
+                code, report = run(check, '--plan', self.green / 'plan.md')
+                section.write_text(original, encoding='utf-8')
+                self.assertEqual(code, 1)
+                self.assertEqual(self.failed(report)['numbers']['untraced'], [{'section': '01-results.md', 'number': number}])
+
     def test_missing_caveat_fails(self):
         self.edit(self.green / 'sections/00-intro.md', '<!-- caveat:C1 -->', '')
         code, report = run(check, '--plan', self.green / 'plan.md')
