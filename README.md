@@ -180,6 +180,7 @@ uv run .claude/skills/granki-tools/scripts/rooms.py install --project-root .
   - серия: [план](docs/example/bread/articles/bread/series-plan.md), [журнал](docs/example/bread/articles/bread/journal.md), [заметки автора](docs/example/bread/articles/bread/author-notes.md), [канон серии](docs/example/bread/articles/bread/canon.md)
   - статья 01-flour: [план](docs/example/bread/articles/bread/01-flour/plan.md), [журнал](docs/example/bread/articles/bread/01-flour/journal.md), разделы [00-intro](docs/example/bread/articles/bread/01-flour/sections/00-intro.md), [01-results](docs/example/bread/articles/bread/01-flour/sections/01-results.md), [02-advice](docs/example/bread/articles/bread/01-flour/sections/02-advice.md)
 - [blind-test/](docs/example/blind-test/README.md) — слепой тест «где нейросеть»: две волны, в каждой три темы пилота и по три текста — голая модель, Granki до и после экспериментов со стилем
+- [style-v25/](docs/example/style-v25/README.md) — тексты последней версии ветки стиля с профилем автора, с подписями, и сами профили
 
 ## Тесты
 

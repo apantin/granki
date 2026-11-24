@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 320" width="560" height="320" role="img" aria-labelledby="t d">
+<title id="t">Медиана длительности полного пайплайна, с (число сборок)</title>
+<desc id="d">без кэша, 4-ядерные, 6–31 октября: 888 с (145 сборок); кэш, 4-ядерные, 3–14 ноября: 502 с (75 сборок); кэш, 8-ядерные, 17–28 ноября: 338 с (69 сборок). Между вторым и третьим периодом — другие раннеры.</desc>
+<style>
+  svg { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .bg { fill: #fcfcfb; }
+  .bar { fill: #2a78d6; }
+  .val { fill: #0b0b0b; font-size: 14px; font-weight: 600; text-anchor: middle; }
+  .lab { fill: #0b0b0b; font-size: 13px; text-anchor: middle; }
+  .lab2, .sepl { fill: #52514e; font-size: 13px; text-anchor: middle; }
+  .sepl, .cap { text-anchor: start; }
+  .cap { fill: #52514e; font-size: 13px; }
+  .axis { stroke: #52514e; stroke-width: 1; }
+  .sep { stroke: #52514e; stroke-width: 1; stroke-dasharray: 4 4; }
+  @media (prefers-color-scheme: dark) {
+    .bg { fill: #1a1a19; }
+    .bar { fill: #3987e5; }
+    .val, .lab { fill: #f0efec; }
+    .lab2, .sepl, .cap { fill: #c3c2b7; }
+    .axis, .sep { stroke: #c3c2b7; }
+  }
+</style>
+<rect class="bg" width="560" height="320" rx="6"/>
+<path class="bar" d="M81.3,250 V96.0 Q81.3,92.0 85.3,92.0 H101.3 Q105.3,92.0 105.3,96.0 V250 Z"><title>без кэша, 4-ядерные, 6–31 октября: медиана 888 с (145 сборок)</title></path>
+<text class="val" x="93.3" y="82.0">888 с (145)</text>
+<text class="lab" x="93.3" y="272">без кэша, 4-ядерные</text>
+<text class="lab2" x="93.3" y="290">6–31 октября</text>
+<path class="bar" d="M268.0,250 V164.7 Q268.0,160.7 272.0,160.7 H288.0 Q292.0,160.7 292.0,164.7 V250 Z"><title>кэш, 4-ядерные, 3–14 ноября: медиана 502 с (75 сборок)</title></path>
+<text class="val" x="280.0" y="150.7">502 с (75)</text>
+<text class="lab" x="280.0" y="272">кэш, 4-ядерные</text>
+<text class="lab2" x="280.0" y="290">3–14 ноября</text>
+<path class="bar" d="M454.7,250 V193.9 Q454.7,189.9 458.7,189.9 H474.7 Q478.7,189.9 478.7,193.9 V250 Z"><title>кэш, 8-ядерные, 17–28 ноября: медиана 338 с (69 сборок)</title></path>
+<text class="val" x="466.7" y="179.9">338 с (69)</text>
+<text class="lab" x="466.7" y="272">кэш, 8-ядерные</text>
+<text class="lab2" x="466.7" y="290">17–28 ноября</text>
+<line class="sep" x1="373.3" y1="44" x2="373.3" y2="250"/>
+<text class="sepl" x="379.3" y="58">другие раннеры</text>
+<text class="cap" x="12" y="24">Медиана полного пайплайна, с; в скобках — число сборок</text>
+<line class="axis" x1="8" y1="250" x2="552" y2="250"/>
+</svg>
