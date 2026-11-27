@@ -313,7 +313,7 @@ class PolicyTemplateTests(unittest.TestCase):
     """Layers merge by exact section titles, so every place that names them must agree."""
 
     STANDARD = ['Проект и читатель', 'Площадки и форматы', 'Регистр и тональность', 'Словарь: запрещено/принято',
-                'Фактура: на что опираемся', 'Примеры голоса', 'Как я говорю и не говорю', 'Открытые вопросы']
+                'Фактура: на что опираемся', 'Автор', 'Примеры голоса', 'Как я говорю и не говорю', 'Открытые вопросы']
     REPO = Path(__file__).resolve().parents[4]
 
     def titles(self, path: Path) -> list[str]:

@@ -28,6 +28,7 @@ import rooms  # noqa: E402
 import impact  # noqa: E402
 import canon  # noqa: E402
 import status  # noqa: E402
+import style  # noqa: E402
 from fixture import make_series  # noqa: E402
 from granki_core import GrankiError, decimal_tokens, prose, render, section_paths  # noqa: E402
 
@@ -91,6 +92,34 @@ class CheckTests(SeriesCase):
         code, report = run(check, '--plan', self.green / 'plan.md')
         self.assertEqual(code, 1)
         self.assertEqual(self.failed(report)['numbers']['untraced'], [{'section': '01-results.md', 'number': '91,00'}])
+
+    def test_hedged_rounded_number_passes(self):
+        self.edit(self.green / 'plan.md', 'allow: ["2,5"]}', 'allow: ["2,5"], integers: true}')
+        self.edit(self.green / 'sections/01-results.md', '87,50% гостей', 'почти 90% гостей')
+        code, report = run(check, '--plan', self.green / 'plan.md')
+        self.assertEqual(code, 0, report)
+        self.assertEqual({c['name']: c for c in report['checks']}['numbers']['approximate'], 1)
+
+    def test_rounded_forms(self):
+        # {form: not below the value}: «почти 90%» fits 87,5% but not 94,4%; 149 is not «около 100».
+        self.assertEqual(check.rounded_forms(0.875), {'88': True, '90': True})
+        self.assertEqual(check.rounded_forms(0.944), {'94': False, '90': False})
+        self.assertEqual(check.rounded_forms(149), {'150': True})
+        self.assertEqual(check.rounded_forms(897.76), {'900': True})
+
+    def test_rounded_number_needs_its_own_hedge_word(self):
+        # «около 90B» is a name, not a rounded 90; 70 is too far from 87,5.
+        self.edit(self.green / 'plan.md', 'allow: ["2,5"]}', 'allow: ["2,5"], integers: true}')
+        for text, number in [('90% гостей, а не почти 90%,', '90'), ('90% гостей ждали около 90B и', '90'),
+                             ('почти 70% гостей', '70'), ('около 70% гостей', '70')]:
+            with self.subTest(text=text):
+                section = self.green / 'sections/01-results.md'
+                original = section.read_text(encoding='utf-8')
+                self.edit(section, '87,50% гостей', text)
+                code, report = run(check, '--plan', self.green / 'plan.md')
+                section.write_text(original, encoding='utf-8')
+                self.assertEqual(code, 1)
+                self.assertEqual(self.failed(report)['numbers']['untraced'], [{'section': '01-results.md', 'number': number}])
 
     def test_missing_caveat_fails(self):
         self.edit(self.green / 'sections/00-intro.md', '<!-- caveat:C1 -->', '')
@@ -332,6 +361,84 @@ class PlanTests(SeriesCase):
         self.assertIn('plan-sections', self.failed(run(check, '--plan', self.green / 'plan.md')[1]))
         self.assertEqual(run(plan, 'sync', '--plan', self.green / 'plan.md')[1]['added'], ['02-extra.md'])
         self.assertEqual(run(check, '--plan', self.green / 'plan.md')[0], 0)
+
+
+STYLE_TEXT = """\
+---
+title: Пуэр
+---
+
+# Пуэр на даче
+
+<!-- caveat:C1 --> Один чайник, одна кружка, одна неделя. Выводов я не делаю.
+
+Заваривал утром: вода из колодца, шумовка вместо сита. Всего три заварки, время по памяти, около пяти минут.
+
+```
+выводов не делаю
+```
+
+| Чай | Минуты |
+|---|---|
+| пуэр | 5 |
+
+## Вкус
+
+Горечь записана в таблице, так она и стоит в таблице. Журнал не говорит, откуда она.
+
+Итог: «волшебный» не напишу, хотя напрашивается.
+
+- Было: горько
+- Стало: мягче
+"""
+
+
+class StyleTests(SeriesCase):
+    def test_counts_traces_in_prose_only(self):
+        path = self.tmp / 'puer.md'
+        path.write_text(STYLE_TEXT, encoding='utf-8')
+        code, report = run(style, '--file', path)
+        self.assertEqual(code, 0, report)
+        cat = report['categories']
+        where = lambda kind: [(m['heading'], m['paragraph'], m['quote']) for m in cat[kind]['matches']]  # noqa: E731
+        # code, tables, comments and the frontmatter are not prose; a limit with a fact is not a refusal
+        self.assertEqual(where('refusal'), [('Пуэр на даче', 1, 'Выводов я не делаю'), ('Вкус', 1, 'Журнал не говорит')])
+        self.assertEqual(where('self_ref'), [('Вкус', 1, 'в таблице'), ('Вкус', 1, 'так она и стоит в таблице')])
+        self.assertEqual(where('inoculation'), [('Вкус', 2, '«волшебный» не напишу, хотя напрашивается')])
+        self.assertEqual(where('anaphora'), [('Пуэр на даче', 1, 'Один чайник, одна кружка, одна неделя.')])
+        # a one-word label, a colon before a quotation and list items are not explanation colons
+        self.assertEqual([m['quote'] for m in cat['colon']['matches']], ['Заваривал утром: вода из колодца, шумовка'])
+        dist = report['distribution']
+        self.assertEqual((dist['paragraphs'], dist['flagged_paragraphs']), (5, 2))
+        self.assertEqual(cat['refusal']['matches'][0]['file'], 'puer.md')
+        # the sentence opened by a caveat marker is the required caveat: marked, not hidden
+        self.assertEqual(cat['anaphora']['matches'][0].get('caveat'), 'C1')
+        self.assertNotIn('caveat', cat['refusal']['matches'][0])
+        self.assertIn('фразы-отказы в 2 из 5 абзацев', report['signals'][0])
+        self.assertTrue(any(s.startswith('«прививка»') for s in report['signals']))
+        self.assertTrue(any(s.startswith('анафорическая тройка') for s in report['signals']))
+
+    def test_dashes_between_words(self):
+        path = self.tmp / 'dash.md'
+        path.write_text('Мешок — около тысячи. Печь одна — у другого выйдет иначе.\n\n'
+                        '— Скажу, — ответил я. Тропа — к реке.\n\n- Было — список, не проза\n', encoding='utf-8')
+        code, report = run(style, '--file', path)
+        quotes = [m['quote'] for m in report['categories']['dash']['matches']]
+        # dialogue dashes and list items are not counted
+        self.assertEqual(quotes, ['Мешок — около тысячи.', 'Печь одна — у другого выйдет иначе.', 'Тропа — к реке.'])
+        self.assertTrue(any(s.startswith('тире между словами: 3') for s in report['signals']))
+
+    def test_plan_scope_and_input_errors(self):
+        p = self.green / 'plan.md'
+        code, report = run(style, '--plan', p)
+        self.assertEqual((code, report['scope'], report['sections']), (0, 'article', ['00-intro.md', '01-results.md']))
+        self.assertEqual(report['categories']['refusal']['count'], 0)
+        code, report = run(style, '--plan', p, '--section', 'sections/01-results.md')
+        self.assertEqual((code, report['sections']), (0, ['01-results.md']))
+        self.assertEqual(report['categories']['colon']['matches'][0]['heading'], 'Результаты')
+        self.assertEqual(run(style, '--plan', p, '--section', '07-none.md')[0], 2)
+        self.assertEqual(run(style, '--section', '01-results.md')[0], 2)
+        self.assertEqual(run(style, '--file', self.tmp / 'none.md')[0], 2)
 
 
 class RoomsTests(unittest.TestCase):

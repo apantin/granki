@@ -47,6 +47,7 @@
 | Скрипт | Что делает |
 |---|---|
 | `check.py` | Проверяет раздел, статью или серию: объём, происхождение чисел, актуальность утверждений, оговорки, ссылки, запрещённое содержимое, рисунки, неизменность опубликованного |
+| `style.py` | Считает структурные следы нейротекста: фразы-отказы, текст о своих данных, «прививки», двоеточия, тройки, ровную длину. Не блокирует, а подсказывает |
 | `claims.py` | Строит таблицу утверждений из CSV и сверяет её с источником |
 | `plan.py` | Меняет статус статьи и разделов по жизненному циклу, отмечает публикацию и новую версию |
 | `journal.py` | Ведёт журнал статьи: реестр находок и хронологию; находит нерешённые находки во всей серии |
@@ -149,7 +150,9 @@ uv run .claude/skills/granki-tools/scripts/rooms.py install --project-root .
 - [research/](docs/research/README.md) — исследования
   - [text-evaluation/](docs/research/text-evaluation/README.md) — как оценивают тексты: [модели-судьи](docs/research/text-evaluation/01-llm-judges.md), [оценка людьми](docs/research/text-evaluation/02-human-evaluation.md), [распознавание ИИ-текста](docs/research/text-evaluation/03-ai-text-detection.md), [голос и стиль](docs/research/text-evaluation/04-voice-and-style.md), [фактическая точность](docs/research/text-evaluation/05-factuality.md)
   - [text-checkers/](docs/research/text-checkers/README.md) — проверка текста по правилам: [Главред](docs/research/text-checkers/01-glavred.md), [русские инструменты](docs/research/text-checkers/02-russian-tools.md), [линтеры прозы](docs/research/text-checkers/03-prose-linters.md)
+  - [anti-ai-style/](docs/research/anti-ai-style/README.md) — как текст модели перестаёт звучать как ИИ: структурные признаки, правила письма и ревью, метрики
 - [pilot.md](docs/dev/pilot.md) — пилот на вымышленных сериях: метод, находки, эксперименты
+- [style.md](docs/dev/style.md) — эксперименты со стилем после пилота: структурные следы нейротекста, гипотезы, журнал прогонов
 - [roadmap.md](docs/dev/roadmap.md) — пилот и то, что не сделано
 
 **Скиллы**
@@ -176,6 +179,8 @@ uv run .claude/skills/granki-tools/scripts/rooms.py install --project-root .
   - [канон проекта](docs/example/bread/.agents/canon.md)
   - серия: [план](docs/example/bread/articles/bread/series-plan.md), [журнал](docs/example/bread/articles/bread/journal.md), [заметки автора](docs/example/bread/articles/bread/author-notes.md), [канон серии](docs/example/bread/articles/bread/canon.md)
   - статья 01-flour: [план](docs/example/bread/articles/bread/01-flour/plan.md), [журнал](docs/example/bread/articles/bread/01-flour/journal.md), разделы [00-intro](docs/example/bread/articles/bread/01-flour/sections/00-intro.md), [01-results](docs/example/bread/articles/bread/01-flour/sections/01-results.md), [02-advice](docs/example/bread/articles/bread/01-flour/sections/02-advice.md)
+- [blind-test/](docs/example/blind-test/README.md) — слепой тест «где нейросеть»: две волны, в каждой три темы пилота и по три текста — голая модель, Granki до и после экспериментов со стилем
+- [style-v25/](docs/example/style-v25/README.md) — тексты последней версии ветки стиля с профилем автора, с подписями, и сами профили
 
 ## Тесты
 
